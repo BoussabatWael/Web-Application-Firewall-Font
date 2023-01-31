@@ -1,0 +1,138 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+  <!-- Topbar -->
+  <app-topbar></app-topbar>
+  <!-- End of Topbar -->
+
+  <!-- left sidebar-->
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  <!-- End of Sidebar -->
+
+  <!-- ============================================================== -->
+  <!-- Start right Content here -->
+  <!-- ============================================================== -->
+  <div class="main-content">
+
+    <div class="page-content">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <div class="checkOs d-none"
+              style="position: absolute;left: 0;height: 90%;opacity:90%;  margin: auto;background: #fff;text-align: center;right: 0;z-index: 3;">
+              <svg _ngcontent-cev-c121="" version="1.1" id="L7" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100"
+                enable-background="new 0 0 100 100" xml:space="preserve" style="width: 6%; margin-top: 4%;">
+                <path _ngcontent-cev-c121="" fill="#000" d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3
+                                                    c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z">
+                  <animateTransform _ngcontent-cev-c121="" attributeName="transform" attributeType="XML" type="rotate"
+                    dur="2s" from="0 50 50" to="360 50 50" repeatCount="indefinite">
+                  </animateTransform>
+                </path>
+                <path _ngcontent-cev-c121="" fill="#000" d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7
+                                                    c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z">
+                  <animateTransform _ngcontent-cev-c121="" attributeName="transform" attributeType="XML" type="rotate"
+                    dur="1s" from="0 50 50" to="-360 50 50" repeatCount="indefinite">
+                  </animateTransform>
+                </path>
+                <path _ngcontent-cev-c121="" fill="#000" d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5
+                                                    L82,35.7z">
+                  <animateTransform _ngcontent-cev-c121="" attributeName="transform" attributeType="XML" type="rotate"
+                    dur="2s" from="0 50 50" to="360 50 50" repeatCount="indefinite">
+                  </animateTransform>
+                </path>
+              </svg>
+              <div class="text-dark mt-3 checkOsTitle">Adding rule to server ...</div>
+              <div class="checkOsResults">
+              </div>
+            </div>
+            <form [formGroup]="ruleForm" id="fromAdd" (ngSubmit)="addRule()">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3 ">
+                    <label for="example-text-input" class="col-md-4 col-form-label">Name<span
+                        class="required-asterisk">*</span></label>
+                    <div class="col-md-12">
+                      <input type="text" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" formControlName="name" required>
+                      <div *ngIf="submitted && form['name'].errors" class="invalid-feedback">
+                        <div *ngIf="form['name'].errors form['name'].required">Name is required</div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="mb-3 ">
+                    <label for="example-text-input" class="col-md-4 col-form-label">IP address</label>
+                    <div class="col-md-12">
+                      <input type="text" class="form-control" formControlName="ip_address" id="ip_address">
+                    </div>
+                  </div>
+                  <div class="mb-3 ">
+                    <label for="example-text-input" class="col-md-4 col-form-label">Port<span
+                        class="required-asterisk">*</span></label>
+                    <div class="col-md-12">
+                      <input type="number" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && form['port'].errors }" formControlName="port" required>
+                      <div *ngIf="submitted && form['port'].errors" class="invalid-feedback">
+                        <div *ngIf="form['port'].errors form['port'].required">Port is required</div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="mb-3 ">
+                    <label for="example-text-input" class="col-md-4 col-form-label">Protocol<span
+                        class="required-asterisk">*</span></label>
+                    <div class="col-md-12">
+                      <select class="form-select" formControlName="protocol"
+                        [ngClass]="{ 'is-invalid': submitted && form['protocol'].errors }" required>
+                        <option>HTTP</option>
+                        <option>HTTPS</option>
+                        <option>UDP</option>
+                        <option>TCP</option>
+                      </select>
+                      <div *ngIf="submitted && form['protocol'].errors" class="invalid-feedback">
+                        <div *ngIf="form['protocol'].errors form['protocol'].required">Protocol is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3 ">
+                    <label for="example-text-input" class="col-md-4 col-form-label">Action<span
+                        class="required-asterisk">*</span></label>
+                    <div class="col-md-12">
+                      <select class="form-select" formControlName="action"
+                        [ngClass]="{ 'is-invalid': submitted && form['action'].errors }" required>
+                        <option>ACCEPT</option>
+                        <option>DROP</option>
+                      </select>
+                      <div *ngIf="submitted && form['action'].errors" class="invalid-feedback">
+                        <div *ngIf="form['action'].errors form['action'].required">Action is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3 ">
+                    <label for="example-text-input" class="col-md-4 col-form-label">Server</label>
+                    <div class="col-md-12">
+                      <div class="col-md-12" formGroupName="servers">
+                        <select class="form-select" id="servers.id" formControlName="id">
+                          <option *ngFor="let server of ServersList" value="{{server.id}}">{{server.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex flex-wrap gap-2 justify-content-end">
+                <button type="submit" class="btn btn-primary waves-effect waves-light">Add</button>
+                <button type="button" class="btn btn-secondary waves-effect waves-light"
+                  routerLink="/rules">Cancel</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

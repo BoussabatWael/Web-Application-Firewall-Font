@@ -1,0 +1,1486 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+  <!-- Topbar -->
+  <app-topbar></app-topbar>
+  <!-- End of Topbar -->
+
+  <!-- left sidebar-->
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  <!-- End of Sidebar -->
+
+  <!-- ============================================================== -->
+  <!-- Start right Content here -->
+  <!-- ============================================================== -->
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <!-- start page title -->
+
+        <!-- end page title -->
+
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card overflow-hidden">
+              <div class="bg-primary bg-soft">
+                <div class="row">
+                  <div class="col-7"></div>
+                  <div class="col-5 align-self-end leftside"></div>
+                </div>
+              </div>
+              <div class="card-body pt-0">
+                <div class="row">
+                  <div class="col-12">
+                    <div
+                      class="gap-2 avatar-md profile-user-wid mb-3 d-flex w-100"
+                    >
+                      <img
+                        src="assets/images/uploads/{{ data.photo }}"
+                        alt=""
+                        class="img-thumbnail rounded-circle"
+                      />
+                      <h5 class="d-flex font-size-18 text-truncate pt-5">
+                        <a class="text-dark">{{ data.username }}</a>
+                      </h5>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <h5 class="font-size-15 text-truncate">
+                            <a class="text-dark">Status</a>
+                          </h5>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <span
+                            *ngIf="data.status == 1"
+                            class="badge rounded-pill badge-soft-success font-size-12"
+                            >Active</span
+                          >
+                          <span
+                            *ngIf="data.status == 2"
+                            class="badge rounded-pill badge-soft-danger font-size-12"
+                            >Inactive</span
+                          >
+                          <span
+                            *ngIf="data.status == 3"
+                            class="badge rounded-pill badge-soft-warning font-size-12"
+                            >In progress</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title mb-4 text-dark">Last activity</h4>
+                <div *ngIf="LastUserLogs.length === 0; else other">
+                  <table
+                    class="table align-middle table-nowrap table-hover text-center"
+                  >
+                    <thead class="th-bg-color">
+                      <tr>
+                        <th class="th-table">Action date</th>
+                        <th class="th-table">Action</th>
+                        <th class="th-table">Source</th>
+                      </tr>
+                    </thead>
+                    <tbody class="border-top-0">
+                      <tr>
+                        <td colspan="7">
+                          <a class="text-dark"
+                            ><i class="fas fa-ban"></i> No result matched</a
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <ng-template #other>
+                  <div class="table-responsive">
+                    <table
+                      class="table align-middle table-nowrap table-hover text-center"
+                    >
+                      <thead class="th-bg-color">
+                        <tr>
+                          <th class="th-table">Action date</th>
+                          <th class="th-table">Action</th>
+                          <th class="th-table">Source</th>
+                        </tr>
+                      </thead>
+                      <tbody
+                        class="border-top-0"
+                        *ngFor="let userlog of LastUserLogs"
+                      >
+                        <tr>
+                          <td>
+                            {{
+                              userlog.action_date
+                                | date : "yyyy-MM-dd h:mm:ss a"
+                            }}
+                          </td>
+                          <td style="text-transform: uppercase">
+                            {{ userlog.action }}
+                          </td>
+                          <td>
+                            <span>{{ userlog.element }}</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <!-- end row -->
+            <div class="card">
+              <div class="card-body">
+                <ul class="nav nav-pills nav-justified" role="tablist">
+                  <li
+                    class="nav-item waves-effect waves-light"
+                    placement="top"
+                    ngbTooltip="Personal Informations"
+                  >
+                    <a
+                      class="nav-link active"
+                      data-bs-toggle="tab"
+                      href="#home-1"
+                      role="tab"
+                    >
+                      <span class="d-block"
+                        ><i class="fas fa-home"></i>
+                        <span class="d-none d-sm-block" class="text-dark">
+                          Personal</span
+                        >
+                      </span>
+                    </a>
+                  </li>
+                  <li
+                    class="nav-item waves-effect waves-light"
+                    placement="top"
+                    ngbTooltip="API Keys"
+                  >
+                    <a
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      href="#api-1"
+                      role="tab"
+                    >
+                      <span class="d-block"
+                        ><i class="fa fa-key"></i>
+                        <span class="d-none d-sm-block" class="text-dark">
+                          API Keys</span
+                        >
+                      </span>
+                    </a>
+                  </li>
+                  <li
+                    class="nav-item waves-effect waves-light"
+                    placement="top"
+                    ngbTooltip="Logs Activity"
+                  >
+                    <a
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      href="#profile-1"
+                      role="tab"
+                    >
+                      <span class="d-block"
+                        ><i class="fa fa-history"></i>
+                        <span
+                          class="d-none d-sm-block"
+                          (click)="getUserLogs()"
+                          class="text-dark"
+                        >
+                          Logs</span
+                        >
+                      </span>
+                    </a>
+                  </li>
+                  <li
+                    class="nav-item waves-effect waves-light"
+                    *ngIf="data.role != 1"
+                    style="display: none"
+                    placement="top"
+                    ngbTooltip="Billing"
+                  >
+                    <a
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      href="#messages-1"
+                      role="tab"
+                    >
+                      <span class="d-block"
+                        ><i class="fas fa-file-invoice-dollar"></i>
+                        <span class="d-none d-sm-block" class="text-dark">
+                          Billing</span
+                        >
+                      </span>
+                    </a>
+                  </li>
+                  <li
+                    class="nav-item waves-effect waves-light"
+                    *ngIf="data.role == 1"
+                    placement="top"
+                    ngbTooltip="Billing"
+                  >
+                    <a
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      href="#messages-1"
+                      role="tab"
+                    >
+                      <span class="d-block"
+                        ><i class="fas fa-file-invoice-dollar"></i>
+                        <span class="d-none d-sm-block" class="text-dark">
+                          Billing</span
+                        >
+                      </span>
+                    </a>
+                  </li>
+                  <li
+                    class="nav-item waves-effect waves-light"
+                    placement="top"
+                    ngbTooltip="Notifications"
+                  >
+                    <a
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      href="#settings-1"
+                      role="tab"
+                      style="width: 108%"
+                    >
+                      <span class="d-block"
+                        ><i class="fa fa-bell"></i>
+                        <span class="d-none d-sm-block" class="text-dark">
+                          Notifications</span
+                        >
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content p-0 py-4 text-muted">
+                  <div class="tab-pane pt-2 active" id="home-1" role="tabpanel">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-12">
+                          <div>
+                            <div class="card-body p-0">
+                              <from
+                                [formGroup]="profileEditForm"
+                                (ngSubmit)="updateUser(this.data.id)"
+                              >
+                                <label
+                                  for="example-text-input"
+                                  class="col-6 col-form-label"
+                                  ><a class="text-dark"
+                                    >Full name<span class="required-asterisk"
+                                      >*</span
+                                    ></a
+                                  ></label
+                                >
+                                <div class="col-12 mb-3">
+                                  <input
+                                    class="form-control"
+                                    type="text"
+                                    id="example-text-input"
+                                    formControlName="username"
+                                    [ngModel]="data.username"
+                                    [ngClass]="{
+                                      'is-invalid':
+                                        submitted && form['username'].errors
+                                    }"
+                                  />
+                                  <div
+                                    *ngIf="submitted && form['username'].errors"
+                                    class="invalid-feedback"
+                                  >
+                                    <div
+                                      *ngIf="
+                                        form['username'].errors;
+                                        form: ['username'].required
+                                      "
+                                    >
+                                      Username is required
+                                    </div>
+                                  </div>
+                                </div>
+                                <label
+                                  for="example-text-input"
+                                  class="col-6 col-form-label"
+                                  ><a class="text-dark"
+                                    >Password<span class="required-asterisk"
+                                      >*</span
+                                    ></a
+                                  ></label
+                                >
+                                <div class="d-flex col-12 mb-3">
+                                  <div class="input-group auth-pass-inputgroup">
+                                    <input
+                                      class="form-control"
+                                      type="password"
+                                      [ngClass]="{
+                                        'is-invalid':
+                                          submitted && form['password'].errors
+                                      }"
+                                      minlength="6"
+                                      formControlName="password"
+                                      [ngModel]="data.password"
+                                    />
+                                    <button
+                                      class="btn btn-light"
+                                      type="button"
+                                      id="password-addon"
+                                    >
+                                      <i class="mdi mdi-eye-outline"></i>
+                                    </button>
+                                    <div
+                                      *ngIf="
+                                        submitted && form['password'].errors
+                                      "
+                                      class="invalid-feedback"
+                                    >
+                                      <div
+                                        *ngIf="
+                                          form['password'].errors;
+                                          form: ['password'].required
+                                        "
+                                      >
+                                        Password is required | minimum 6
+                                        characters
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex flex-wrap gap-2 justify-content-end"
+                                >
+                                  <button
+                                    type="submit"
+                                    (click)="updateUser(this.data.id)"
+                                    class="btn btn-primary waves-effect waves-light"
+                                  >
+                                    Save changes
+                                  </button>
+                                </div>
+                              </from>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane pt-4" id="profile-1" role="tabpanel">
+                    <div *ngIf="userLogsList.length === 0; else other_content">
+                      <div class="card-body">
+                        <label class="col-md-12 col-form-label text-center"
+                          ><img
+                            src="assets/images/no_data_found.png"
+                            style="width: 22%"
+                        /></label>
+                      </div>
+                    </div>
+                    <ng-template #other_content>
+                      <div class="card-body">
+                        <div class="row mb-2">
+                          <div class="col-sm-4">
+                            <div class="search-box me-2 mb-2 d-inline-block">
+                              <div class="position-relative">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="Search..."
+                                  autocomplete="off"
+                                  [(ngModel)]="searchText"
+                                />
+                                <i class="bx bx-search-alt search-icon"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          *ngIf="
+                            userLogsList | filter : searchText as resultFilter
+                          "
+                        >
+                          <div *ngIf="resultFilter.length === 0; else otherr">
+                            <table
+                              class="table align-middle table-nowrap table-hover text-center"
+                            >
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="th-table">ID</th>
+                                  <th class="th-table">Element</th>
+                                  <th class="th-table">Element ID</th>
+                                  <th class="th-table">Action</th>
+                                  <th class="th-table">Action date</th>
+                                  <th class="th-table">Source</th>
+                                  <th class="th-table">View</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr>
+                                  <td colspan="7">
+                                    <img
+                                      src="assets/images/no_data_found.png"
+                                      style="width: 22%"
+                                    />
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ng-template #otherr>
+                            <table
+                              class="table align-middle table-nowrap table-hover text-center"
+                            >
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th
+                                    [appSort]="userLogsList"
+                                    data-order="desc"
+                                    data-name="id"
+                                  >
+                                    ID <i class="fas fa-angle-up"></i>
+                                  </th>
+                                  <th
+                                    [appSort]="userLogsList"
+                                    data-order="desc"
+                                    data-name="element"
+                                  >
+                                    Element
+                                    <i class="fas fa-angle-up d-none"></i>
+                                  </th>
+                                  <th
+                                    [appSort]="userLogsList"
+                                    data-order="desc"
+                                    data-name="element_id"
+                                  >
+                                    Element ID
+                                    <i class="fas fa-angle-up d-none"></i>
+                                  </th>
+                                  <th
+                                    [appSort]="userLogsList"
+                                    data-order="desc"
+                                    data-name="action"
+                                  >
+                                    Action
+                                    <i class="fas fa-angle-up d-none"></i>
+                                  </th>
+                                  <th
+                                    [appSort]="userLogsList"
+                                    data-order="desc"
+                                    data-name="action_date"
+                                  >
+                                    Action date
+                                    <i class="fas fa-angle-up d-none"></i>
+                                  </th>
+                                  <th
+                                    [appSort]="userLogsList"
+                                    data-order="desc"
+                                    data-name="source"
+                                  >
+                                    Source
+                                    <i class="fas fa-angle-up d-none"></i>
+                                  </th>
+                                  <th class="th-table">View</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr
+                                  *ngFor="
+                                    let userlog of userLogsList
+                                      | paginate
+                                        : {
+                                            itemsPerPage: 5,
+                                            currentPage: p,
+                                            id: 'Pagination1'
+                                          }
+                                      | filter : searchText
+                                  "
+                                >
+                                  <td>{{ userlog.id }}</td>
+                                  <td>
+                                    <span>{{ userlog.element }}</span>
+                                    <!--
+                                                                    <span *ngIf="userlog.element==0">Accounts</span>
+                                                                    <span *ngIf="userlog.element==1">Users</span>
+                                                                    <span *ngIf="userlog.element==2">Servers</span>
+                                                                    <span *ngIf="userlog.element==3">Rules</span>
+                                                                    <span *ngIf="userlog.element==4">Groups</span>
+                                                                    <span *ngIf="userlog.element==5">Policies</span>
+                                                                    <span *ngIf="userlog.element==6">Rules Instances</span>
+                                                                    <span *ngIf="userlog.element==7">Groups Rules</span>
+                                                                    <span *ngIf="userlog.element==8">Policies Instances</span>
+                                                                    <span *ngIf="userlog.element==9">SSH Credentials</span>
+                                                                    <span *ngIf="userlog.element==10">User Permissions</span>
+
+                                                                   -->
+                                  </td>
+                                  <td>{{ userlog.element_id }}</td>
+                                  <td>{{ userlog.action }}</td>
+                                  <td>
+                                    {{
+                                      userlog.action_date
+                                        | date : "yyyy-MM-dd h:mm:ss a"
+                                    }}
+                                  </td>
+                                  <td>
+                                    <span>{{ userlog.source }}</span>
+                                    <!--
+                                                                    <span *ngIf="userlog.source==0">Accounts</span>
+                                                                    <span *ngIf="userlog.source==1">Users</span>
+                                                                    <span *ngIf="userlog.source==2">Servers</span>
+                                                                    <span *ngIf="userlog.source==3">Rules</span>
+                                                                    <span *ngIf="userlog.source==4">Groups</span>
+                                                                    <span *ngIf="userlog.source==5">Policies</span>
+                                                                    <span *ngIf="userlog.source==6">Rules Instances</span>
+                                                                    <span *ngIf="userlog.source==7">Groups Rules</span>
+                                                                    <span *ngIf="userlog.source==8">Policies Instances</span>
+                                                                    <span *ngIf="userlog.source==9">SSH Credentials</span>
+                                                                    <span *ngIf="userlog.source==10">User Permissions</span>
+                                                                    <span *ngIf="userlog.source==11">Desktop</span>
+                                                                    -->
+                                  </td>
+
+                                  <td>
+                                    <div
+                                      *ngIf="
+                                        userlog.source == 'Desktop' ||
+                                          userlog.action === 'delete';
+                                        else other_content
+                                      "
+                                    ></div>
+                                    <ng-template #other_content>
+                                      <div
+                                        class="d-flex flex-wrap gap-1 justify-content-center"
+                                      >
+                                        <a
+                                          *ngIf="userlog.element == 'Accounts'"
+                                          routerLink="/account"
+                                          placement="left"
+                                          ngbTooltip="View"
+                                        >
+                                          <i class="fa fa-eye font-size-20"></i
+                                        ></a>
+                                        <a
+                                          *ngIf="userlog.element == 'Users'"
+                                          routerLink="/settings/user/edit/{{
+                                            userlog.element_id
+                                          }}"
+                                          placement="left"
+                                          ngbTooltip="View"
+                                        >
+                                          <i class="fa fa-eye font-size-20"></i
+                                        ></a>
+                                        <a
+                                          *ngIf="userlog.element == 'Servers'"
+                                          routerLink="/server/edit/{{
+                                            userlog.element_id
+                                          }}"
+                                          placement="left"
+                                          ngbTooltip="View"
+                                        >
+                                          <i class="fa fa-eye font-size-20"></i
+                                        ></a>
+                                        <a
+                                          *ngIf="userlog.element == 'Rules'"
+                                          routerLink="/rule/edit/{{
+                                            userlog.element_id
+                                          }}"
+                                          placement="left"
+                                          ngbTooltip="View"
+                                        >
+                                          <i class="fa fa-eye font-size-20"></i
+                                        ></a>
+                                        <a
+                                          *ngIf="userlog.element == 'Groups'"
+                                          routerLink="/group/edit/{{
+                                            userlog.element_id
+                                          }}"
+                                          placement="left"
+                                          ngbTooltip="View"
+                                        >
+                                          <i class="fa fa-eye font-size-20"></i
+                                        ></a>
+                                        <a
+                                          *ngIf="userlog.element == 'Policies'"
+                                          routerLink="/policies/edit/{{
+                                            userlog.element_id
+                                          }}"
+                                          placement="left"
+                                          ngbTooltip="View"
+                                        >
+                                          <i class="fa fa-eye font-size-20"></i
+                                        ></a>
+                                      </div>
+                                    </ng-template>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls
+                              class="pagination pagination-rounded justify-content-center mt-4"
+                              (pageChange)="p = $event"
+                              id="Pagination1"
+                            ></pagination-controls>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                  <div class="tab-pane pt-4" id="messages-1" role="tabpanel">
+                    <div class="card-body">
+                      <label class="col-md-12 col-form-label text-center"
+                        ><a class="text-dark"
+                          >Coming soon in the next version</a
+                        ></label
+                      >
+                    </div>
+                  </div>
+                  <div class="tab-pane pt-4" id="settings-1" role="tabpanel">
+                    <div class="card-body">
+                      <label class="col-md-12 col-form-label text-center"
+                        ><a class="text-dark"
+                          >Coming soon in the next version</a
+                        ></label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="tab-pane pt-4" id="api-1" role="tabpanel">
+                    <div class="card-body">
+                      <div
+                        *ngIf="apiKeysList.length === 0; else otherr_contentt"
+                      >
+                        <div class="row mb-0 justify-content-between">
+                          <div class="col-8"></div>
+                          <div class="col-2">
+                            <div class="d-flex flex-wrap gap-2 pb-3">
+                              <button
+                                type="submit"
+                                (click)="openModalAddKey(addKeyModal, apikey)"
+                                class="btn btn-outline-primary"
+                              >
+                                New API key
+                              </button>
+                              <ng-template #addKeyModal>
+                                <div class="modal-header">
+                                  <h6 class="modal-title" id="addRuleLabel">
+                                    Add new key
+                                  </h6>
+                                  <button
+                                    type="button"
+                                    class="btn btn-outline-primary"
+                                    (click)="generateKey()"
+                                  >
+                                    Generate key
+                                  </button>
+                                </div>
+                                <div class="modal-body position-relative">
+                                  <div class="card-body">
+                                    <form
+                                      [formGroup]="KeyFormAdd"
+                                      (ngSubmit)="addKey()"
+                                    >
+                                      <div class="row">
+                                        <div class="mb-3">
+                                          <label
+                                            for="validationCustom01"
+                                            class="form-label"
+                                            ><a class="text-dark"
+                                              >key<span
+                                                class="required-asterisk"
+                                                >*</span
+                                              ></a
+                                            ></label
+                                          >
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            [ngClass]="{
+                                              'is-invalid':
+                                                submitted &&
+                                                KeyAdd['key'].errors
+                                            }"
+                                            formControlName="key"
+                                            required
+                                          />
+                                          <div
+                                            *ngIf="
+                                              submitted && KeyAdd['key'].errors
+                                            "
+                                            class="invalid-feedback"
+                                          >
+                                            <div
+                                              *ngIf="
+                                                KeyAdd['key'].errors;
+                                                keyAdd: ['key'].required
+                                              "
+                                            >
+                                              key is required
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div
+                                        class="d-flex flex-wrap gap-2 justify-content-end"
+                                      >
+                                        <button
+                                          type="submit"
+                                          class="btn btn-primary waves-effect waves-light"
+                                        >
+                                          Save changes
+                                        </button>
+                                        <button
+                                          type="button"
+                                          (click)="onSubmit()"
+                                          class="btn btn-secondary waves-effect waves-light"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </ng-template>
+                            </div>
+                          </div>
+                        </div>
+                        <label class="col-md-12 col-form-label text-center"
+                          ><img
+                            src="assets/images/no_data_found.png"
+                            style="width: 22%"
+                        /></label>
+                      </div>
+                      <ng-template #otherr_contentt>
+                        <div class="row mb-0 justify-content-between">
+                          <div class="col-8">
+                            <div class="search-box me-2 mb-2 d-inline-block">
+                              <div class="position-relative">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="Search..."
+                                  autocomplete="off"
+                                  [(ngModel)]="searchText1"
+                                />
+                                <i class="bx bx-search-alt search-icon"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-2">
+                            <div class="d-flex flex-wrap gap-2 pb-3">
+                              <button
+                                type="submit"
+                                (click)="openModalAddKey(addKeyModal, apikey)"
+                                class="btn btn-outline-primary"
+                              >
+                                New API key
+                              </button>
+                              <ng-template #addKeyModal>
+                                <div class="modal-header">
+                                  <h6 class="modal-title" id="addRuleLabel">
+                                    Add New key
+                                  </h6>
+                                  <button
+                                    type="button"
+                                    class="btn btn-outline-primary"
+                                    (click)="generateKey()"
+                                  >
+                                    Generate key
+                                  </button>
+                                </div>
+                                <div class="modal-body position-relative">
+                                  <div class="card-body">
+                                    <form
+                                      [formGroup]="KeyFormAdd"
+                                      (ngSubmit)="addKey()"
+                                    >
+                                      <div class="row">
+                                        <div class="mb-3">
+                                          <label
+                                            for="validationCustom01"
+                                            class="form-label"
+                                            ><a class="text-dark"
+                                              >key<span
+                                                class="required-asterisk"
+                                                >*</span
+                                              ></a
+                                            ></label
+                                          >
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            [ngClass]="{
+                                              'is-invalid':
+                                                submitted &&
+                                                KeyAdd['key'].errors
+                                            }"
+                                            formControlName="key"
+                                            required
+                                          />
+                                          <div
+                                            *ngIf="
+                                              submitted && KeyAdd['key'].errors
+                                            "
+                                            class="invalid-feedback"
+                                          >
+                                            <div
+                                              *ngIf="
+                                                KeyAdd['key'].errors;
+                                                keyAdd: ['key'].required
+                                              "
+                                            >
+                                              key is required
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div
+                                        class="d-flex flex-wrap gap-2 justify-content-end"
+                                      >
+                                        <button
+                                          type="submit"
+                                          class="btn btn-primary waves-effect waves-light"
+                                        >
+                                          Save changes
+                                        </button>
+                                        <button
+                                          type="button"
+                                          (click)="onSubmit()"
+                                          class="btn btn-secondary waves-effect waves-light"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </ng-template>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          *ngIf="
+                            apiKeysList | filter : searchText1 as resultFilter1
+                          "
+                        >
+                          <div *ngIf="resultFilter1.length === 0; else otherrr">
+                            <div class="table-responsive">
+                              <table
+                                class="table align-middle table-nowrap table-hover text-center"
+                              >
+                                <thead class="th-bg-color">
+                                  <tr>
+                                    <th class="th-table">ID</th>
+                                    <th class="th-table">Key</th>
+                                    <th class="th-table">Status</th>
+                                    <th class="th-table">Account ID</th>
+                                    <th class="th-table">Start date</th>
+                                  </tr>
+                                </thead>
+                                <tbody class="border-top-0">
+                                  <tr>
+                                    <td colspan="7">
+                                      <img
+                                        src="assets/images/no_data_found.png"
+                                        style="width: 22%"
+                                      />
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <ng-template #otherrr>
+                            <div class="table-responsive">
+                              <table
+                                class="table align-middle table-nowrap table-hover text-center"
+                              >
+                                <thead class="th-bg-color">
+                                  <tr>
+                                    <th
+                                      scope="col"
+                                      [appSort]="apiKeysList"
+                                      data-order="desc"
+                                      data-name="id"
+                                    >
+                                      ID <i class="fas fa-angle-up"></i>
+                                    </th>
+                                    <th
+                                      scope="col"
+                                      [appSort]="apiKeysList"
+                                      data-order="desc"
+                                      data-name="key_value"
+                                    >
+                                      Key <i class="fas fa-angle-up d-none"></i>
+                                    </th>
+                                    <th
+                                      scope="col"
+                                      [appSort]="apiKeysList"
+                                      data-order="desc"
+                                      data-name="status"
+                                    >
+                                      Status
+                                      <i class="fas fa-angle-up d-none"></i>
+                                    </th>
+                                    <th
+                                      scope="col"
+                                      [appSort]="apiKeysList"
+                                      data-order="desc"
+                                      data-name="start_date"
+                                    >
+                                      Start date
+                                      <i class="fas fa-angle-up d-none"></i>
+                                    </th>
+                                    <th
+                                      scope="col"
+                                      style="cursor: auto !important"
+                                    >
+                                      Actions
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody class="border-top-0">
+                                  <tr
+                                    *ngFor="
+                                      let apikey of apiKeysList
+                                        | paginate
+                                          : {
+                                              itemsPerPage: 5,
+                                              currentPage: p1,
+                                              id: 'Pagination2'
+                                            }
+                                        | filter : searchText1
+                                    "
+                                    data-id="{{ apikey.id }}"
+                                  >
+                                    <td>
+                                      {{ apikey.id }}
+                                    </td>
+                                    <td>
+                                      {{ apikey.key_value }}
+                                    </td>
+                                    <td>
+                                      <span *ngIf="apikey.status == 1"
+                                        ><span
+                                          class="badge badge-pill badge-soft-success font-size-11"
+                                          >Active</span
+                                        ></span
+                                      >
+                                      <span *ngIf="apikey.status == 2"
+                                        ><span
+                                          class="badge badge-pill badge-soft-danger font-size-11"
+                                          >Inactive</span
+                                        ></span
+                                      >
+                                      <span *ngIf="apikey.status == 3"
+                                        ><span
+                                          class="badge badge-pill badge-soft-warning font-size-11"
+                                          >In progress</span
+                                        ></span
+                                      >
+                                    </td>
+                                    <td>
+                                      {{
+                                        apikey.start_date
+                                          | date : "yyyy-MM-dd h:mm:ss a"
+                                      }}
+                                    </td>
+                                    <td>
+                                      <div
+                                        class="d-flex flex-wrap gap-1 justify-content-center"
+                                      >
+                                        <a
+                                          class="btn btn-secondary waves-effect waves-light btn-act"
+                                          (click)="
+                                            openModalApiPermissions(
+                                              apiPermissionsModal,
+                                              apikey
+                                            )
+                                          "
+                                          (click)="
+                                            getApiPermissionsList(apikey)
+                                          "
+                                          placement="left"
+                                          ngbTooltip="Edit"
+                                        >
+                                          <i
+                                            class="mdi mdi-pencil font-size-16"
+                                          ></i
+                                        ></a>
+                                        <a
+                                          class="btn btn-danger waves-effect waves-light btn-act"
+                                          type="button"
+                                          (click)="deleteKey(apikey.id)"
+                                          placement="left"
+                                          ngbTooltip="Delete"
+                                          ><i
+                                            class="mdi mdi-delete font-size-16"
+                                          ></i
+                                        ></a>
+                                      </div>
+                                      <ng-template #apiPermissionsModal>
+                                        <div class="modal-header">
+                                          <h6
+                                            class="modal-title"
+                                            id="addRuleLabel"
+                                          >
+                                            API permissions
+                                          </h6>
+                                          <button
+                                            type="button"
+                                            class="btn-close"
+                                            (click)="close()"
+                                            aria-label="Close"
+                                          ></button>
+                                        </div>
+                                        <div
+                                          class="modal-body position-relative"
+                                        >
+                                          <div class="card-body">
+                                            <table
+                                              class="table align-middle table-nowrap table-hover text-center"
+                                            >
+                                              <thead class="th-bg-color">
+                                                <tr>
+                                                  <th
+                                                    class="success"
+                                                    class="th-table"
+                                                  >
+                                                    #
+                                                  </th>
+                                                  <th
+                                                    class="success"
+                                                    class="th-table"
+                                                  >
+                                                    List
+                                                  </th>
+                                                  <th
+                                                    class="warning"
+                                                    class="th-table"
+                                                  >
+                                                    Create
+                                                  </th>
+                                                  <th
+                                                    class="danger"
+                                                    class="th-table"
+                                                  >
+                                                    Edit
+                                                  </th>
+                                                  <th
+                                                    class="danger"
+                                                    class="th-table"
+                                                  >
+                                                    Delete
+                                                  </th>
+                                                </tr>
+                                              </thead>
+                                              <tbody class="border-top-0">
+                                                <tr data-permission="users">
+                                                  <td class="success">Users</td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'users'
+                                                        ].includes('view')
+                                                      "
+                                                      (click)="
+                                                        Onchange($event, 'view')
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'users'
+                                                        ].includes('create')
+                                                      "
+                                                      (click)="
+                                                        Onchange(
+                                                          $event,
+                                                          'create'
+                                                        )
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'users'
+                                                        ].includes('edit')
+                                                      "
+                                                      (click)="
+                                                        Onchange($event, 'edit')
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'users'
+                                                        ].includes('delete')
+                                                      "
+                                                      (click)="
+                                                        Onchange(
+                                                          $event,
+                                                          'delete'
+                                                        )
+                                                      "
+                                                    />
+                                                  </td>
+                                                </tr>
+                                                <tr data-permission="servers">
+                                                  <td class="success">
+                                                    Servers
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'servers'
+                                                        ].includes('view')
+                                                      "
+                                                      (click)="
+                                                        Onchange($event, 'view')
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'servers'
+                                                        ].includes('create')
+                                                      "
+                                                      (click)="
+                                                        Onchange(
+                                                          $event,
+                                                          'create'
+                                                        )
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'servers'
+                                                        ].includes('edit')
+                                                      "
+                                                      (click)="
+                                                        Onchange($event, 'edit')
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'servers'
+                                                        ].includes('delete')
+                                                      "
+                                                      (click)="
+                                                        Onchange(
+                                                          $event,
+                                                          'delete'
+                                                        )
+                                                      "
+                                                    />
+                                                  </td>
+                                                </tr>
+                                                <tr data-permission="rules">
+                                                  <td class="success">Rules</td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'rules'
+                                                        ].includes('view')
+                                                      "
+                                                      (click)="
+                                                        Onchange($event, 'view')
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'rules'
+                                                        ].includes('create')
+                                                      "
+                                                      (click)="
+                                                        Onchange(
+                                                          $event,
+                                                          'create'
+                                                        )
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'rules'
+                                                        ].includes('edit')
+                                                      "
+                                                      (click)="
+                                                        Onchange($event, 'edit')
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'rules'
+                                                        ].includes('delete')
+                                                      "
+                                                      (click)="
+                                                        Onchange(
+                                                          $event,
+                                                          'delete'
+                                                        )
+                                                      "
+                                                    />
+                                                  </td>
+                                                </tr>
+                                                <tr data-permission="groups">
+                                                  <td class="success">
+                                                    Groups
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'groups'
+                                                        ].includes('view')
+                                                      "
+                                                      (click)="
+                                                        Onchange($event, 'view')
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'groups'
+                                                        ].includes('create')
+                                                      "
+                                                      (click)="
+                                                        Onchange(
+                                                          $event,
+                                                          'create'
+                                                        )
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'groups'
+                                                        ].includes('edit')
+                                                      "
+                                                      (click)="
+                                                        Onchange($event, 'edit')
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'groups'
+                                                        ].includes('delete')
+                                                      "
+                                                      (click)="
+                                                        Onchange(
+                                                          $event,
+                                                          'delete'
+                                                        )
+                                                      "
+                                                    />
+                                                  </td>
+                                                </tr>
+                                                <tr data-permission="policies">
+                                                  <td class="success">
+                                                    Policies
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'policies'
+                                                        ].includes('view')
+                                                      "
+                                                      (click)="
+                                                        Onchange($event, 'view')
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'policies'
+                                                        ].includes('create')
+                                                      "
+                                                      (click)="
+                                                        Onchange(
+                                                          $event,
+                                                          'create'
+                                                        )
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'policies'
+                                                        ].includes('edit')
+                                                      "
+                                                      (click)="
+                                                        Onchange($event, 'edit')
+                                                      "
+                                                    />
+                                                  </td>
+                                                  <td class="active">
+                                                    <input
+                                                      type="checkbox"
+                                                      class="select-item checkbox"
+                                                      name="select-item"
+                                                      [checked]="
+                                                        ApiPermissionsList[
+                                                          'policies'
+                                                        ].includes('delete')
+                                                      "
+                                                      (click)="
+                                                        Onchange(
+                                                          $event,
+                                                          'delete'
+                                                        )
+                                                      "
+                                                    />
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                            <div>
+                                              <div
+                                                class="d-flex flex-wrap gap-2 justify-content-end"
+                                              >
+                                                <button
+                                                  type="submit"
+                                                  class="btn btn-primary waves-effect waves-light"
+                                                  (click)="save(apikey)"
+                                                >
+                                                  Save changes
+                                                </button>
+                                                <button
+                                                  type="submit"
+                                                  class="btn btn-secondary"
+                                                  (click)="close()"
+                                                >
+                                                  Cancel
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </ng-template>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <pagination-controls
+                                class="pagination pagination-rounded justify-content-center mt-4"
+                                (pageChange)="p1 = $event"
+                                id="Pagination2"
+                              ></pagination-controls>
+                            </div>
+                          </ng-template>
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

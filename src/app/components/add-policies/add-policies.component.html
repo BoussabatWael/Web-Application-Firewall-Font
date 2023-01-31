@@ -1,0 +1,118 @@
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <!-- Topbar -->
+             <app-topbar></app-topbar>
+                   <!-- End of Topbar -->
+
+             <!-- left sidebar-->
+                 <!-- Sidebar -->
+           <app-sidebar></app-sidebar>
+              <!-- End of Sidebar -->
+
+             <!-- ============================================================== -->
+             <!-- Start right Content here -->
+             <!-- ============================================================== -->
+             <div class="main-content">
+
+                <div class="page-content" >
+                    <div class="container-fluid">
+                        <div class="card">
+                            <div class="card-body">
+                                <form [formGroup]="policyForm" (ngSubmit)="addPolicy()">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+
+                                            <div class="mb-3 ">
+                                                <label for="example-text-input" class="col-md-4 col-form-label">Name<span class="required-asterisk">*</span></label>
+                                                <div class="col-md-12">
+                                                            <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }"
+                                                            formControlName="name"  required>
+                                                            <div *ngIf="submitted && form['name'].errors" class="invalid-feedback">
+                                                                <div *ngIf="form['name'].errors form['name'].required">Name is required</div>
+                                                              </div>
+
+                                                            </div></div>
+                                                  <div class="mb-3 ">
+                                                  <label for="example-text-input" class="col-md-4 col-form-label">Metric<span class="required-asterisk">*</span></label>
+                                                <div class="col-md-12">
+                                                            <input type="number" class="form-control" [ngClass]="{ 'is-invalid': submitted && form['metric'].errors }"
+                                                            formControlName="metric"  required>
+                                                            <div *ngIf="submitted && form['metric'].errors" class="invalid-feedback">
+                                                                <div *ngIf="form['metric'].errors form['metric'].required">Metric is required</div>
+                                                              </div>
+
+                                                            </div></div>
+                                                  <div class="mb-3 ">
+                                                            <label for="example-text-input" class="col-md-4 col-form-label">Duration<span class="required-asterisk">*</span></label>
+                                                  <div class="col-md-12">
+                                                            <input type="number" class="form-control" [ngClass]="{ 'is-invalid': submitted && form['duration'].errors }"
+                                                            formControlName="duration"  required>
+                                                            <div *ngIf="submitted && form['duration'].errors" class="invalid-feedback">
+                                                                <div *ngIf="form['duration'].errors form['duration'].required">Duration is required</div>
+                                                              </div>
+
+                                                            </div>
+                                                            </div>
+                                                  <div class="mb-3 ">
+                                                  <label for="example-text-input" class="col-md-4 col-form-label">Start date<span class="required-asterisk">*</span></label>
+                                                      <div class="col-md-12">
+                                                            <input type="date" class="form-control" [ngClass]="{ 'is-invalid': submitted && form['start_date'].errors }"
+                                                            formControlName="start_date"  required>
+                                                            <div *ngIf="submitted && form['start_date'].errors" class="invalid-feedback">
+                                                                <div *ngIf="form['start_date'].errors form['start_date'].required">Start date is required</div>
+                                                              </div>
+
+                                                            </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                                <div class="mb-3 ">
+                                                                <label for="example-text-input" class="col-md-4 col-form-label">Action<span class="required-asterisk">*</span></label>
+                                                                <div class="col-md-12">
+                                                                <select class="form-select"  formControlName="action" [ngClass]="{ 'is-invalid': submitted && form['action'].errors }" required>
+                                                                    <option value="1">ACCEPT</option>
+                                                                    <option value="0">DROP</option>
+                                                                </select>
+                                                                <div *ngIf="submitted && form['action'].errors" class="invalid-feedback">
+                                                                    <div *ngIf="form['action'].errors form['action'].required">Action is required</div>
+                                                                  </div>
+                                                                  </div>
+                                                                  </div>
+                                                                <div class="mb-3 ">
+                                                                <label for="example-text-input" class="col-md-4 col-form-label">Threshold<span class="required-asterisk">*</span></label>
+                                                                <div class="col-md-12">
+                                                                <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && form['threshold'].errors }"
+                                                                formControlName="threshold"   required>
+                                                                <div *ngIf="submitted && form['threshold'].errors" class="invalid-feedback">
+                                                                    <div *ngIf="form['threshold'].errors form['threshold'].required">Threshold is required</div>
+                                                                  </div>
+
+                                                                </div>
+                                                                </div>
+                                                                <div class="mb-3 ">
+                                                                <label for="example-text-input" class="col-md-4 col-form-label">Status<span class="required-asterisk">*</span></label>
+                                                                <div class="col-md-12">
+                                                                    <select class="form-select"  formControlName="status" [ngClass]="{ 'is-invalid': submitted && form['status'].errors }" required>
+                                                                        <option value="1">Active</option>
+                                                                        <option value="2">Inactive</option>
+                                                                        <option value="3">In progress</option>
+                                                                </select>
+                                                        <div *ngIf="submitted && form['status'].errors" class="invalid-feedback">
+                                                            <div *ngIf="form['status'].errors form['status'].required">Status is required</div>
+                                                        </div>
+                                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Add</button>
+                                    <button type="button" class="btn btn-secondary waves-effect waves-light" routerLink="/policies">Cancel</button>
+                                </div>
+                                </form>
+
+                            </div>
+                        </div>
+                                </div>
+                            </div>
+                        </div>

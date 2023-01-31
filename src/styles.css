@@ -1,0 +1,131 @@
+/* You can add global styles to this file, and also import other style files */
+.loading{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 150px;
+    height: 250px;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    animation: spin 5s linear infinite;
+}
+.spinner-border{
+    margin: auto !important; position: absolute; left: 50%; top: 20%
+}
+.spinnerLoading{
+    margin: auto !important; position: absolute; left: 49%; top: 22%
+  }
+.load,.innerLoad{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    background: white;
+    display: block;
+}
+.load{
+    height: 200vh;
+    z-index: 10001;
+}
+.innerLoad{
+    z-index: 1000;
+    height: 100%;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    background-color: #dfdfdf !important;
+    color: #000 !important;
+    border-radius: 0;
+  }
+  .badge-soft-danger {
+    background-color: #f46a6a;
+}
+.badge-soft-success {
+    background-color: #34c38f;
+}
+.badge-soft-warning {
+    background-color: #f1b44c;
+}
+
+.isactive {
+  color: rgb(255, 255, 255);
+}
+i.isactive {
+    color: rgb(255, 255, 255) !important;
+  }
+
+
+button#password-addon{
+    border: 1px solid #ced4da;
+}
+.page-title-box.d-sm-flex.align-items-center.justify-content-between{
+    padding-bottom: 0;
+}
+.btn-add{
+    font-size: 0.9rem !important;
+    border-radius:7px !important;
+}
+
+
+  .btn-primary{
+    background-color: #5f77f0 !important;
+    border-color: #5f77f0 !important;
+  }
+  .ngx-pagination .current{
+    background-color: #acacac !important;
+  }
+  .btn-act{
+    padding : 0rem .40rem !important
+  }
+  .search-box .form-control{
+    border-radius: 7px;
+  }
+  .pagination{
+    float: right !important;
+  }
+  .btn .badge{
+    top: -15px !important;
+  }
+  .form-control{
+    font-size: 14px !important;
+  }
+  .col-2{
+    width: auto !important
+  }
+  th{
+    cursor: pointer;
+  }
+.leftside{
+  height: 60px !important;
+  width: 100% !important;
+  background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%) !important;
+  background-image: linear-gradient(-225deg, #CBBACC 0%, #2580B3 100%) !important;
+  }
+
+.th-bg-color{
+  background-color: #ced4da6b !important;
+  }
+
+.required-asterisk{
+    color: red;
+    font-weight: bold;
+    margin-left: 3px;
+    font-size: 1.2em;
+}
+.repotingloading{
+ position: relative;
+  min-height: 78vh;
+  }
+
+.th-table{
+  cursor: auto !important;
+}

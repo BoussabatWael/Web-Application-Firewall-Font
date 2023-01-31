@@ -1,0 +1,152 @@
+<div id="layout-wrapper">
+  <header id="page-topbar">
+    <div class="navbar-header">
+      <div class="d-flex">
+        <!-- LOGO -->
+        <div class="navbar-brand-box">
+          <a class="logo logo-dark">
+            <span class="logo-sm">
+              <img src="assets/images/fms.png" alt="" height="20">
+            </span>
+            <span class="logo-lg">
+              <img src="assets/images/fms.png" alt="" height="57">
+            </span>
+          </a>
+
+          <a class="logo logo-light">
+            <span class="logo-sm">
+              <img src="assets/images/favicon.png" alt="" height="20">
+            </span>
+            <span class="logo-lg">
+              <img src="assets/images/fms.png" alt="" height="57">
+            </span>
+          </a>
+        </div>
+
+        <div class="dropdown ms-4 d-flex align-items-center">
+          <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn"
+            style="display: flex; align-items: center; padding: 0px !important;;">
+            <i class="fa fa-fw fa-bars"></i>
+          </button>
+          <span class="card-title mb-0" key="t-henry" style="font-weight: 500;">{{page}}</span>
+        </div>
+
+      </div>
+
+      <div class="d-flex">
+        <div class="dropdown d-flex p-0 align-items-center">
+          <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" style="display: flex; align-items: center; padding-right: 0;">
+            <i class="bx bxs-plus-square"></i>
+            <span class="card-title mb-0" key="t-henry" style="font-weight: 400;">Create</span>
+          </button>
+
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="min-width:  127px;">
+            <a *ngIf="this.usrPer.users.includes('create')==true" class="dropdown-item"
+              routerLink="/settings/user/add">User</a>
+            <a *ngIf="this.usrPer.users.includes('create')==false" style="display: none;" class="dropdown-item"
+              routerLink="/settings/user/add">User</a>
+            <a *ngIf="this.usrPer.servers.includes('create')==true" class="dropdown-item"
+              routerLink="/server/add">Server</a>
+            <a *ngIf="this.usrPer.servers.includes('create')==false" style="display: none;" class="dropdown-item"
+              routerLink="/server/add">Server</a>
+            <a *ngIf="this.usrPer.rules.includes('create')==true" class="dropdown-item" routerLink="/rule/add">Rule</a>
+            <a *ngIf="this.usrPer.rules.includes('create')==false" style="display: none;" class="dropdown-item"
+              routerLink="/rule/add">Rule</a>
+            <a *ngIf="this.usrPer.groups.includes('create')==true" class="dropdown-item"
+              routerLink="/group/add">Group</a>
+            <a *ngIf="this.usrPer.groups.includes('create')==false" style="display: none;" class="dropdown-item"
+              routerLink="/group/add">Group</a>
+            <a *ngIf="this.usrPer.policies.includes('create')==true" class="dropdown-item"
+              routerLink="/policies/add">Policy</a>
+            <a *ngIf="this.usrPer.policies.includes('create')==false" style="display: none;" class="dropdown-item"
+              routerLink="/policies/add">Policy</a>
+          </ul>
+
+        </div>
+
+        <div class="dropdown d-inline-block" placement="left" ngbTooltip="Notifications">
+          <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="bx bx-bell bx-tada"></i>
+            <span class="badge bg-danger rounded-pill">0</span>
+
+          </button>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+            aria-labelledby="page-header-notifications-dropdown">
+            <div class="p-3">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="m-0" key="t-notifications"> Notifications </h6>
+                </div>
+
+              </div>
+            </div>
+            <div data-simplebar="init" style="max-height: 230px;">
+              <div class="simplebar-wrapper" style="margin: 0px;">
+                <div class="simplebar-height-auto-observer-wrapper">
+                  <div class="simplebar-height-auto-observer"></div>
+                </div>
+                <div class="simplebar-mask">
+                  <div class="simplebar-offset" style="right: -17px; bottom: 0px;">
+                    <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden scroll;">
+                      <div class="simplebar-content" style="padding: 0px;">
+                        <a href="javascript: void(0);" class="text-reset notification-item">
+                          <div class="d-flex">
+                            <div class="avatar-xs me-2">
+                              <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                <i class="bx bx-bell-off"></i>
+                              </span>
+                            </div>
+                            <div class="flex-grow-1">
+                              <h6 class="my-2" key="t-your-order">No notifications yet </h6>
+
+                            </div>
+                          </div>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="simplebar-placeholder" style="width: auto; height: 388px;"></div>
+              </div>
+              <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                <div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div>
+              </div>
+              <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                <div class="simplebar-scrollbar"
+                  style="transform: translate3d(0px, 0px, 0px); display: block; height: 136px;"></div>
+              </div>
+            </div>
+
+            <div class="p-2 border-top d-grid">
+
+            </div>
+          </div>
+        </div>
+        <div class="dropdown d-inline-block">
+          <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="rounded-circle header-profile-user" src="assets/images/uploads/{{data.photo}}"
+              alt="Header Avatar">
+            <span class="d-none d-xl-inline-block ms-1" key="t-henry" style="font-weight: 500;">{{data.username}}</span>
+            <i class="mdi mdi-chevron-down d-none d-xl-inline-block" style="font-family: 'Material Design Icons';
+                    font-weight: 600;"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end" style="min-width: 100%;padding: 0px;">
+            <!-- item-->
+            <a class="dropdown-item py-3 text-dark" routerLink="/account"><i
+                class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Profile</span></a>
+            <a type="button" class="dropdown-item text-danger py-3" (click)="logout()"><i
+                class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span
+                key="t-logout">Logout</span></a>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+  </header>
+</div>

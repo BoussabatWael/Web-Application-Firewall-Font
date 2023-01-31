@@ -1,0 +1,1938 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+  <app-topbar></app-topbar>
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card overflow-hidden">
+              <div class="bg-primary bg-soft">
+                <div class="row">
+                  <div class="col-7">
+                  </div>
+                  <div class="col-5 align-self-end leftside"></div>
+                </div>
+              </div>
+              <div class="card-body pt-0">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="gap-2 avatar-md profile-user-wid mb-3 d-flex w-100">
+                      <img src="assets/images/uploads/{{user.photo}}" alt="" class="img-thumbnail rounded-circle">
+                      <h5 _ngcontent-mue-c121="" class="d-flex font-size-18 text-truncate pt-5"><a
+                          _ngcontent-mue-c121="" class="text-dark">{{user.username}}</a></h5>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <h5 class="font-size-15 text-truncate"><a class="text-dark">ID</a></h5>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <h5 class="font-size-15 text-truncate"><a class="text-dark">{{user.id}}</a></h5>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <h5 class="font-size-15 text-truncate"><a class="text-dark">Role</a></h5>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <span class="font-size-15 text-truncate text-dark" *ngIf="user.role==1">ADMIN</span>
+                          <span class="font-size-15 text-truncate text-dark" *ngIf="user.role==2">ADMIN</span>
+                          <span class="font-size-15 text-truncate text-dark" *ngIf="user.role==3">SUPERVISOR</span>
+                          <span class="font-size-15 text-truncate text-dark" *ngIf="user.role==4">AGENT</span>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <h5 class="font-size-15 text-truncate"><a class="text-dark">Status</a></h5>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <span class="badge rounded-pill badge-soft-success font-size-12"
+                            *ngIf="user.status==1">Active</span>
+                          <span class="badge rounded-pill badge-soft-danger font-size-12"
+                            *ngIf="user.status==2">Inactive</span>
+                          <span class="badge rounded-pill badge-soft-warning font-size-12" *ngIf="user.status==3">In
+                            progress</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title mb-4 text-dark">Informations</h4>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>Last IP address : {{user.ip_address}}</p>
+                    <p>Last browser data : {{user.browser}}</p>
+                    <p>Last authentification : {{user.last_auth | date:'yyyy-MM-dd h:mm:ss a'}}</p>
+                    <p>Start date : {{user.start_date | date:'yyyy-MM-dd h:mm:ss a'}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-body">
+                <ul class="nav nav-pills nav-justified" role="tablist">
+                  <li class="nav-item waves-effect waves-light" placement="top" ngbTooltip="Details">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#home-1" role="tab">
+                      <span class="d-block"><i class="fas fa-user"></i>
+                        <span class="d-none d-sm-block" class="text-dark text2"> Details</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item waves-effect waves-light" placement="top" ngbTooltip="Security">
+                    <a class="nav-link" data-bs-toggle="tab" href="#profile-1" role="tab">
+                      <span class="d-block"><i class="fas fa-lock"></i>
+                        <span class="d-none d-sm-block" class="text-dark text2"> Security</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item waves-effect waves-light" placement="top" ngbTooltip="Permissions">
+                    <a class="nav-link" data-bs-toggle="tab" href="#messages-1" role="tab">
+                      <span class="d-block"><i class="fas fa-user-secret"></i>
+                        <span class="d-none d-sm-block" class="text-dark text2"> Permissions</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item waves-effect waves-light" (click)="getpage()" placement="top"
+                    ngbTooltip="Servers">
+                    <a class="nav-link" data-bs-toggle="tab" href="#servers-1" role="tab">
+                      <span class="d-block"><i class="fas fa-server"></i>
+                        <span class="d-none d-sm-block" class="text-dark text2"> Servers</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item waves-effect waves-light" (click)="getUserLogs()" placement="top"
+                    ngbTooltip="Logs Activity">
+                    <a class="nav-link" data-bs-toggle="tab" href="#settings-1" role="tab">
+                      <span class="d-block"><i class="fa fa-history"></i>
+                        <span class="d-none d-sm-block" class="text-dark text2"> Logs</span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content p-0 py-4 text-muted">
+                  <div *ngIf="this.usrPer.users.includes('edit')==true" class="tab-pane active" id="home-1"
+                    role="tabpanel">
+                    <div class="card-body">
+                      <form [formGroup]="userForm" (ngSubmit)="updateUser(user.id)">
+                        <div class="mb-3 row">
+                          <label class="col-md-4 col-form-label"><a class="text-dark">Language</a></label>
+                          <div class="col-md-8">
+                            <select class="form-select" formControlName="language" [ngModel]='user.language'
+                              [ngClass]="{ 'is-invalid': submitted && form['language'].errors }">
+                              <option value="SQ">Albanian</option>
+                              <option value="AR">Arabic</option>
+                              <option value="BG">Bulgarian</option>
+                              <option value="CA">Catalan</option>
+                              <option value="ZH">Chinese (Mandarin)</option>
+                              <option value="HR">Croatian</option>
+                              <option value="CS">Czech</option>
+                              <option value="DA">Danish</option>
+                              <option value="NL">Dutch</option>
+                              <option value="EN">English</option>
+                              <option value="ET">Estonian</option>
+                              <option value="FR">French</option>
+                              <option value="KA">Georgian</option>
+                              <option value="DE">German</option>
+                              <option value="EL">Greek</option>
+                              <option value="HI">Hindi</option>
+                              <option value="HU">Hungarian</option>
+                              <option value="IS">Icelandic</option>
+                              <option value="ID">Indonesian</option>
+                              <option value="GA">Irish</option>
+                              <option value="IT">Italian</option>
+                              <option value="JA">Japanese</option>
+                              <option value="KO">Korean</option>
+                              <option value="LA">Latin</option>
+                              <option value="LV">Latvian</option>
+                              <option value="LT">Lithuanian</option>
+                              <option value="MK">Macedonian</option>
+                              <option value="MT">Maltese</option>
+                              <option value="PT">Portuguese</option>
+                              <option value="RO">Romanian</option>
+                              <option value="RU">Russian</option>
+                              <option value="SR">Serbian</option>
+                              <option value="SK">Slovak</option>
+                              <option value="SL">Slovenian</option>
+                              <option value="ES">Spanish</option>
+                              <option value="SV">Swedish </option>
+                              <option value="TR">Turkish</option>
+                              <option value="UK">Ukrainian</option>
+                            </select>
+                            <div *ngIf="submitted && form['language'].errors" class="invalid-feedback">
+                              <div *ngIf="form['language'].errors form['language'].required">Language is required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-md-4 col-form-label"><a class="text-dark">TimeZone</a></label>
+                          <div class="col-md-8">
+                            <select class="form-select" formControlName="timezone" [ngModel]='user.timezone'>
+                              <option value="-12">(GMT -12:00) Eniwetok, Kwajalein</option>
+                              <option value="-11">(GMT -11:00) Midway Island, Samoa</option>
+                              <option value="-10">(GMT -10:00) Hawaii</option>
+                              <option value="-09">(GMT -9:00) Alaska</option>
+                              <option value="-08">(GMT -8:00) Pacific Time (US & Canada)</option>
+                              <option value="-07">(GMT -7:00) Mountain Time (US & Canada)</option>
+                              <option value="-06">(GMT -6:00) Central Time (US & Canada), Mexico City</option>
+                              <option value="-05">(GMT -5:00) Eastern Time (US & Canada), Bogota, Lima</option>
+                              <option value="-04">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
+                              <option value="-03">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+                              <option value="-02">(GMT -2:00) Mid-Atlantic</option>
+                              <option value="-01">(GMT -1:00) Azores, Cape Verde Islands</option>
+                              <option value="+00">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+                              <option value="+01">(GMT +1:00) Brussels, Copenhagen, Madrid, Paris</option>
+                              <option value="+02">(GMT +2:00) Kaliningrad, South Africa</option>
+                              <option value="+03">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+                              <option value="+04">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+                              <option value="+05">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+                              <option value="+06">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+                              <option value="+07">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+                              <option value="+08">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+                              <option value="+09">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+                              <option value="+10">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+                              <option value="+11">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+                              <option value="+12">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+                            </select>
+                            <div *ngIf="submitted && form['timezone'].errors" class="invalid-feedback">
+                              <div *ngIf="form['timezone'].errors form['timezone'].required">TimeZone is required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-md-4 col-form-label"><a class="text-dark">Role<span
+                                class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8">
+                            <select class="form-select" formControlName="role" [ngModel]='user.role'>
+                              <option *ngIf="user.role==2" disabled>Admin</option>
+                              <option *ngIf="user.role==3" disabled>Supervisor</option>
+                              <option *ngIf="user.role==4" disabled>Agent</option>
+                              <option value="2">Admin</option>
+                              <option value="3">Supervisor</option>
+                              <option value="4">Agent</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-md-4 col-form-label"><a class="text-dark">Status<span
+                                class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8">
+                            <select class="form-select" formControlName="status" [ngModel]='user.status'>
+                              <option *ngIf="user.status==1" disabled>Active</option>
+                              <option *ngIf="user.status==2" disabled>Inactive</option>
+                              <option *ngIf="user.status==3" disabled>In progress</option>
+                              <option value="1">Active</option>
+                              <option value="2">Inactive</option>
+                              <option value="3">In progress</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="example-datetime-local-input" class="col-md-4 col-form-label"><a
+                              class="text-dark">Photo</a></label>
+                          <div class="col-md-8">
+                            <div class="mb-6" class="row mb-3">
+                              <div class="col-xs-6">
+                                <div *ngIf="imgUrl;else autre">
+                                  <img src={{imgUrl}} width=100 height=100>
+                                </div>
+                                <ng-template #autre>
+                                  <img src="assets/images/uploads/{{user.photo}}" width=100 height=100>
+                                </ng-template>
+                                <input class="form-control" type="file" formControlName="photo" [ngModel]='user.photo'
+                                  id="example-datetime-local-input" (change)="selectImge($event)">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-4 col-form-label"><a class="text-dark">Account</a></label>
+                          <div class="col-md-8" formGroupName="account">
+                            <select class="form-select" formControlName="id" [ngModel]='user.account?.id'>
+                              <option *ngFor="let account of accountsList" value="{{account.id}}">{{account.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 justify-content-end">
+                          <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==false" class="tab-pane active" id="home-1"
+                    role="tabpanel">
+                    <div class="card-body">
+                      <form [formGroup]="userForm" (ngSubmit)="updateUser(user.id)">
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-3 col-form-label"><a
+                              class="text-dark">Language</a></label>
+                          <div class="col-md-8">
+                            <label for="example-text-input" class="col-md-3 col-form-label"><a
+                                class="text-dark">{{user.language}}</a></label>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-md-3 col-form-label"><a class="text-dark">TimeZone</a></label>
+                          <div class="col-md-8">
+                            <label for="example-text-input" class="col-md-3 col-form-label"><a
+                                class="text-dark">{{user.timezone}}</a></label>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-md-3 col-form-label"><a class="text-dark">Role</a></label>
+                          <div class="col-md-8">
+                            <label for="example-text-input" class="col-md-0 col-form-label"><a class="text-dark"
+                                *ngIf="user.role == 1">ADMIN</a></label>
+                            <label for="example-text-input" class="col-md-0 col-form-label"><a class="text-dark"
+                                *ngIf="user.role == 2">ADMIN</a></label>
+                            <label for="example-text-input" class="col-md-0 col-form-label"><a class="text-dark"
+                                *ngIf="user.role == 3">SUPERVISOR</a></label>
+                            <label for="example-text-input" class="col-md-0 col-form-label"><a class="text-dark"
+                                *ngIf="user.role == 4">AGENT</a></label>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-3 col-form-label"><a class="text-dark">Account</a></label>
+                          <div class="col-md-8" formGroupName="account">
+                            <select class="form-select" formControlName="id" [ngModel]='user.account?.id'>
+                              <option *ngFor="let account of accountsList" value="{{account.id}}">{{account.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==true" class="tab-pane" id="profile-1" role="tabpanel">
+                    <div class="card-body">
+                      <form [formGroup]="userForm" (ngSubmit)="updateUser(user.id)">
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-4 col-form-label"><a
+                              class="text-dark">Username<span class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8">
+                            <input class="form-control" formControlName="username" type="text" [ngModel]='user.username'
+                              [ngClass]="{ 'is-invalid': submitted && form['username'].errors }"
+                              id="example-text-input">
+                            <div *ngIf="submitted && form['username'].errors" class="invalid-feedback">
+                              <div *ngIf="form['username'].errors form['username'].required">Username is required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="example-search-input" class="col-md-4 col-form-label"><a
+                              class="text-dark">Password<span class="required-asterisk">*</span></a></label>
+                          <div class="d-flex col-md-8">
+                            <div class="input-group auth-pass-inputgroup">
+                              <input type="password" class="form-control" [ngModel]='user.password' minlength="6"
+                                formControlName="password" aria-label="Password" aria-describedby="password-addon"
+                                [ngClass]="{ 'is-invalid': submitted && form['password'].errors }">
+                              <button class="btn btn-light " type="button" id="password-addon"><i
+                                  class="mdi mdi-eye-outline"></i></button>
+                              <div *ngIf="submitted && form['password'].errors" class="invalid-feedback">
+                                <div *ngIf="form['password'].errors form['password'].required">Password is required |
+                                  minimum 6 characters</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label for="example-number-input" class="col-md-3 col-form-label"><a class="text-dark">IP
+                              address<span class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8">
+                            <input class="form-control" type="text" formControlName="ip_address"
+                              [ngModel]='user.ip_address' id="example-number-input">
+                          </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 justify-content-end">
+                          <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==false" class="tab-pane" id="profile-1"
+                    role="tabpanel">
+                    <div class="card-body">
+                      <form [formGroup]="userForm" (ngSubmit)="updateUser(user.id)">
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-3 col-form-label"><a
+                              class="text-dark">Username</a></label>
+                          <div class="col-md-8">
+                            <label for="example-text-input" class="col-md-3 col-form-label"><a
+                                class="text-dark">{{user.username}}</a></label>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="example-search-input" class="col-md-3 col-form-label"><a
+                              class="text-dark">Password</a></label>
+                          <div class="d-flex col-md-8">
+                            <label for="example-text-input" class="col-md-3 col-form-label"><a
+                                class="text-dark">*****</a></label>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label for="example-number-input" class="col-md-3 col-form-label"><a class="text-dark">IP
+                              address</a></label>
+                          <div class="col-md-8">
+                            <input class="form-control" type="text" formControlName="ip_address"
+                              [ngModel]='user.ip_address' id="example-number-input">
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==true" class="tab-pane" id="messages-1"
+                    role="tabpanel">
+                    <div class="card-body">
+                      <table class="table align-middle table-nowrap table-hover text-center">
+                        <thead class="th-bg-color">
+                          <tr>
+                            <th class="th-table" class="success">#</th>
+                            <th class="th-table" class="success">View</th>
+                            <th class="th-table" class="warning">Create</th>
+                            <th class="th-table" class="danger">Edit</th>
+                            <th class="th-table" class="danger">Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody class="border-top-0">
+                          <tr data-permission="users">
+                            <td class="success">Users</td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['users'].includes('view'))"
+                                (click)="Onchange($event,'view')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['users'].includes('create'))"
+                                (click)="Onchange($event,'create')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['users'].includes('edit'))"
+                                (click)="Onchange($event,'edit')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['users'].includes('delete'))"
+                                (click)="Onchange($event,'delete')" />
+                            </td>
+                          </tr>
+                          <tr data-permission="servers">
+                            <td class="success">Servers</td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['servers'].includes('view'))"
+                                (click)="Onchange($event,'view')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['servers'].includes('create'))"
+                                (click)="Onchange($event,'create')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['servers'].includes('edit'))"
+                                (click)="Onchange($event,'edit')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['servers'].includes('delete'))"
+                                (click)="Onchange($event,'delete')" />
+                            </td>
+                          </tr>
+                          <tr data-permission="rules">
+                            <td class="success">Rules</td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['rules'].includes('view'))"
+                                (click)="Onchange($event,'view')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['rules'].includes('create'))"
+                                (click)="Onchange($event,'create')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['rules'].includes('edit'))"
+                                (click)="Onchange($event,'edit')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['rules'].includes('delete'))"
+                                (click)="Onchange($event,'delete')" />
+                            </td>
+                          </tr>
+                          <tr data-permission="groups">
+                            <td class="success">Groups</td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['groups'].includes('view'))"
+                                (click)="Onchange($event,'view')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['groups'].includes('create'))"
+                                (click)="Onchange($event,'create')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['groups'].includes('edit'))"
+                                (click)="Onchange($event,'edit')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['groups'].includes('delete'))"
+                                (click)="Onchange($event,'delete')" />
+                            </td>
+                          </tr>
+                          <tr data-permission="policies">
+                            <td class="success">Policies</td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['policies'].includes('view'))"
+                                (click)="Onchange($event,'view')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['policies'].includes('create'))"
+                                (click)="Onchange($event,'create')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['policies'].includes('edit'))"
+                                (click)="Onchange($event,'edit')" />
+                            </td>
+                            <td class="active">
+                              <input type="checkbox" class="select-item checkbox" name="select-item"
+                                [checked]="(PermissionsList['policies'].includes('delete'))"
+                                (click)="Onchange($event,'delete')" />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div>
+                        <div class="d-flex flex-wrap gap-2 justify-content-end">
+                          <button type="submit" class="btn btn-primary waves-effect waves-light" (click)="save()">Save
+                            changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==false" class="tab-pane" id="messages-1"
+                    role="tabpanel">
+                    <div class="card-body">
+                      <table class="table align-middle table-nowrap table-hover text-center">
+                        <thead class="th-bg-color">
+                          <tr>
+                            <th class="th-table" class="success">#</th>
+                            <th class="th-table" class="success">View</th>
+                            <th class="th-table" class="warning">Create</th>
+                            <th class="th-table" class="danger">Edit</th>
+                            <th class="th-table" class="danger">Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody class="border-top-0">
+                          <tr data-permission="users">
+                            <td class="success">Users</td>
+                            <td class="active" aria-readonly="true">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['users'].includes('view'))"
+                                (click)="Onchange($event,'view')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['users'].includes('create'))"
+                                (click)="Onchange($event,'create')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['users'].includes('edit'))"
+                                (click)="Onchange($event,'edit')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['users'].includes('delete'))"
+                                (click)="Onchange($event,'delete')" />
+                            </td>
+                          </tr>
+                          <tr data-permission="servers">
+                            <td class="success">Servers</td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['servers'].includes('view'))"
+                                (click)="Onchange($event,'view')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['servers'].includes('create'))"
+                                (click)="Onchange($event,'create')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['servers'].includes('edit'))"
+                                (click)="Onchange($event,'edit')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['servers'].includes('delete'))"
+                                (click)="Onchange($event,'delete')" />
+                            </td>
+                          </tr>
+                          <tr data-permission="rules">
+                            <td class="success">Rules</td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['rules'].includes('view'))"
+                                (click)="Onchange($event,'view')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['rules'].includes('create'))"
+                                (click)="Onchange($event,'create')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['rules'].includes('edit'))"
+                                (click)="Onchange($event,'edit')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['rules'].includes('delete'))"
+                                (click)="Onchange($event,'delete')" />
+                            </td>
+                          </tr>
+                          <tr data-permission="groups">
+                            <td class="success">Groups</td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['groups'].includes('view'))"
+                                (click)="Onchange($event,'view')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['groups'].includes('create'))"
+                                (click)="Onchange($event,'create')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['groups'].includes('edit'))"
+                                (click)="Onchange($event,'edit')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['groups'].includes('delete'))"
+                                (click)="Onchange($event,'delete')" />
+                            </td>
+                          </tr>
+                          <tr data-permission="policies">
+                            <td class="success">Policies</td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['policies'].includes('view'))"
+                                (click)="Onchange($event,'view')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['policies'].includes('create'))"
+                                (click)="Onchange($event,'create')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['policies'].includes('edit'))"
+                                (click)="Onchange($event,'edit')" />
+                            </td>
+                            <td class="active">
+                              <input readonly type="checkbox" class="select-item checkbox" disabled="disabled"
+                                name="select-item" [checked]="(PermissionsList['policies'].includes('delete'))"
+                                (click)="Onchange($event,'delete')" />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==true" class="tab-pane" id="servers-1" role="tabpanel">
+                    <div *ngIf="UsersServersList.length === 0; else other_content">
+                      <div class="card-body">
+                        <div class="row mb-0 justify-content-between">
+                          <div class="col-8">
+                          </div>
+                          <div class="col-2">
+                            <div class="d-flex flex-wrap gap-2 pb-3">
+                              <button type="submit"
+                                (click)="openModalAssignUserToServer(assignUserToServerModal, server)"
+                                class="btn btn-outline-primary">Assign user to server</button>
+                              <ng-template #assignUserToServerModal>
+                                <div class="modal-header">
+                                  <h6 class="modal-title" id="assignUserServerLabel">Assign user to server</h6>
+                                  <button type="button" class="btn-close" (click)="onSubmit()"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <form [formGroup]="userServerFormAdd" (ngSubmit)="assignUserToServer()">
+                                    <label for="validationCustom03" class="form-label"><a class="text-dark">Servers
+                                        list<span class="required-asterisk">*</span></a></label>
+                                    <div *ngIf="serversList.length ===0; else content1" formGroupName="servers">
+                                      <select class="form-select mb-3" required aria-required="true"
+                                        formControlName="id"
+                                        [ngClass]="{ 'is-invalid': submitted1 && usersServersControls['servers'].get('id')?.errors }">
+                                        <option class="text-center" disabled> No data to display</option>
+                                      </select>
+                                      <div *ngIf="submitted1 && usersServersControls['servers'].get('id')?.errors"
+                                        class="invalid-feedback">
+                                        <div
+                                          *ngIf="usersServersControls['servers'].get('id')?.errors form['id'].required">
+                                          Server is required</div>
+                                      </div>
+                                    </div>
+                                    <ng-template #content1 formGroupName="servers">
+                                      <select class="form-select mb-3" required aria-required="true"
+                                        formControlName="id"
+                                        [ngClass]="{ 'is-invalid': submitted1 && usersServersControls['servers'].get('id')?.errors }">
+                                        <option *ngFor="let server of serversList" value="{{server.id}}">{{server.name}}
+                                        </option>
+                                      </select>
+                                      <div *ngIf="submitted1 && usersServersControls['servers'].get('id')?.errors"
+                                        class="invalid-feedback">
+                                        <div
+                                          *ngIf="usersServersControls['servers'].get('id')?.errors form['id'].required">
+                                          Server is required</div>
+                                      </div>
+                                    </ng-template>
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-secondary">Save changes</button>
+                                      <button type="button" (click)="onSubmit()"
+                                        class="btn btn-outline-secondary">Close</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </ng-template>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                          style="width: 22%;"></label>
+                    </div>
+                    <ng-template #other_content>
+                      <div class="card-body">
+                        <div class="row mb-0 justify-content-between">
+                          <div class="col-8">
+                            <div class="search-box me-2 mb-2 d-inline-block">
+                              <div class="position-relative">
+                                <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                  [(ngModel)]="searchText">
+                                <i class="bx bx-search-alt search-icon"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-2">
+                            <div class="d-flex flex-wrap gap-2 pb-3">
+                              <button type="submit" (click)="openModalAssignUserToServer(assignUserToServerModal, user)"
+                                class="btn btn-outline-primary">Assign user to server</button>
+                              <ng-template #assignUserToServerModal>
+                                <div class="modal-header">
+                                  <h6 class="modal-title" id="assignUserServerLabel">Assign user to server</h6>
+                                  <button type="button" class="btn-close" (click)="onSubmit()"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <form [formGroup]="userServerFormAdd" (ngSubmit)="assignUserToServer()">
+                                    <label for="validationCustom03" class="form-label"><a class="text-dark">Servers
+                                        list<span class="required-asterisk">*</span></a></label>
+                                    <div *ngIf="serversList.length ===0; else content1" formGroupName="servers">
+                                      <select class="form-select mb-3" required aria-required="true"
+                                        formControlName="id"
+                                        [ngClass]="{ 'is-invalid': submitted1 && usersServersControls['servers'].get('id')?.errors }">
+                                        <option class="text-center" disabled> No data to display</option>
+                                      </select>
+                                      <div *ngIf="submitted1 && usersServersControls['servers'].get('id')?.errors"
+                                        class="invalid-feedback">
+                                        <div
+                                          *ngIf="usersServersControls['servers'].get('id')?.errors form['id'].required">
+                                          Server is required</div>
+                                      </div>
+                                    </div>
+                                    <ng-template #content1 formGroupName="servers">
+                                      <select class="form-select mb-3" required aria-required="true"
+                                        formControlName="id"
+                                        [ngClass]="{ 'is-invalid': submitted1 && usersServersControls['servers'].get('id')?.errors }">
+                                        <option *ngFor="let server of serversList" value="{{server.id}}">{{server.name}}
+                                        </option>
+                                      </select>
+                                      <div *ngIf="submitted1 && usersServersControls['servers'].get('id')?.errors"
+                                        class="invalid-feedback">
+                                        <div
+                                          *ngIf="usersServersControls['servers'].get('id')?.errors form['id'].required">
+                                          Server is required</div>
+                                      </div>
+                                    </ng-template>
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-secondary">Save changes</button>
+                                      <button type="button" (click)="onSubmit()"
+                                        class="btn btn-outline-secondary">Close</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </ng-template>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="( UsersServersList | filter : searchText) as resultFilter3">
+                          <div *ngIf="resultFilter3.length === 0 ; else otherr3">
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="th-table">ID</th>
+                                  <th class="th-table">Name</th>
+                                  <th class="th-table">IP address</th>
+                                  <th class="th-table">Operating system</th>
+                                  <th class="th-table">System version</th>
+                                  <th class="th-table">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr>
+                                  <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 22%;"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ng-template #otherr3>
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="success" [appSort]="UsersServersList" data-order="desc"
+                                    data-parent="servers" data-name="id">ID <i class="fas fa-angle-up"></i></th>
+                                  <th class="danger" [appSort]="UsersServersList" data-order="desc"
+                                    data-parent="servers" data-name="name">Name <i class="fas fa-angle-up d-none"></i>
+                                  </th>
+                                  <th class="danger" [appSort]="UsersServersList" data-order="desc"
+                                    data-parent="servers" data-name="ip_address">IP address <i
+                                      class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="UsersServersList" data-order="desc"
+                                    data-parent="servers" data-name="operating_system">Operating system <i
+                                      class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="UsersServersList" data-order="desc"
+                                    data-parent="servers" data-name="system_version">System version <i
+                                      class="fas fa-angle-up d-none"></i></th>
+                                  <th class="th-table">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr
+                                  *ngFor="let userServer of UsersServersList | paginate:{itemsPerPage:5,currentPage:p5, id:'p5'} | filter:searchText">
+                                  <td>{{userServer.servers.id}}</td>
+                                  <td> {{userServer.servers.name}}</td>
+                                  <td> {{userServer.servers.ip_address}}</td>
+                                  <td>{{userServer.servers.operating_system}}</td>
+                                  <td>{{userServer.servers.system_version}}</td>
+                                  <td>
+                                    <div class="d-flex flex-wrap gap-1 justify-content-center">
+                                      <a class="btn btn-secondary waves-effect waves-light btn-act" type="submit"
+                                        (click)="openModalServer(ServerModal)"
+                                        (click)="getUsersServersRulesList(userServer.servers?.id)" placement="left"
+                                        ngbTooltip="Edit"><i class="mdi mdi-pencil font-size-16"></i></a>
+                                      <a class="btn btn-danger waves-effect waves-light btn-act" type="button"
+                                        (click)="deleteUserServer(userServer.servers?.id)" placement="left"
+                                        ngbTooltip="Delete"><i class="mdi mdi-delete font-size-16"></i></a>
+                                    </div>
+                                    <ng-template #ServerModal>
+                                      <div class="modal-header">
+                                        <h6 class="modal-title" id="ServerLabel">RULES</h6>
+                                        <button type="button" class="btn-close" (click)="onSubmit()"
+                                          aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div *ngIf="usersServersRulesList.length === 0; else other_content">
+                                          <div class="card-body">
+                                            <div class="row mb-0 justify-content-between">
+                                              <div class="col-6">
+                                              </div>
+                                              <div class="col-2">
+                                                <div class="d-flex flex-wrap gap-2 pb-3">
+                                                  <button type="submit" (click)="openModalAssignRule(RuleModal, rule)"
+                                                    (click)="getRulesUsersServers(userServer.servers?.id)"
+                                                    class="btn btn-outline-primary">Assign Rule</button>
+                                                  <button type="submit" (click)="openModalAddRule(AddRuleModal, rule)"
+                                                    class="btn btn-outline-primary">Add rule</button>
+                                                  <ng-template #AddRuleModal>
+                                                    <div class="modal-header">
+                                                      <h6 class="modal-title" id="addRuleLabel">Add rule</h6>
+                                                      <button type="button" class="btn-close"
+                                                        (click)="closeModalAddRule()" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                      <div class="card-body">
+                                                        <div class="checkOs d-none"
+                                                          style="position: absolute;left: 0;height: 92%; opacity:90%; margin: auto;background: #fff;text-align: center;right: 0;z-index: 3;">
+                                                          <svg _ngcontent-cev-c121="" version="1.1" id="L7"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                            viewBox="0 0 100 100" enable-background="new 0 0 100 100"
+                                                            xml:space="preserve" style="width: 24%; margin-top: 24%;">
+                                                            <path _ngcontent-cev-c121="" fill="#000"
+                                                              d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3
+                                                                                                             c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z">
+                                                              <animateTransform _ngcontent-cev-c121=""
+                                                                attributeName="transform" attributeType="XML"
+                                                                type="rotate" dur="2s" from="0 50 50" to="360 50 50"
+                                                                repeatCount="indefinite">
+                                                              </animateTransform>
+                                                            </path>
+                                                            <path _ngcontent-cev-c121="" fill="#000"
+                                                              d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7
+                                                                                                             c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z">
+                                                              <animateTransform _ngcontent-cev-c121=""
+                                                                attributeName="transform" attributeType="XML"
+                                                                type="rotate" dur="1s" from="0 50 50" to="-360 50 50"
+                                                                repeatCount="indefinite">
+                                                              </animateTransform>
+                                                            </path>
+                                                            <path _ngcontent-cev-c121="" fill="#000"
+                                                              d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5
+                                                                                                             L82,35.7z">
+                                                              <animateTransform _ngcontent-cev-c121=""
+                                                                attributeName="transform" attributeType="XML"
+                                                                type="rotate" dur="2s" from="0 50 50" to="360 50 50"
+                                                                repeatCount="indefinite">
+                                                              </animateTransform>
+                                                            </path>
+                                                          </svg>
+                                                          <div class="text-dark mt-3 checkOsTitle">Adding rule to server
+                                                            ...</div>
+                                                          <div class="checkOsResults">
+                                                          </div>
+                                                        </div>
+                                                        <form [formGroup]="ruleFormAdd"
+                                                          (ngSubmit)="addRule(userServer)">
+                                                          <div class="row mb-3">
+                                                            <div class="col-12">
+                                                              <div class="col-10 mb-3">
+                                                                <label class="form-check-label">Choose an option :<span
+                                                                    class="required-asterisk">*</span></label>
+                                                              </div>
+                                                              <div class="col-10 d-flex justify-content-end">
+                                                                <div class="col-6 form-check form-check-inline">
+                                                                  <input class="form-check-input" type="radio"
+                                                                    name="inlineRadioOptions" id="inlineRadio1"
+                                                                    formControlName="static"
+                                                                    (change)="changecheck($event)" value="static">
+                                                                  <label class="form-check-label"
+                                                                    for="inlineRadio1">Static</label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline mb-3">
+                                                                  <input class="form-check-input" type="radio"
+                                                                    name="inlineRadioOptions" id="inlineRadio2"
+                                                                    formControlName="dynamic"
+                                                                    (change)="changecheck($event)" value="dynamic">
+                                                                  <label class="form-check-label"
+                                                                    for="inlineRadio2">Dynamic</label>
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="mb-3">
+                                                                <label for="validationCustom01" class="form-label"><a
+                                                                    class="text-dark">Name<span
+                                                                      class="required-asterisk">*</span></a></label>
+                                                                <input type="text" class="form-control"
+                                                                  [ngClass]="{ 'is-invalid': submitted && FormRuleAdd['name'].errors }"
+                                                                  formControlName="name" required />
+                                                                <div *ngIf="submitted && FormRuleAdd['name'].errors"
+                                                                  class="invalid-feedback">
+                                                                  <div
+                                                                    *ngIf="FormRuleAdd['name'].errors FormRuleAdd['name'].required">
+                                                                    Name is required</div>
+                                                                </div>
+
+                                                              </div>
+                                                              <div class="mb-3">
+                                                                <div
+                                                                  *ngIf="selectedOption !== 'static'; else contentt_22">
+                                                                  <label for="validationCustom01" class="form-label"><a
+                                                                      class="text-dark">IP address</a></label>
+                                                                  <input type="text" class="form-control"
+                                                                    formControlName="ip_address">
+                                                                </div>
+                                                                <ng-template #contentt_22>
+                                                                  <label for="validationCustom01" class="form-label"><a
+                                                                      class="text-dark">IP address<span
+                                                                        class="required-asterisk">*</span></a></label>
+                                                                  <input type="text" class="form-control"
+                                                                    [ngClass]="{ 'is-invalid': submitted && FormRuleAdd['ip_address'].errors }"
+                                                                    formControlName="ip_address" required>
+                                                                  <div
+                                                                    *ngIf="submitted && FormRuleAdd['ip_address'].errors"
+                                                                    class="invalid-feedback">
+                                                                    <div
+                                                                      *ngIf="FormRuleAdd['ip_address'].errors FormRuleAdd['ip_address'].required">
+                                                                      IP address is required</div>
+                                                                  </div>
+                                                                </ng-template>
+
+                                                              </div>
+                                                              <div class="mb-3">
+                                                                <label for="validationCustom01" class="form-label"><a
+                                                                    class="text-dark">Port<span
+                                                                      class="required-asterisk">*</span></a></label>
+                                                                <input type="number" class="form-control"
+                                                                  [ngClass]="{ 'is-invalid': submitted && FormRuleAdd['port'].errors }"
+                                                                  formControlName="port" required>
+                                                                <div *ngIf="submitted && FormRuleAdd['port'].errors"
+                                                                  class="invalid-feedback">
+                                                                  <div
+                                                                    *ngIf="FormRuleAdd['port'].errors FormRuleAdd['port'].required">
+                                                                    Port is required</div>
+                                                                </div>
+
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-12">
+                                                              <div class="mb-3">
+                                                                <label for="validationCustom03" class="form-label"><a
+                                                                    class="text-dark">Action<span
+                                                                      class="required-asterisk">*</span></a></label>
+                                                                <select class="form-select" formControlName="action"
+                                                                  [ngClass]="{ 'is-invalid': submitted && FormRuleAdd['action'].errors }"
+                                                                  required>
+                                                                  <option>ACCEPT</option>
+                                                                  <option>DROP</option>
+                                                                </select>
+                                                                <div *ngIf="submitted && FormRuleAdd['action'].errors"
+                                                                  class="invalid-feedback">
+                                                                  <div
+                                                                    *ngIf="FormRuleAdd['action'].errors FormRuleAdd['action'].required">
+                                                                    Action is required</div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="mb-3">
+                                                                <label for="validationCustom03" class="form-label"><a
+                                                                    class="text-dark">Protocol<span
+                                                                      class="required-asterisk">*</span></a></label>
+                                                                <select class="form-select" formControlName="protocol"
+                                                                  [ngClass]="{ 'is-invalid': submitted && FormRuleAdd['protocol'].errors }"
+                                                                  required>
+                                                                  <option>HTTP</option>
+                                                                  <option>HTTPS</option>
+                                                                  <option>UDP</option>
+                                                                  <option>TCP</option>
+                                                                </select>
+                                                                <div *ngIf="submitted && FormRuleAdd['protocol'].errors"
+                                                                  class="invalid-feedback">
+                                                                  <div
+                                                                    *ngIf="FormRuleAdd['protocol'].errors FormRuleAdd['protocol'].required">
+                                                                    Protocol is required</div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                          <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                                            <button type="submit"
+                                                              class="btn btn-primary waves-effect waves-light">Save
+                                                              changes</button>
+                                                            <button type="button" (click)="closeModalAddRule()"
+                                                              class="btn btn-secondary waves-effect waves-light">Cancel</button>
+                                                          </div>
+                                                        </form>
+                                                      </div>
+                                                    </div>
+                                                  </ng-template>
+                                                  <ng-template #RuleModal>
+                                                    <div class="modal-header">
+                                                      <h6 class="modal-title" id="assignUserServerLabel">Add rule</h6>
+                                                      <button type="button" class="btn-close"
+                                                        (click)="closeModalAssignRule()" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                      <div class="checkOs d-none"
+                                                        style="position: absolute;left: 0;height: 90%; opacity:90%; margin: auto;background: #fff;text-align: center;right: 0;z-index: 3;">
+                                                        <svg _ngcontent-cev-c121="" version="1.1" id="L7"
+                                                          xmlns="http://www.w3.org/2000/svg"
+                                                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                          viewBox="0 0 100 100" enable-background="new 0 0 100 100"
+                                                          xml:space="preserve" style="width: 20%;">
+                                                          <path _ngcontent-cev-c121="" fill="#000"
+                                                            d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3
+                                                                                                             c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z">
+                                                            <animateTransform _ngcontent-cev-c121=""
+                                                              attributeName="transform" attributeType="XML"
+                                                              type="rotate" dur="2s" from="0 50 50" to="360 50 50"
+                                                              repeatCount="indefinite">
+                                                            </animateTransform>
+                                                          </path>
+                                                          <path _ngcontent-cev-c121="" fill="#000"
+                                                            d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7
+                                                                                                             c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z">
+                                                            <animateTransform _ngcontent-cev-c121=""
+                                                              attributeName="transform" attributeType="XML"
+                                                              type="rotate" dur="1s" from="0 50 50" to="-360 50 50"
+                                                              repeatCount="indefinite">
+                                                            </animateTransform>
+                                                          </path>
+                                                          <path _ngcontent-cev-c121="" fill="#000"
+                                                            d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5
+                                                                                                             L82,35.7z">
+                                                            <animateTransform _ngcontent-cev-c121=""
+                                                              attributeName="transform" attributeType="XML"
+                                                              type="rotate" dur="2s" from="0 50 50" to="360 50 50"
+                                                              repeatCount="indefinite">
+                                                            </animateTransform>
+                                                          </path>
+                                                        </svg>
+                                                        <div class="text-dark mt-3 checkOsTitle">Adding rule ...</div>
+                                                        <div class="checkOsResults">
+                                                        </div>
+                                                      </div>
+                                                      <form [formGroup]="userServerRulesFormAdd"
+                                                        (ngSubmit)="assignRule(userServer.servers.id)">
+                                                        <label for="validationCustom03" class="form-label"><a
+                                                            class="text-dark">Rules list<span
+                                                              class="required-asterisk">*</span></a></label>
+                                                        <div *ngIf="RulesUsersServersList.length ===0; else content1"
+                                                          formGroupName="rules">
+                                                          <select class="form-select mb-3" required aria-required="true"
+                                                            formControlName="id"
+                                                            [ngClass]="{ 'is-invalid': submitted3 && usersServersRuleControls['rules'].get('id')?.errors }">
+                                                            <option class="text-center" disabled> No data to display
+                                                            </option>
+                                                          </select>
+                                                          <div
+                                                            *ngIf="submitted3 && usersServersRuleControls['rules'].get('id')?.errors"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                              *ngIf="usersServersRuleControls['rules'].get('id')?.errors form['id'].required">
+                                                              Rule is required</div>
+                                                          </div>
+                                                        </div>
+                                                        <ng-template #content1 formGroupName="rules">
+                                                          <select class="form-select mb-3" required aria-required="true"
+                                                            formControlName="id"
+                                                            [ngClass]="{ 'is-invalid': submitted3 && usersServersRuleControls['rules'].get('id')?.errors }">
+                                                            <option *ngFor="let rule of RulesUsersServersList"
+                                                              value="{{rule.id}}">{{rule.name}}</option>
+                                                          </select>
+                                                          <div
+                                                            *ngIf="submitted3 && usersServersRuleControls['rules'].get('id')?.errors"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                              *ngIf="usersServersRuleControls['rules'].get('id')?.errors form['id'].required">
+                                                              Rule is required</div>
+                                                          </div>
+                                                        </ng-template>
+                                                        <div class="modal-footer">
+                                                          <button type="submit" class="btn btn-secondary">Save
+                                                            changes</button>
+                                                          <button type="button" (click)="closeModalAssignRule()"
+                                                            class="btn btn-outline-secondary">Close</button>
+                                                        </div>
+                                                      </form>
+                                                    </div>
+                                                  </ng-template>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <label class="col-md-12 col-form-label text-center"><img
+                                              src="assets/images/no_data_found.png" style="width: 22%;"></label>
+                                        </div>
+                                        <ng-template #other_content>
+                                          <div class="card-body">
+                                            <div class="row mb-0 justify-content-between">
+                                              <div class="col-6">
+                                                <div class="search-box me-2 mb-2 d-inline-block">
+                                                  <div class="position-relative">
+                                                    <input type="text" class="form-control" placeholder="Search..."
+                                                      autocomplete="off" [(ngModel)]="searchText1">
+                                                    <i class="bx bx-search-alt search-icon"></i>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="col-2">
+                                                <div class="d-flex flex-wrap gap-2 pb-3">
+                                                  <button type="submit" (click)="openModalAssignRule(RuleModal, rule)"
+                                                    (click)="getRulesUsersServers(userServer.servers?.id)"
+                                                    class="btn btn-outline-primary">Assign rule</button>
+                                                  <button type="submit" (click)="openModalAddRule(AddRuleModal, rule)"
+                                                    class="btn btn-outline-primary">Add rule</button>
+                                                  <ng-template #AddRuleModal>
+                                                    <div class="modal-header">
+                                                      <h6 class="modal-title" id="addRuleLabel">Add rule</h6>
+                                                      <button type="button" class="btn-close"
+                                                        (click)="closeModalAddRule()" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                      <div class="card-body">
+                                                        <div class="checkOs d-none"
+                                                          style="position: absolute;left: 0;height: 92%; opacity:90%; margin: auto;background: #fff;text-align: center;right: 0;z-index: 3;">
+                                                          <svg _ngcontent-cev-c121="" version="1.1" id="L7"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                            viewBox="0 0 100 100" enable-background="new 0 0 100 100"
+                                                            xml:space="preserve" style="width: 24%; margin-top: 24%;">
+                                                            <path _ngcontent-cev-c121="" fill="#000"
+                                                              d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3
+                                                                                                             c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z">
+                                                              <animateTransform _ngcontent-cev-c121=""
+                                                                attributeName="transform" attributeType="XML"
+                                                                type="rotate" dur="2s" from="0 50 50" to="360 50 50"
+                                                                repeatCount="indefinite">
+                                                              </animateTransform>
+                                                            </path>
+                                                            <path _ngcontent-cev-c121="" fill="#000"
+                                                              d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7
+                                                                                                             c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z">
+                                                              <animateTransform _ngcontent-cev-c121=""
+                                                                attributeName="transform" attributeType="XML"
+                                                                type="rotate" dur="1s" from="0 50 50" to="-360 50 50"
+                                                                repeatCount="indefinite">
+                                                              </animateTransform>
+                                                            </path>
+                                                            <path _ngcontent-cev-c121="" fill="#000"
+                                                              d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5
+                                                                                                             L82,35.7z">
+                                                              <animateTransform _ngcontent-cev-c121=""
+                                                                attributeName="transform" attributeType="XML"
+                                                                type="rotate" dur="2s" from="0 50 50" to="360 50 50"
+                                                                repeatCount="indefinite">
+                                                              </animateTransform>
+                                                            </path>
+                                                          </svg>
+                                                          <div class="text-dark mt-3 checkOsTitle">Adding rule to server
+                                                            ...</div>
+                                                          <div class="checkOsResults">
+                                                          </div>
+                                                        </div>
+                                                        <form [formGroup]="ruleFormAdd"
+                                                          (ngSubmit)="addRule(userServer)">
+                                                          <div class="row mb-3">
+                                                            <div class="col-12">
+                                                              <div class="col-10 mb-3">
+                                                                <label class="form-check-label">Choose an option :<span
+                                                                    class="required-asterisk">*</span></label>
+                                                              </div>
+                                                              <div class="col-10 d-flex justify-content-end">
+                                                                <div class="col-6 form-check form-check-inline">
+                                                                  <input class="form-check-input" type="radio"
+                                                                    name="inlineRadioOptions" id="inlineRadio1"
+                                                                    formControlName="static"
+                                                                    (change)="changecheck($event)" value="static">
+                                                                  <label class="form-check-label"
+                                                                    for="inlineRadio1">Static</label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline mb-3">
+                                                                  <input class="form-check-input" type="radio"
+                                                                    name="inlineRadioOptions" id="inlineRadio2"
+                                                                    formControlName="dynamic"
+                                                                    (change)="changecheck($event)" value="dynamic">
+                                                                  <label class="form-check-label"
+                                                                    for="inlineRadio2">Dynamic</label>
+                                                                </div>
+                                                              </div>
+                                                              <div class="mb-3">
+                                                                <label for="validationCustom01" class="form-label"><a
+                                                                    class="text-dark">Name<span
+                                                                      class="required-asterisk">*</span></a></label>
+                                                                <input type="text" class="form-control"
+                                                                  [ngClass]="{ 'is-invalid': submitted && FormRuleAdd['name'].errors }"
+                                                                  formControlName="name" required />
+                                                                <div *ngIf="submitted && FormRuleAdd['name'].errors"
+                                                                  class="invalid-feedback">
+                                                                  <div
+                                                                    *ngIf="FormRuleAdd['name'].errors FormRuleAdd['name'].required">
+                                                                    Name is required</div>
+                                                                </div>
+
+                                                              </div>
+                                                              <div class="mb-3">
+                                                                <div
+                                                                  *ngIf="selectedOption !== 'static'; else contentt_222">
+                                                                  <label for="validationCustom01" class="form-label"><a
+                                                                      class="text-dark">IP address</a></label>
+                                                                  <input type="text" class="form-control"
+                                                                    formControlName="ip_address">
+                                                                </div>
+                                                                <ng-template #contentt_222>
+                                                                  <label for="validationCustom01" class="form-label"><a
+                                                                      class="text-dark">IP address<span
+                                                                        class="required-asterisk">*</span></a></label>
+                                                                  <input type="text" class="form-control"
+                                                                    [ngClass]="{ 'is-invalid': submitted && FormRuleAdd['ip_address'].errors }"
+                                                                    formControlName="ip_address" required>
+                                                                  <div
+                                                                    *ngIf="submitted && FormRuleAdd['ip_address'].errors"
+                                                                    class="invalid-feedback">
+                                                                    <div
+                                                                      *ngIf="FormRuleAdd['ip_address'].errors FormRuleAdd['ip_address'].required">
+                                                                      IP address is required</div>
+                                                                  </div>
+                                                                </ng-template>
+                                                              </div>
+                                                              <div class="mb-3">
+                                                                <label for="validationCustom01" class="form-label"><a
+                                                                    class="text-dark">Port<span
+                                                                      class="required-asterisk">*</span></a></label>
+                                                                <input type="number" class="form-control"
+                                                                  [ngClass]="{ 'is-invalid': submitted && FormRuleAdd['port'].errors }"
+                                                                  formControlName="port" required>
+                                                                <div *ngIf="submitted && FormRuleAdd['port'].errors"
+                                                                  class="invalid-feedback">
+                                                                  <div
+                                                                    *ngIf="FormRuleAdd['port'].errors FormRuleAdd['port'].required">
+                                                                    Port is required</div>
+                                                                </div>
+
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-12">
+                                                              <div class="mb-3">
+                                                                <label for="validationCustom03" class="form-label"><a
+                                                                    class="text-dark">Action<span
+                                                                      class="required-asterisk">*</span></a></label>
+                                                                <select class="form-select" formControlName="action"
+                                                                  [ngClass]="{ 'is-invalid': submitted && FormRuleAdd['action'].errors }"
+                                                                  required>
+                                                                  <option>ACCEPT</option>
+                                                                  <option>DROP</option>
+                                                                </select>
+                                                                <div *ngIf="submitted && FormRuleAdd['action'].errors"
+                                                                  class="invalid-feedback">
+                                                                  <div
+                                                                    *ngIf="FormRuleAdd['action'].errors FormRuleAdd['action'].required">
+                                                                    Action is required</div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="mb-3">
+                                                                <label for="validationCustom03" class="form-label"><a
+                                                                    class="text-dark">Protocol<span
+                                                                      class="required-asterisk">*</span></a></label>
+                                                                <select class="form-select" formControlName="protocol"
+                                                                  [ngClass]="{ 'is-invalid': submitted && FormRuleAdd['protocol'].errors }"
+                                                                  required>
+                                                                  <option>HTTP</option>
+                                                                  <option>HTTPS</option>
+                                                                  <option>UDP</option>
+                                                                  <option>TCP</option>
+                                                                </select>
+                                                                <div *ngIf="submitted && FormRuleAdd['protocol'].errors"
+                                                                  class="invalid-feedback">
+                                                                  <div
+                                                                    *ngIf="FormRuleAdd['protocol'].errors FormRuleAdd['protocol'].required">
+                                                                    Protocol is required</div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                          <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                                            <button type="submit"
+                                                              class="btn btn-primary waves-effect waves-light">Save
+                                                              changes</button>
+                                                            <button type="button" (click)="closeModalAddRule()"
+                                                              class="btn btn-secondary waves-effect waves-light">Cancel</button>
+                                                          </div>
+                                                        </form>
+                                                      </div>
+                                                    </div>
+                                                  </ng-template>
+                                                  <ng-template #RuleModal>
+                                                    <div class="modal-header">
+                                                      <h6 class="modal-title" id="assignUserServerLabel">Add rule</h6>
+                                                      <button type="button" class="btn-close"
+                                                        (click)="closeModalAssignRule()" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                      <div class="checkOs d-none"
+                                                        style="position: absolute;left: 0;height: 90%; opacity:90%; margin: auto;background: #fff;text-align: center;right: 0;z-index: 3;">
+                                                        <svg _ngcontent-cev-c121="" version="1.1" id="L7"
+                                                          xmlns="http://www.w3.org/2000/svg"
+                                                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                          viewBox="0 0 100 100" enable-background="new 0 0 100 100"
+                                                          xml:space="preserve" style="width: 20%;">
+                                                          <path _ngcontent-cev-c121="" fill="#000"
+                                                            d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3
+                                                                                                             c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z">
+                                                            <animateTransform _ngcontent-cev-c121=""
+                                                              attributeName="transform" attributeType="XML"
+                                                              type="rotate" dur="2s" from="0 50 50" to="360 50 50"
+                                                              repeatCount="indefinite">
+                                                            </animateTransform>
+                                                          </path>
+                                                          <path _ngcontent-cev-c121="" fill="#000"
+                                                            d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7
+                                                                                                             c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z">
+                                                            <animateTransform _ngcontent-cev-c121=""
+                                                              attributeName="transform" attributeType="XML"
+                                                              type="rotate" dur="1s" from="0 50 50" to="-360 50 50"
+                                                              repeatCount="indefinite">
+                                                            </animateTransform>
+                                                          </path>
+                                                          <path _ngcontent-cev-c121="" fill="#000"
+                                                            d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5
+                                                                                                             L82,35.7z">
+                                                            <animateTransform _ngcontent-cev-c121=""
+                                                              attributeName="transform" attributeType="XML"
+                                                              type="rotate" dur="2s" from="0 50 50" to="360 50 50"
+                                                              repeatCount="indefinite">
+                                                            </animateTransform>
+                                                          </path>
+                                                        </svg>
+                                                        <div class="text-dark mt-3 checkOsTitle">Adding rule ...</div>
+                                                        <div class="checkOsResults">
+                                                        </div>
+                                                      </div>
+                                                      <form [formGroup]="userServerRulesFormAdd"
+                                                        (ngSubmit)="assignRule(userServer.servers.id)">
+                                                        <label for="validationCustom03" class="form-label"><a
+                                                            class="text-dark">Rules list<span
+                                                              class="required-asterisk">*</span></a></label>
+                                                        <div *ngIf="RulesUsersServersList.length ===0; else content1"
+                                                          formGroupName="rules">
+                                                          <select class="form-select mb-3" required aria-required="true"
+                                                            formControlName="id"
+                                                            [ngClass]="{ 'is-invalid': submitted3 && usersServersRuleControls['rules'].get('id')?.errors }">
+                                                            <option class="text-center" disabled> No data to display
+                                                            </option>
+                                                          </select>
+                                                          <div
+                                                            *ngIf="submitted3 && usersServersRuleControls['rules'].get('id')?.errors"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                              *ngIf="usersServersRuleControls['rules'].get('id')?.errors form['id'].required">
+                                                              Rule is required</div>
+                                                          </div>
+                                                        </div>
+                                                        <ng-template #content1 formGroupName="rules">
+                                                          <select class="form-select mb-3" required aria-required="true"
+                                                            formControlName="id"
+                                                            [ngClass]="{ 'is-invalid': submitted3 && usersServersRuleControls['rules'].get('id')?.errors }">
+                                                            <option *ngFor="let rule of RulesUsersServersList"
+                                                              value="{{rule.id}}">{{rule.name}}</option>
+                                                          </select>
+                                                          <div
+                                                            *ngIf="submitted3 && usersServersRuleControls['rules'].get('id')?.errors"
+                                                            class="invalid-feedback">
+                                                            <div
+                                                              *ngIf="usersServersRuleControls['rules'].get('id')?.errors form['id'].required">
+                                                              Rule is required</div>
+                                                          </div>
+                                                        </ng-template>
+                                                        <div class="modal-footer">
+                                                          <button type="submit" class="btn btn-secondary">Save
+                                                            changes</button>
+                                                          <button type="button" (click)="closeModalAssignRule()"
+                                                            class="btn btn-outline-secondary">Close</button>
+                                                        </div>
+                                                      </form>
+                                                    </div>
+                                                  </ng-template>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div
+                                              *ngIf="( usersServersRulesList | filter : searchText1) as resultFilter1">
+                                              <div *ngIf="resultFilter1.length === 0 ; else otherr3">
+                                                <table class="table align-middle table-nowrap table-hover text-center">
+                                                  <thead class="th-bg-color">
+                                                    <tr>
+                                                      <th class="th-table">ID</th>
+                                                      <th class="th-table">Name</th>
+                                                      <th class="th-table">IP address</th>
+                                                      <th class="th-table">Action</th>
+                                                      <th class="th-table">Port</th>
+                                                      <th class="th-table">Protocol</th>
+                                                      <th class="th-table">Actions</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody class="border-top-0">
+                                                    <tr>
+                                                      <td colspan="7"><img src="assets/images/no_data_found.png"
+                                                          style="width: 22%;"></td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                              </div>
+                                            </div>
+                                            <ng-template #otherr3>
+                                              <table class="table align-middle table-nowrap table-hover text-center"
+                                                id="table_rule">
+                                                <thead class="th-bg-color">
+                                                  <tr>
+                                                    <th class="success" [appSort]="usersServersRulesList"
+                                                      data-order="desc" data-name="id">ID <i
+                                                        class="fas fa-angle-up"></i></th>
+                                                    <th class="danger" [appSort]="usersServersRulesList"
+                                                      data-order="desc" data-name="name">Name <i
+                                                        class="fas fa-angle-up d-none"></i></th>
+                                                    <th class="danger" [appSort]="usersServersRulesList"
+                                                      data-order="desc" data-name="ip_address">IP address <i
+                                                        class="fas fa-angle-up d-none"></i></th>
+                                                    <th class="danger" [appSort]="usersServersRulesList"
+                                                      data-order="desc" data-name="action">Action <i
+                                                        class="fas fa-angle-up d-none"></i></th>
+                                                    <th class="danger" [appSort]="usersServersRulesList"
+                                                      data-order="desc" data-name="port">Port <i
+                                                        class="fas fa-angle-up d-none"></i></th>
+                                                    <th class="danger" [appSort]="usersServersRulesList"
+                                                      data-order="desc" data-name="protocol">Protocol <i
+                                                        class="fas fa-angle-up d-none"></i></th>
+                                                    <th class="th-table">Actions</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody class="border-top-0">
+                                                  <tr
+                                                    *ngFor="let userServerRule of usersServersRulesList | paginate:{itemsPerPage:5,currentPage:p4, id: 'p4' } | filter:searchText1"
+                                                    data-id="{{userServerRule.id}}">
+                                                    <td>{{userServerRule.id}}</td>
+                                                    <td> {{userServerRule.name}}</td>
+                                                    <td> {{userServerRule.ip_address}}</td>
+                                                    <td>{{userServerRule.action}}</td>
+                                                    <td>{{userServerRule.port}}</td>
+                                                    <td>{{userServerRule.protocol}}</td>
+                                                    <td>
+                                                      <div class="d-flex flex-wrap gap-1 justify-content-center">
+                                                        <a class="btn btn-secondary waves-effect waves-light btn-act"
+                                                          type="submit"
+                                                          (click)="openModal(editRuleModal, userServerRule)"
+                                                          placement="left" ngbTooltip="Edit"><i
+                                                            class="mdi mdi-pencil font-size-16"></i></a>
+                                                        <a class="btn btn-danger waves-effect waves-light btn-act"
+                                                          type="button"
+                                                          (click)="deleteUserServerRule(userServerRule.id,userServer.servers.id)"
+                                                          placement="left" ngbTooltip="Delete"><i
+                                                            class="mdi mdi-delete font-size-16"></i></a>
+                                                      </div>
+                                                      <ng-template #editRuleModal>
+                                                        <div class="modal-header">
+                                                          <h6 class="modal-title" id="editRuleLabel">Edit rule</h6>
+                                                          <button type="button" class="btn-close" (click)="close()"
+                                                            aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                          <div class="card-body">
+                                                            <form [formGroup]="ruleFormEdit"
+                                                              (ngSubmit)="updateRule(userServerRule.id,userServerRule)">
+                                                              <div class="mb-3 row" style="display: none;">
+                                                                <label for="example-text-input"
+                                                                  class="col-6 col-form-label">ID<span
+                                                                    class="required-asterisk">*</span></label>
+                                                                <div class="col-12">
+                                                                  <input class="form-control" type="text" id="id"
+                                                                    formControlName="id" [ngModel]='userServerRule.id'>
+                                                                </div>
+                                                              </div>
+                                                              <div class="mb-3 row">
+                                                                <label for="example-text-input"
+                                                                  class="col-6 col-form-label">Name<span
+                                                                    class="required-asterisk">*</span></label>
+                                                                <div class="col-12">
+                                                                  <input class="form-control" type="text" id="name"
+                                                                    formControlName="name"
+                                                                    [ngModel]='userServerRule.name'
+                                                                    [ngClass]="{ 'is-invalid': submitted2 && FormRuleEdit['name'].errors }">
+                                                                  <div *ngIf="submitted2 && FormRuleEdit['name'].errors"
+                                                                    class="invalid-feedback">
+                                                                    <div
+                                                                      *ngIf="FormRuleEdit['name'].errors FormRuleEdit['name'].required">
+                                                                      Name is required</div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="mb-3 row">
+                                                                <label class="col-6 col-form-label">Action<span
+                                                                    class="required-asterisk">*</span></label>
+                                                                <div class="col-12">
+                                                                  <select class="form-select" id="action"
+                                                                    formControlName="action"
+                                                                    [ngModel]='userServerRule.action'
+                                                                    [ngClass]="{ 'is-invalid': submitted2 && FormRuleEdit['action'].errors }">
+                                                                    <option>ACCEPT</option>
+                                                                    <option>DROP</option>
+                                                                  </select>
+                                                                  <div
+                                                                    *ngIf="submitted2 && FormRuleEdit['action'].errors"
+                                                                    class="invalid-feedback">
+                                                                    <div
+                                                                      *ngIf="FormRuleEdit['action'].errors FormRuleEdit['action'].required">
+                                                                      Action is required</div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="mb-3 row">
+                                                                <label class="col-6 col-form-label">Protocol<span
+                                                                    class="required-asterisk">*</span></label>
+                                                                <div class="col-12">
+                                                                  <select class="form-select" id="protocol"
+                                                                    formControlName="protocol"
+                                                                    [ngModel]='userServerRule.protocol'>
+                                                                    <option>HTTP</option>
+                                                                    <option>HTTPS</option>
+                                                                    <option>UDP</option>
+                                                                    <option>TCP</option>
+                                                                  </select>
+                                                                </div>
+                                                              </div>
+                                                              <div class="mb-3 row">
+                                                                <label for="example-url-input"
+                                                                  class="col-6 col-form-label">Port<span
+                                                                    class="required-asterisk">*</span></label>
+                                                                <div class="col-12">
+                                                                  <input class="form-control" type="number" id="port"
+                                                                    formControlName="port"
+                                                                    [ngModel]='userServerRule.port'
+                                                                    [ngClass]="{ 'is-invalid': submitted2 && FormRuleEdit['port'].errors }"
+                                                                    id="example-url-input">
+                                                                  <div *ngIf="submitted2 && FormRuleEdit['port'].errors"
+                                                                    class="invalid-feedback">
+                                                                    <div
+                                                                      *ngIf="FormRuleEdit['port'].errors FormRuleEdit['port'].required">
+                                                                      Port is required</div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="mb-3 row">
+                                                                <label for="example-time-input"
+                                                                  class="col-6 col-form-label">IP address</label>
+                                                                <div class="col-12">
+                                                                  <input class="form-control" type="text"
+                                                                    id="ip_address" formControlName="ip_address">
+
+                                                                </div>
+                                                              </div>
+                                                              <div class="mb-3 row">
+                                                                <label class="col-6 col-form-label">Status<span
+                                                                    class="required-asterisk">*</span></label>
+                                                                <div class="col-12">
+                                                                  <select class="form-select" formControlName="status"
+                                                                    [ngModel]='userServerRule.status'
+                                                                    [ngClass]="{ 'is-invalid': submitted2 && FormRuleEdit['status'].errors }">
+                                                                    <option *ngIf="userServerRule.status==1" disabled>
+                                                                      Active</option>
+                                                                    <option *ngIf="userServerRule.status==2" disabled>
+                                                                      Inactive</option>
+                                                                    <option *ngIf="userServerRule.status==3" disabled>In
+                                                                      progress</option>
+                                                                    <option value="1">Active</option>
+                                                                    <option value="2">Inactive</option>
+                                                                    <option value="3">In progress</option>
+                                                                  </select>
+                                                                  <div
+                                                                    *ngIf="submitted2 && FormRuleEdit['status'].errors"
+                                                                    class="invalid-feedback">
+                                                                    <div
+                                                                      *ngIf="FormRuleEdit['status'].errors FormRuleEdit['status'].required">
+                                                                      Status is required</div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="mb-3 row" style="display: none;">
+                                                                <label for="example-time-input"
+                                                                  class="col-6 col-form-label"><a
+                                                                    class="text-dark">Start date<span
+                                                                      class="required-asterisk">*</span></a></label>
+                                                                <div class="col-12">
+                                                                  <input class="form-control" type="datetime"
+                                                                    formControlName="start_date"
+                                                                    [ngModel]='userServerRule.start_date'
+                                                                    id="example-time-input">
+                                                                </div>
+                                                              </div>
+                                                              <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                                                <button type="submit"
+                                                                  class="btn btn-primary waves-effect waves-light">Save
+                                                                  changes</button>
+                                                                <button type="button" (click)="close()"
+                                                                  class="btn btn-secondary waves-effect waves-light">Cancel</button>
+                                                              </div>
+                                                            </form>
+                                                          </div>
+                                                        </div>
+                                                      </ng-template>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                              <pagination-controls
+                                                class="pagination pagination-rounded justify-content-center mt-4"
+                                                (pageChange)="p4 = $event" id="p4"></pagination-controls>
+                                            </ng-template>
+
+                                          </div>
+                                        </ng-template>
+                                      </div>
+                                    </ng-template>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                              (pageChange)="p5 = $event" id="p5"></pagination-controls>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==false" class="tab-pane" id="servers-1"
+                    role="tabpanel">
+                    <div *ngIf="UsersServersList.length === 0; else other_content">
+                      <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                          style="width: 22%;"></label>
+                    </div>
+                    <ng-template #other_content>
+                      <div class="card-body">
+                        <div class="row mb-2">
+                          <div class="row mb-2">
+                            <div class="col-sm-4">
+                              <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                  <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                    [(ngModel)]='searchText'>
+                                  <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="( UsersServersList | filter : searchText) as resultFilter3">
+                          <div *ngIf="resultFilter3.length === 0 ; else otherr33">
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="th-table">ID</th>
+                                  <th class="th-table">Name</th>
+                                  <th class="th-table">IP address</th>
+                                  <th class="th-table">Operating system</th>
+                                  <th class="th-table">System version</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr>
+                                  <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 22%;"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ng-template #otherr33>
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="success" [appSort]="UsersServersList" data-order="desc"
+                                    data-parent="servers" data-name="id">ID <i class="fas fa-angle-up"></i></th>
+                                  <th class="danger" [appSort]="UsersServersList" data-order="desc"
+                                    data-parent="servers" data-name="name">Name <i class="fas fa-angle-up d-none"></i>
+                                  </th>
+                                  <th class="danger" [appSort]="UsersServersList" data-order="desc"
+                                    data-parent="servers" data-name="ip_address">IP address <i
+                                      class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="UsersServersList" data-order="desc"
+                                    data-parent="servers" data-name="operating_system">Operating system <i
+                                      class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="UsersServersList" data-order="desc"
+                                    data-parent="servers" data-name="system_version">System version <i
+                                      class="fas fa-angle-up d-none"></i></th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr
+                                  *ngFor="let userServer of UsersServersList | paginate:{itemsPerPage:5,currentPage:p6, id: 'p6' } | filter:searchText">
+                                  <td>{{userServer.servers.id}}</td>
+                                  <td> {{userServer.servers.name}}</td>
+                                  <td> {{userServer.servers.ip_address}}</td>
+                                  <td>{{userServer.servers.operating_system}}</td>
+                                  <td>{{userServer.servers.system_version}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                              (pageChange)="p6 = $event" id="p6"></pagination-controls>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==true" class="tab-pane" id="settings-1"
+                    role="tabpanel">
+                    <div *ngIf="usersLogsList.length === 0; else other_content">
+                      <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                          style="width: 22%;"></label>
+                    </div>
+                    <ng-template #other_content>
+                      <div class="card-body">
+                        <div class="row mb-0">
+                          <div class="row mb-2">
+                            <div class="col-sm-4">
+                              <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                  <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                    [(ngModel)]='searchText'>
+                                  <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="( usersLogsList | filter : searchText) as resultFilter4">
+                          <div *ngIf="resultFilter4.length === 0 ; else other3">
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="th-table">ID</th>
+                                  <th class="th-table">Element</th>
+                                  <th class="th-table">Element ID</th>
+                                  <th class="th-table">Action</th>
+                                  <th class="th-table">Action date</th>
+                                  <th class="th-table">Source</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr>
+                                  <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 22%;"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ng-template #other3>
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="success" [appSort]="usersLogsList" data-order="desc" data-name="id">ID <i
+                                      class="fas fa-angle-up"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="element">
+                                    Element <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="element_id">
+                                    Element ID <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="action">
+                                    Action <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc"
+                                    data-name="action_date">Action date <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc" data-name="source">
+                                    Source <i class="fas fa-angle-up d-none"></i></th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr
+                                  *ngFor="let userlog of usersLogsList | paginate:{itemsPerPage:5,currentPage:p, id: 'p' } | filter:searchText">
+                                  <td>{{userlog.id}}</td>
+                                  <td>
+                                    <span>{{userlog.element}}</span>
+                                  </td>
+                                  <td>{{userlog.element_id}}</td>
+                                  <td>{{userlog.action}}</td>
+                                  <td>{{userlog.action_date | date:'yyyy-MM-dd h:mm:ss a'}}</td>
+                                  <td>
+                                    <span>{{userlog.source}}</span>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                              (pageChange)="p = $event" id="p"></pagination-controls>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==false" class="tab-pane" id="settings-1"
+                    role="tabpanel">
+                    <div *ngIf="usersLogsList.length === 0; else other_content">
+                      <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                          style="width: 22%;"></label>
+                    </div>
+                    <ng-template #other_content>
+                      <div class="card-body">
+                        <div class="row mb-0">
+                          <div class="row mb-2">
+                            <div class="col-sm-4">
+                              <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                  <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                    [(ngModel)]='searchText'>
+                                  <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="( usersLogsList | filter : searchText) as resultFilter2">
+                          <div *ngIf="resultFilter2.length === 0 ; else otherr3">
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="th-table">ID</th>
+                                  <th class="th-table">Element</th>
+                                  <th class="th-table">Element ID</th>
+                                  <th class="th-table">Action</th>
+                                  <th class="th-table">Action date</th>
+                                  <th class="th-table">Source</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr>
+                                  <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 22%;"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ng-template #otherr3>
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="success" [appSort]="usersLogsList" data-order="desc" data-name="id">ID <i
+                                      class="fas fa-angle-up"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="element">
+                                    Element <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="element_id">
+                                    Element ID <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="action">
+                                    Action <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc"
+                                    data-name="action_date">Action date <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc" data-name="source">
+                                    Source <i class="fas fa-angle-up d-none"></i></th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr
+                                  *ngFor="let userlog of usersLogsList | paginate:{itemsPerPage:5,currentPage:p, id: 'p' } | filter:searchText">
+                                  <td>{{userlog.id}}</td>
+                                  <td>
+                                    <span>{{userlog.element}}</span>
+                                  </td>
+                                  <td>{{userlog.element_id}}</td>
+                                  <td>{{userlog.action}}</td>
+                                  <td>{{userlog.action_date | date:'yyyy-MM-dd h:mm:ss a'}}</td>
+                                  <td>
+                                    <span>{{userlog.source}}</span>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                              (pageChange)="p = $event" id="p"></pagination-controls>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

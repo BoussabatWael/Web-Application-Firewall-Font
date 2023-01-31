@@ -1,0 +1,104 @@
+<!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+  <div data-simplebar class="h-100">
+    <div id="sidebar-menu">
+      <br>
+      <ul class="metismenu list-unstyled" id="side-menu">
+        <li>
+          <a href="javascript: void(0);" class="waves-effect" routerLink="/dashboard">
+            <i class="bx bx-home-circle" routerLinkActive="isactive"></i>
+            <span key="t-dashboards" routerLinkActive="isactive">Dashboard</span>
+          </a>
+        </li>
+
+        <li *ngIf="this.usrPer.servers.includes('view')==true">
+          <a routerLink="/server/edit/" routerLinkActive #serverEditActive="routerLinkActive"
+            style="margin: auto 4px;display: none;" placement="left" ngbTooltip="Edit"></a>
+          <a routerLink="/server/add" routerLinkActive #serverAddActive="routerLinkActive"
+            style="margin: auto 4px;display: none;" placement="left" ngbTooltip="Edit"></a>
+          <a class="waves-effect" routerLink="/servers" routerLinkActive #serversActive="routerLinkActive">
+            <i class="bx bx-server"
+              [ngClass]="{'isactive': serverEditActive.isActive || serversActive.isActive || serverAddActive.isActive }"></i>
+            <span key="t-authentication"
+              [ngClass]="{'isactive': serverEditActive.isActive || serversActive.isActive || serverAddActive.isActive }">Servers</span>
+          </a>
+        </li>
+        <li *ngIf="this.usrPer.servers.includes('view')==false" style="display: none;">
+          <a class="waves-effect" routerLink="/servers">
+            <i class="bx bx-server" routerLinkActive="isactive"></i>
+            <span key="t-authentication" routerLinkActive="isactive">Servers</span>
+          </a>
+        </li>
+        <li *ngIf="this.usrPer.rules.includes('view')==true">
+          <a routerLink="/rule/edit/" routerLinkActive #ruleEditActive="routerLinkActive"
+            style="margin: auto 4px;display: none;" placement="left" ngbTooltip="Edit"></a>
+          <a routerLink="/rule/add" routerLinkActive #ruleAddActive="routerLinkActive"
+            style="margin: auto 4px;display: none;" placement="left" ngbTooltip="Edit"></a>
+          <a class="waves-effect" routerLink="/rules" routerLinkActive #rulesActive="routerLinkActive">
+            <i class="bx bxs-layer"
+              [ngClass]="{'isactive': ruleEditActive.isActive || rulesActive.isActive || ruleAddActive.isActive }"></i>
+            <span key="t-authentication"
+              [ngClass]="{'isactive': ruleEditActive.isActive || rulesActive.isActive || ruleAddActive.isActive }">Rules</span>
+          </a>
+        </li>
+        <li *ngIf="this.usrPer.rules.includes('view')==false" style="display: none;">
+          <a class="waves-effect" routerLink="/rules">
+            <i class="bx bxs-layer" routerLinkActive="isactive"></i>
+            <span key="t-authentication" routerLinkActive="isactive">Rules</span>
+          </a>
+        </li>
+        <li *ngIf="this.usrPer.groups.includes('view')==true">
+          <a routerLink="/group/edit/" routerLinkActive #groupEditActive="routerLinkActive"
+            style="margin: auto 4px;display: none;" placement="left" ngbTooltip="Edit"></a>
+          <a routerLink="/group/add" routerLinkActive #groupAddActive="routerLinkActive"
+            style="margin: auto 4px;display: none;" placement="left" ngbTooltip="Edit"></a>
+          <a class="waves-effect" routerLink="/groups" routerLinkActive #groupsActive="routerLinkActive">
+            <i class="bx bxs-collection"
+              [ngClass]="{'isactive': groupEditActive.isActive || groupsActive.isActive || groupAddActive.isActive }"></i>
+            <span key="t-authentication"
+              [ngClass]="{'isactive': groupEditActive.isActive || groupsActive.isActive || groupAddActive.isActive }">Groups</span>
+          </a>
+        </li>
+        <li *ngIf="this.usrPer.groups.includes('view')==false" style="display: none;">
+          <a class="waves-effect" routerLink="/groups">
+            <i class="bx bxs-collection" routerLinkActive="isactive"></i>
+            <span key="t-authentication" routerLinkActive="isactive">Groups</span>
+          </a>
+        </li>
+        <li *ngIf="this.usrPer.policies.includes('view')==true">
+          <a routerLink="/policies/edit/" routerLinkActive #policiesEditActive="routerLinkActive"
+            style="margin: auto 4px;display: none;" placement="left" ngbTooltip="Edit"></a>
+          <a routerLink="/policies/add" routerLinkActive #policiesAddActive="routerLinkActive"
+            style="margin: auto 4px;display: none;" placement="left" ngbTooltip="Edit"></a>
+          <a class="waves-effect" routerLink="/policies" routerLinkActive #policiesActive="routerLinkActive">
+            <i class="bx bx-sync"
+              [ngClass]="{'isactive': policiesEditActive.isActive || policiesActive.isActive || policiesAddActive.isActive }"></i>
+            <span key="t-authentication"
+              [ngClass]="{'isactive': policiesEditActive.isActive || policiesActive.isActive || policiesAddActive.isActive }">Policies</span>
+          </a>
+        </li>
+        <li *ngIf="this.usrPer.policies.includes('view')==false" style="display: none;">
+          <a class="waves-effect" routerLink="/policies">
+            <i class="bx bx-sync" routerLinkActive="isactive"></i>
+            <span key="t-authentication" routerLinkActive="isactive">Policies</span>
+          </a>
+        </li>
+        <li>
+          <a class="waves-effect" routerLink="/reporting">
+            <i class="bx bxs-bar-chart-alt-2" routerLinkActive="isactive"></i>
+            <span key="t-authentication" routerLinkActive="isactive">Reporting</span>
+          </a>
+        </li>
+        <li>
+          <a class="waves-effect" routerLink="/settings">
+            <i class="fas fa-cog" routerLinkActive="isactive"></i>
+            <span key="t-authentication" routerLinkActive="isactive">Settings</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- Sidebar -->
+
+  </div>
+</div>
+<!-- Left Sidebar End -->

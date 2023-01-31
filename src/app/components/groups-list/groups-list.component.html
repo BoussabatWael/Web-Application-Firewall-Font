@@ -1,0 +1,140 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+  <app-topbar></app-topbar>
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="groupsList.length ===0; else other_content">
+                  <div class="col-12">
+                    <div *ngIf="this.usrPer.groups.includes('create')==true" class="text-sm-end"
+                      routerLink="/group/add">
+                      <button type="button" class="btn btn-primary waves-effect waves-light btn-add"
+                        style="border-radius: 50px;"><i class="mdi mdi-plus me-1"></i> Add new group</button>
+                    </div>
+                    <div *ngIf="this.usrPer.groups.includes('create')==false" style="display: none;" class="text-sm-end"
+                      routerLink="/group/add">
+                      <button type="button" class="btn btn-primary waves-effect waves-light btn-add"
+                        style="border-radius: 50px;"><i class="mdi mdi-plus me-1"></i> Add new group</button>
+                    </div>
+                  </div>
+                  <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                      style="width: 20%;"></label>
+                </div>
+                <ng-template #other_content>
+                  <div class="row mb-2 justify-content-between">
+                    <div class="col-6">
+                      <div class="search-box me-2 mb-2 d-inline-block">
+                        <div class="position-relative">
+                          <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                            [(ngModel)]="searchText">
+                          <i class="bx bx-search-alt search-icon"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div *ngIf="this.usrPer.groups.includes('create')==true" class="text-sm-end"
+                        routerLink="/group/add">
+                        <button type="button" class="btn btn-primary waves-effect waves-light btn-add"
+                          style="border-radius: 50px;"><i class="mdi mdi-plus me-1"></i> Add new group</button>
+                      </div>
+                      <div *ngIf="this.usrPer.groups.includes('create')==false" style="display: none;"
+                        class="text-sm-end" routerLink="/group/add">
+                        <button type="button" class="btn btn-primary waves-effect waves-light btn-add"
+                          style="border-radius: 50px;"><i class="mdi mdi-plus me-1"></i> Add new group</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="( groupsList | filter : searchText) as resultFilter">
+                    <div *ngIf="resultFilter.length === 0 ; else otherr">
+                      <div class="table-responsive">
+                        <table class="table align-middle table-nowrap table-hover text-center" id="#table_group">
+                          <thead class="th-bg-color">
+                            <tr>
+                              <th class="th-table">ID</th>
+                              <th class="th-table">Name</th>
+                              <th class="th-table">Status</th>
+                              <th class="th-table">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody class="border-top-0">
+                            <tr>
+                              <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 20%;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <ng-template #otherr>
+                      <div class="table-responsive">
+                        <table class="table align-middle table-nowrap table-hover text-center" id="#table_group">
+                          <thead class="th-bg-color">
+                            <tr>
+                              <th scope="col" [appSort]="groupsList" data-order="desc" data-name="id">ID <i
+                                  class="fas fa-angle-up"></i></th>
+                              <th scope="col" [appSort]="groupsList" data-order="desc" data-name="name">Name <i
+                                  class="fas fa-angle-up d-none"></i></th>
+                              <th scope="col" [appSort]="groupsList" data-order="desc" data-name="status">Status <i
+                                  class="fas fa-angle-up d-none"></i></th>
+                              <th scope="col" class="th-table">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody class="border-top-0">
+                            <tr
+                              *ngFor="let group of groupsList  | paginate:{itemsPerPage:10,currentPage:p} | filter:searchText"
+                              data-id={{group.id}}>
+                              <td>
+                                {{group.id}}
+                              </td>
+                              <td>
+                                {{group.name}}
+                              </td>
+                              <td>
+                                <span *ngIf="group.status==1"><span
+                                    class="badge badge-pill badge-soft-success font-size-11">Active</span></span>
+                                <span *ngIf="group.status==2"><span
+                                    class="badge badge-pill badge-soft-danger font-size-11">Inactive</span></span>
+                                <span *ngIf="group.status==3"><span
+                                    class="badge badge-pill badge-soft-warning font-size-11">In Progress</span></span>
+                              </td>
+                              <td>
+                                <div class="d-flex flex-wrap gap-1 justify-content-center">
+                                  <a class="btn btn-secondary waves-effect waves-light btn-act"
+                                    *ngIf="this.usrPer.groups.includes('edit')==true"
+                                    routerLink="/group/edit/{{group.id}}" placement="left" ngbTooltip="Edit">
+                                    <i class="mdi mdi-pencil font-size-16"></i></a>
+                                  <a class="btn btn-secondary waves-effect waves-light btn-act"
+                                    *ngIf="this.usrPer.groups.includes('edit')==false"
+                                    routerLink="/group/edit/{{group.id}}" placement="left" ngbTooltip="View">
+                                    <i class="fa fa-eye font-size-16"></i></a>
+                                  <a class="btn btn-danger waves-effect waves-light btn-act"
+                                    *ngIf="this.usrPer.groups.includes('delete')==true" type="button"
+                                    (click)="deleteGroup(group.id)" placement="left" ngbTooltip="Delete">
+                                    <i class="mdi mdi-delete font-size-16"></i></a>
+                                  <a class="btn btn-danger waves-effect waves-light btn-act"
+                                    *ngIf="this.usrPer.groups.includes('delete')==false" style="display: none;"
+                                    type="button" (click)="deleteGroup(group.id)" placement="left" ngbTooltip="Delete">
+                                    <i class="mdi mdi-delete font-size-16"></i></a>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                          (pageChange)="p = $event"></pagination-controls>
+                      </div>
+                    </ng-template>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

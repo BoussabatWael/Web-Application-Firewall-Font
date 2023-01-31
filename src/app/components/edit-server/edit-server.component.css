@@ -1,0 +1,16 @@
+.ports{
+    white-space: unset !important;
+    overflow-wrap: anywhere;
+}
+.csf{
+    white-space: unset !important;
+    overflow-wrap: anywhere;
+}
+div, a , span, button{
+    font-family: "Poppins", sans-serif !important;
+    font-size: 14px;
+  }
+  
+  .btn-add{
+    font-size: 13px !important;
+  }

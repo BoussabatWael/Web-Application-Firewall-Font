@@ -1,0 +1,1001 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+  <!-- Topbar -->
+  <app-topbar></app-topbar>
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card overflow-hidden">
+              <div class="bg-primary bg-soft">
+                <div class="row">
+                  <div class="col-7">
+                  </div>
+                  <div class="col-5 align-self-end leftside"></div>
+                </div>
+              </div>
+              <div class="card-body pt-4">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <h5 class="font-size-15 text-truncate"><a class="text-dark">Name</a></h5>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <h5 class="font-size-18 text-truncate"><a>{{group.name}}</a></h5><br>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <h5 class="font-size-15 text-truncate"><a class="text-dark">Status</a></h5>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <span *ngIf="group.status==1"
+                            class="badge rounded-pill badge-soft-success font-size-12">Active</span>
+                          <span *ngIf="group.status==2"
+                            class="badge rounded-pill badge-soft-danger font-size-12">Inactive</span>
+                          <span *ngIf="group.status==3" class="badge rounded-pill badge-soft-warning font-size-12">In
+                            progress</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title mb-4 text-dark">Informations</h4>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>Name : {{group.name}}</p>
+                    <p>Start date : {{group.start_date | date:'yyyy-MM-dd h:mm:ss a'}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-body">
+                <ul class="nav nav-pills nav-justified" role="tablist">
+                  <li class="nav-item waves-effect waves-light" placement="top" ngbTooltip="General Informations">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#home-1" role="tab">
+                      <span class="d-block"><i class="fas fa-home"></i>
+                        <span class="d-none d-sm-block" class="text-dark text2"> General</span></span>
+                    </a>
+                  </li>
+                  <li class="nav-item waves-effect waves-light" placement="top" ngbTooltip="Rules">
+                    <a class="nav-link" data-bs-toggle="tab" href="#profile-1" role="tab">
+                      <span class="d-block"><i class="fas fa-pencil-ruler"></i>
+                        <span class="d-none d-sm-block" class="text-dark text2"> Rules</span> </span>
+                    </a>
+                  </li>
+                  <li class="nav-item waves-effect waves-light" (click)="getUserLogs()" placement="top"
+                    ngbTooltip="Logs Activity">
+                    <a class="nav-link" data-bs-toggle="tab" href="#logs-1" role="tab">
+                      <span class="d-block"><i class="fa fa-history"></i>
+                        <span class="d-none d-sm-block" class="text-dark text2"> Logs</span> </span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content p-0 py-4 text-muted">
+                  <div *ngIf="this.usrPer.groups.includes('edit')==true" class="tab-pane active" id="home-1"
+                    role="tabpanel">
+                    <div class="card-body">
+                      <form [formGroup]="groupForm" (ngSubmit)="updateGroup(group.id)">
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-4 col-form-label"><a class="text-dark">Name<span
+                                class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8" [formGroup]="groupForm" (ngSubmit)="updateGroup(group.id)">
+                            <input class="form-control" style="width: 100%;" type="text" formControlName="name"
+                              [ngModel]='group.name' [ngClass]="{ 'is-invalid': submitted && form['name'].errors }"
+                              id="example-text-input">
+                            <div *ngIf="submitted && form['name'].errors" class="invalid-feedback">
+                              <div *ngIf="form['name'].errors form['name'].required">Name is required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-3 col-form-label"><a class="text-dark">Status<span
+                                class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8" [formGroup]="groupForm" (ngSubmit)="updateGroup(group.id)">
+                            <select class="form-select" formControlName="status" [ngModel]='group.status'>
+                              <option *ngIf="group.status==1" disabled>Active</option>
+                              <option *ngIf="group.status==2" disabled>Inactive</option>
+                              <option *ngIf="group.status==3" disabled>In progress</option>
+                              <option value="1">Active</option>
+                              <option value="2">Inactive</option>
+                              <option value="3">In progress</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label for="example-time-input" class="col-md-3 col-form-label"><a class="text-dark">Start
+                              date<span class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8">
+                            <input class="form-control" type="datetime" formControlName="start_date"
+                              [ngModel]='group.start_date' id="example-time-input">
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-3 col-form-label"><a class="text-dark">Account<span
+                                class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8" formGroupName="account">
+                            <select class="form-select" formControlName="id" [ngModel]='group.account?.id'>
+
+                              <option *ngFor="let account of accountsList" value="{{account.id}}">{{account.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-3 col-form-label"><a class="text-dark">Category<span
+                                class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8" formGroupName="categories">
+                            <select class="form-select" formControlName="id" [ngModel]='group.categories?.id'>
+
+                              <option *ngFor="let category of categoriesList" value="{{category.id}}">{{category.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 justify-content-end">
+                          <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div *ngIf="this.usrPer.groups.includes('edit')==false" class="tab-pane active" id="home-1"
+                    role="tabpanel">
+                    <div class="card-body">
+                      <form [formGroup]="groupForm" (ngSubmit)="updateGroup(group.id)">
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-3 col-form-label"><a
+                              class="text-dark">Name</a></label>
+                          <div class="col-md-8" [formGroup]="groupForm" (ngSubmit)="updateGroup(group.id)">
+                            <label for="example-text-input" class="col-md-0 col-form-label"><a
+                                class="text-dark">{{group.name}}</a></label>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-3 col-form-label"><a class="text-dark">Status</a></label>
+                          <div class="col-md-8" [formGroup]="groupForm" (ngSubmit)="updateGroup(group.id)">
+                            <select class="form-select" formControlName="status" [ngModel]='group.status'>
+                              <option *ngIf="group.status==1" disabled>Active</option>
+                              <option *ngIf="group.status==2" disabled>Inactive</option>
+                              <option *ngIf="group.status==3" disabled>In progress</option>
+                              <option value="1">Active</option>
+                              <option value="2">Inactive</option>
+                              <option value="3">In progress</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label for="example-time-input" class="col-md-3 col-form-label"><a class="text-dark">Start
+                              date</a></label>
+                          <div class="col-md-8">
+                            <input class="form-control" type="datetime" formControlName="start_date"
+                              [ngModel]='group.start_date' id="example-time-input">
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-3 col-form-label"><a class="text-dark">Account</a></label>
+                          <div class="col-md-8" formGroupName="account">
+                            <select class="form-select" formControlName="id" [ngModel]='group.account?.id'>
+
+                              <option *ngFor="let account of accountsList" value="{{account.id}}">{{account.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-3 col-form-label"><a class="text-dark">Category</a></label>
+                          <div class="col-md-8" formGroupName="categories">
+                            <select class="form-select" formControlName="id" [ngModel]='group.categories?.id'>
+
+                              <option *ngFor="let category of categoriesList" value="{{category.id}}">{{category.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="profile-1" role="tabpanel">
+                    <div *ngIf="this.usrPer.groups.includes('edit')==true" class="tab-pane active" id="profile-1"
+                      role="tabpanel">
+                      <div *ngIf="groupRuleList.length === 0; else other_content">
+                        <div class="card-body">
+                          <div class="row mb-0 justify-content-between">
+                            <div class="col-8">
+                            </div>
+                            <div class="col-2">
+                              <div class="d-flex flex-wrap gap-2 pb-3">
+                                <button type="submit" (click)="openModal2(addNewRule, rule)"
+                                  class="btn btn-outline-primary">New rule</button>
+                                <ng-template #addNewRule>
+                                  <div class="modal-header">
+                                    <h6 class="modal-title" id="addNewRuleLabel">Add rule</h6>
+                                    <button type="button" class="btn-close" (click)="onSubmit()"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form [formGroup]="ruleFormAdd" (ngSubmit)="addRule()">
+                                      <div class="row">
+                                        <div class="col-12">
+                                          <div class="mb-3">
+                                            <label for="validationCustom01" class="form-label"><a
+                                                class="text-dark">Name<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <input type="text" class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['name'].errors }"
+                                              formControlName="name" required>
+                                            <div *ngIf="submitted && addRuleForm['name'].errors"
+                                              class="invalid-feedback">
+                                              <div *ngIf="addRuleForm['name'].errors addRuleForm['name'].required">Name
+                                                is required</div>
+                                            </div>
+
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="validationCustom01" class="form-label"><a class="text-dark">IP
+                                                address<span class="required-asterisk">*</span></a></label>
+                                            <input type="text" class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['ip_address'].errors }"
+                                              formControlName="ip_address" required>
+                                            <div *ngIf="submitted && addRuleForm['ip_address'].errors"
+                                              class="invalid-feedback">
+                                              <div
+                                                *ngIf="addRuleForm['ip_address'].errors addRuleForm['ip_address'].required">
+                                                IP address is required</div>
+                                            </div>
+
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="validationCustom01" class="form-label"><a
+                                                class="text-dark">Port<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <input type="number" class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['port'].errors }"
+                                              formControlName="port" required>
+                                            <div *ngIf="submitted && addRuleForm['port'].errors"
+                                              class="invalid-feedback">
+                                              <div *ngIf="addRuleForm['port'].errors addRuleForm['port'].required">Port
+                                                is required</div>
+                                            </div>
+
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="validationCustom03" class="form-label"><a
+                                                class="text-dark">Action<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <select class="form-select" formControlName="action"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['action'].errors }"
+                                              required>
+                                              <option>ACCEPT</option>
+                                              <option>DROP</option>
+                                            </select>
+                                            <div *ngIf="submitted && addRuleForm['action'].errors"
+                                              class="invalid-feedback">
+                                              <div *ngIf="addRuleForm['action'].errors addRuleForm['action'].required">
+                                                Action is required</div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-12">
+                                          <div class="mb-3">
+                                            <label for="validationCustom03" class="form-label"><a
+                                                class="text-dark">Protocol<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <select class="form-select" formControlName="protocol"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['protocol'].errors }"
+                                              required>
+                                              <option>HTTP</option>
+                                              <option>HTTPS</option>
+                                              <option>UDP</option>
+                                              <option>TCP</option>
+                                            </select>
+                                            <div *ngIf="submitted && addRuleForm['protocol'].errors"
+                                              class="invalid-feedback">
+                                              <div
+                                                *ngIf="addRuleForm['protocol'].errors addRuleForm['protocol'].required">
+                                                Protocol is required</div>
+                                            </div>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="validationCustom03" class="form-label"><a
+                                                class="text-dark">Status<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <select class="form-select" formControlName="status"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['status'].errors }"
+                                              required>
+                                              <option value="1">Active</option>
+                                              <option value="2">InActive</option>
+                                              <option value="3">In Progress</option>
+                                            </select>
+                                            <div *ngIf="submitted && addRuleForm['status'].errors"
+                                              class="invalid-feedback">
+                                              <div *ngIf="addRuleForm['status'].errors addRuleForm['status'].required">
+                                                Status is required</div>
+                                            </div>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="validationCustom01" class="form-label"><a
+                                                class="text-dark">Start date<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <input type="date" class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['start_date'].errors }"
+                                              formControlName="start_date" required>
+                                            <div *ngIf="submitted && addRuleForm['start_date'].errors"
+                                              class="invalid-feedback">
+                                              <div
+                                                *ngIf="addRuleForm['start_date'].errors addRuleForm['start_date'].required">
+                                                Start date is required</div>
+                                            </div>
+
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light">Save
+                                          changes</button>
+                                        <button type="button" (click)="onSubmit()"
+                                          class="btn btn-secondary waves-effect waves-light">Cancel</button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </ng-template>
+                              </div>
+                            </div>
+                          </div>
+                          <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                              style="width: 22%;"></label>
+                        </div>
+                      </div>
+                      <ng-template #other_content>
+                        <div class="card-body">
+                          <div class="row mb-0 justify-content-between">
+                            <div class="col-8">
+                              <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                  <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                    [(ngModel)]='searchText'>
+                                  <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-2">
+                              <div class="d-flex flex-wrap gap-2 pb-3">
+                                <button type="submit" (click)="openModal2(addNewRule, rule)"
+                                  class="btn btn-outline-primary">New rule</button>
+                                <ng-template #addNewRule>
+                                  <div class="modal-header">
+                                    <h6 class="modal-title" id="addNewRuleLabel">Add rule</h6>
+                                    <button type="button" class="btn-close" (click)="onSubmit()"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form [formGroup]="ruleFormAdd" (ngSubmit)="addRule()">
+                                      <div class="row">
+                                        <div class="col-12">
+                                          <div class="mb-3">
+                                            <label for="validationCustom01" class="form-label"><a
+                                                class="text-dark">Name<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <input type="text" class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['name'].errors }"
+                                              formControlName="name" required>
+                                            <div *ngIf="submitted && addRuleForm['name'].errors"
+                                              class="invalid-feedback">
+                                              <div *ngIf="addRuleForm['name'].errors addRuleForm['name'].required">Name
+                                                is required</div>
+                                            </div>
+
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="validationCustom01" class="form-label"><a class="text-dark">IP
+                                                address<span class="required-asterisk">*</span></a></label>
+                                            <input type="text" class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['ip_address'].errors }"
+                                              formControlName="ip_address" required>
+                                            <div *ngIf="submitted && addRuleForm['ip_address'].errors"
+                                              class="invalid-feedback">
+                                              <div
+                                                *ngIf="addRuleForm['ip_address'].errors addRuleForm['ip_address'].required">
+                                                IP address is required</div>
+                                            </div>
+
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="validationCustom01" class="form-label"><a
+                                                class="text-dark">Port<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <input type="number" class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['port'].errors }"
+                                              formControlName="port" required>
+                                            <div *ngIf="submitted && addRuleForm['port'].errors"
+                                              class="invalid-feedback">
+                                              <div *ngIf="addRuleForm['port'].errors addRuleForm['port'].required">Port
+                                                is required</div>
+                                            </div>
+
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="validationCustom03" class="form-label"><a
+                                                class="text-dark">Action<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <select class="form-select" formControlName="action"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['action'].errors }"
+                                              required>
+                                              <option>ACCEPT</option>
+                                              <option>DROP</option>
+                                            </select>
+                                            <div *ngIf="submitted && addRuleForm['action'].errors"
+                                              class="invalid-feedback">
+                                              <div *ngIf="addRuleForm['action'].errors addRuleForm['action'].required">
+                                                Action is required</div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-12">
+                                          <div class="mb-3">
+                                            <label for="validationCustom03" class="form-label"><a
+                                                class="text-dark">Protocol<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <select class="form-select" formControlName="protocol"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['protocol'].errors }"
+                                              required>
+                                              <option>HTTP</option>
+                                              <option>HTTPS</option>
+                                              <option>UDP</option>
+                                              <option>TCP</option>
+                                            </select>
+                                            <div *ngIf="submitted && addRuleForm['protocol'].errors"
+                                              class="invalid-feedback">
+                                              <div
+                                                *ngIf="addRuleForm['protocol'].errors addRuleForm['protocol'].required">
+                                                Protocol is required</div>
+                                            </div>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="validationCustom03" class="form-label"><a
+                                                class="text-dark">Status<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <select class="form-select" formControlName="status"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['status'].errors }"
+                                              required>
+                                              <option value="1">Active</option>
+                                              <option value="2">Inactive</option>
+                                              <option value="3">In progress</option>
+                                            </select>
+                                            <div *ngIf="submitted && addRuleForm['status'].errors"
+                                              class="invalid-feedback">
+                                              <div *ngIf="addRuleForm['status'].errors addRuleForm['status'].required">
+                                                Status is required</div>
+                                            </div>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="validationCustom01" class="form-label"><a
+                                                class="text-dark">Start date<span
+                                                  class="required-asterisk">*</span></a></label>
+                                            <input type="date" class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && addRuleForm['start_date'].errors }"
+                                              formControlName="start_date" required>
+                                            <div *ngIf="submitted && addRuleForm['start_date'].errors"
+                                              class="invalid-feedback">
+                                              <div
+                                                *ngIf="addRuleForm['start_date'].errors addRuleForm['start_date'].required">
+                                                Start date is required</div>
+                                            </div>
+
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light">Save
+                                          changes</button>
+                                        <button type="button" (click)="onSubmit()"
+                                          class="btn btn-secondary waves-effect waves-light">Cancel</button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </ng-template>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngIf="( groupRuleList | filter : searchText) as resultFilter1">
+                            <div *ngIf="resultFilter1.length === 0 ; else otherr1">
+                              <table class="table align-middle table-nowrap table-hover text-center" id="table_rule">
+                                <thead class="th-bg-color">
+                                  <tr>
+                                    <th class="th-table">ID</th>
+                                    <th class="th-table">Name</th>
+                                    <th class="th-table">IP address</th>
+                                    <th class="th-table">Port</th>
+                                    <th class="th-table">Protocol</th>
+                                    <th class="th-table">Actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody class="border-top-0">
+                                  <tr>
+                                    <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 22%;"></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <ng-template #otherr1>
+                              <table class="table align-middle table-nowrap table-hover text-center" id="table_rule">
+                                <thead class="th-bg-color">
+                                  <tr>
+                                    <th [appSort]="groupRuleList" data-order="desc" data-parent="rules" data-name="id">
+                                      ID <i class="fas fa-angle-up"></i></th>
+                                    <th [appSort]="groupRuleList" data-order="desc" data-parent="rules"
+                                      data-name="name">Name <i class="fas fa-angle-up d-none"></i></th>
+                                    <th [appSort]="groupRuleList" data-order="desc" data-parent="rules"
+                                      data-name="ip_address">IP address <i class="fas fa-angle-up d-none"></i></th>
+                                    <th [appSort]="groupRuleList" data-order="desc" data-parent="rules"
+                                      data-name="port">Port <i class="fas fa-angle-up d-none"></i></th>
+                                    <th [appSort]="groupRuleList" data-order="desc" data-parent="rules"
+                                      data-name="protocol">Protocol <i class="fas fa-angle-up d-none"></i></th>
+                                    <th class="danger" class="th-table">Actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody class="border-top-0">
+                                  <tr
+                                    *ngFor="let groupRule of groupRuleList | paginate:{id:'pagination1',itemsPerPage:5,currentPage:p1} | filter:searchText"
+                                    data-id={{groupRule.rules?.id}}>
+                                    <td>{{groupRule.rules?.id}}</td>
+                                    <td>{{groupRule.rules?.name}}</td>
+                                    <td>{{groupRule.rules?.ip_address}}</td>
+                                    <td>{{groupRule.rules?.port}}</td>
+                                    <td>{{groupRule.rules?.protocol}}</td>
+                                    <td>
+                                      <div class="d-flex flex-wrap gap-1 justify-content-center">
+                                        <a class="btn btn-secondary waves-effect waves-light btn-act" type="submit"
+                                          (click)="openModal(editRuleModal, groupRule.rules!)" placement="left"
+                                          ngbTooltip="Edit"><i class="mdi mdi-pencil font-size-16"></i></a>
+                                        <a class="btn btn-danger waves-effect waves-light btn-act" type="button"
+                                          (click)="deleteRule(groupRule.rules?.id)" placement="left"
+                                          ngbTooltip="Delete"><i class="mdi mdi-delete font-size-16"></i></a>
+                                      </div>
+                                      <ng-template #editRuleModal>
+                                        <div class="modal-header">
+                                          <h6 class="modal-title" id="editRuleLabel" class="text-dark">Edit rule</h6>
+                                          <button type="button" aria-label="Close" (click)="onSubmit()"
+                                            class="btn-close"></button>
+
+                                        </div>
+                                        <div class="modal-body">
+                                          <div class="card-body">
+                                            <form [formGroup]="ruleFormEdit"
+                                              (ngSubmit)="updateRule(groupRule.rules?.id,groupRule.rules!)">
+                                              <div class="mb-3 row" style="display: none;">
+                                                <label for="example-text-input" class="col-6 col-form-label">ID<span
+                                                    class="required-asterisk">*</span></label>
+                                                <div class="col-12">
+                                                  <input class="form-control" type="text" id="id" formControlName="id"
+                                                    [ngModel]='groupRule.rules?.id'>
+                                                </div>
+                                              </div>
+                                              <div class="mb-3 row">
+                                                <label for="example-text-input" class="col-6 col-form-label">Name<span
+                                                    class="required-asterisk">*</span></label>
+                                                <div class="col-12">
+                                                  <input class="form-control" type="text" id="name"
+                                                    formControlName="name"
+                                                    [ngClass]="{ 'is-invalid': submitted && editRuleForm['name'].errors }"
+                                                    [ngModel]='groupRule.rules?.name'>
+                                                  <div *ngIf="submitted && editRuleForm['name'].errors"
+                                                    class="invalid-feedback">
+                                                    <div
+                                                      *ngIf="editRuleForm['name'].errors editRuleForm['name'].required">
+                                                      Name is required</div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="mb-3 row">
+                                                <label for="example-text-input" class="col-6 col-form-label">IP address
+                                                  <span class="required-asterisk">*</span></label>
+                                                <div class="col-12">
+                                                  <input class="form-control" type="text" id="ip_address"
+                                                    formControlName="ip_address"
+                                                    [ngClass]="{ 'is-invalid': submitted && editRuleForm['ip_address'].errors }"
+                                                    [ngModel]='groupRule.rules?.ip_address'>
+                                                  <div *ngIf="submitted && editRuleForm['ip_address'].errors"
+                                                    class="invalid-feedback">
+                                                    <div
+                                                      *ngIf="editRuleForm['ip_address'].errors editRuleForm['ip_address'].required">
+                                                      IP address is required</div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="mb-3 row">
+                                                <label for="example-text-input" class="col-6 col-form-label">Port<span
+                                                    class="required-asterisk">*</span></label>
+                                                <div class="col-12">
+                                                  <input class="form-control" type="number" id="port"
+                                                    formControlName="port"
+                                                    [ngClass]="{ 'is-invalid': submitted && editRuleForm['port'].errors }"
+                                                    [ngModel]='groupRule.rules?.port'>
+                                                  <div *ngIf="submitted && editRuleForm['port'].errors"
+                                                    class="invalid-feedback">
+                                                    <div
+                                                      *ngIf="editRuleForm['port'].errors editRuleForm['port'].required">
+                                                      Port is required</div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="mb-3 row">
+                                                <label for="example-text-input"
+                                                  class="col-6 col-form-label">Protocol<span
+                                                    class="required-asterisk">*</span></label>
+                                                <div class="col-12">
+                                                  <select class="form-select" formControlName="protocol"
+                                                    [ngClass]="{ 'is-invalid': submitted && editRuleForm['protocol'].errors }"
+                                                    [ngModel]='groupRule.rules?.protocol'>
+                                                    <option>HTTP</option>
+                                                    <option>HTTPS</option>
+                                                    <option>UDP</option>
+                                                    <option>TCP</option>
+                                                  </select>
+                                                  <div *ngIf="submitted && editRuleForm['protocol'].errors"
+                                                    class="invalid-feedback">
+                                                    <div
+                                                      *ngIf="editRuleForm['protocol'].errors editRuleForm['protocol'].required">
+                                                      Protocol is required</div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="mb-3 row">
+                                                <label class="col-6 col-form-label"><a class="text-dark">Action<span
+                                                      class="required-asterisk">*</span></a></label>
+                                                <div class="col-12">
+                                                  <select class="form-select" formControlName="action"
+                                                    [ngClass]="{ 'is-invalid': submitted && editRuleForm['action'].errors }"
+                                                    [ngModel]='groupRule.rules?.action'>
+                                                    <option>ACCEPT</option>
+                                                    <option>DROP</option>
+                                                  </select>
+                                                  <div *ngIf="submitted && editRuleForm['action'].errors"
+                                                    class="invalid-feedback">
+                                                    <div
+                                                      *ngIf="editRuleForm['action'].errors editRuleForm['action'].required">
+                                                      Action is required</div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="mb-3 row">
+                                                <label class="col-6 col-form-label">Status<span
+                                                    class="required-asterisk">*</span></label>
+                                                <div class="col-12">
+                                                  <select class="form-select" formControlName="status"
+                                                    [ngClass]="{ 'is-invalid': submitted && editRuleForm['status'].errors }"
+                                                    [ngModel]='groupRule.rules?.status'>
+                                                    <option *ngIf="groupRule.rules?.status==1" disabled>Active</option>
+                                                    <option *ngIf="groupRule.rules?.status==2" disabled>Inactive
+                                                    </option>
+                                                    <option *ngIf="groupRule.rules?.status==3" disabled>In progress
+                                                    </option>
+                                                    <option value="1">Active</option>
+                                                    <option value="2">Inactive</option>
+                                                    <option value="3">In progress</option>
+                                                  </select>
+                                                  <div *ngIf="submitted && editRuleForm['status'].errors"
+                                                    class="invalid-feedback">
+                                                    <div
+                                                      *ngIf="editRuleForm['status'].errors editRuleForm['status'].required">
+                                                      Status is required</div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="mb-3 row" style="display: none;">
+                                                <label for="example-time-input" class="col-6 col-form-label"><a
+                                                    class="text-dark">Start date</a></label>
+                                                <div class="col-12">
+                                                  <input class="form-control" type="datetime"
+                                                    formControlName="start_date" [ngModel]='groupRule.rules?.start_date'
+                                                    id="example-time-input">
+                                                </div>
+                                              </div>
+                                              <div class="mb-3 row" style="display: none;">
+                                                <label class="col-6 col-form-label">Account<span
+                                                    class="required-asterisk">*</span></label>
+                                                <div class="col-12" formGroupName="account">
+                                                  <select class="form-select" formControlName="id"
+                                                    [ngModel]='groupRule.rules?.account?.id'>
+                                                    <option value="{{groupRule.rules?.account?.id}}">
+                                                      {{groupRule.rules?.account?.name}}</option>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                              <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                                <button type="submit"
+                                                  class="btn btn-primary waves-effect waves-light">Save changes</button>
+                                                <button type="button" (click)="onSubmit()"
+                                                  class="btn btn-secondary waves-effect waves-light">Cancel</button>
+                                              </div>
+                                            </form>
+                                          </div>
+                                        </div>
+                                      </ng-template>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                                id="pagination1" (pageChange)="p1 = $event"></pagination-controls>
+                              <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+                                <p style="color: white">Please Wait. </p>
+                              </ngx-spinner>
+                            </ng-template>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </div>
+                    <div *ngIf="this.usrPer.groups.includes('edit')==false" class="tab-pane active" id="profile-1"
+                      role="tabpanel">
+                      <div *ngIf="groupRuleList.length === 0; else other_content">
+                        <div class="card-body">
+                          <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                              style="width: 22%;"></label>
+                        </div>
+                      </div>
+                      <ng-template #other_content>
+                        <div class="card-body">
+                          <div class="row mb-2">
+                            <div class="row mb-2">
+                              <div class="col-sm-4">
+                                <div class="search-box me-2 mb-2 d-inline-block">
+                                  <div class="position-relative">
+                                    <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                      [(ngModel)]='searchText'>
+                                    <i class="bx bx-search-alt search-icon"></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngIf="( groupRuleList | filter : searchText) as resultFilter1">
+                            <div *ngIf="resultFilter1.length === 0 ; else otherr2">
+                              <table class="table align-middle table-nowrap table-hover text-center" id="table_rule">
+                                <thead class="th-bg-color">
+                                  <tr>
+                                    <th class="th-table">ID</th>
+                                    <th class="th-table">Name</th>
+                                    <th class="th-table">IP address</th>
+                                    <th class="th-table">Port</th>
+                                    <th class="th-table">Protocol</th>
+                                  </tr>
+                                </thead>
+                                <tbody class="border-top-0">
+                                  <tr>
+                                    <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 22%;"></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <ng-template #otherr2>
+                              <table class="table align-middle table-nowrap table-hover text-center" id="table_rule">
+                                <thead class="th-bg-color">
+                                  <tr>
+                                    <th [appSort]="groupRuleList" data-order="desc" data-parent="rules" data-name="id">
+                                      ID <i class="fas fa-angle-up"></i></th>
+                                    <th [appSort]="groupRuleList" data-order="desc" data-parent="rules"
+                                      data-name="name">Name <i class="fas fa-angle-up d-none"></i></th>
+                                    <th [appSort]="groupRuleList" data-order="desc" data-parent="rules"
+                                      data-name="ip_address">IP address <i class="fas fa-angle-up d-none"></i></th>
+                                    <th [appSort]="groupRuleList" data-order="desc" data-parent="rules"
+                                      data-name="port">Port <i class="fas fa-angle-up d-none"></i></th>
+                                    <th [appSort]="groupRuleList" data-order="desc" data-parent="rules"
+                                      data-name="protocol">Protocol <i class="fas fa-angle-up d-none"></i></th>
+                                  </tr>
+                                </thead>
+                                <tbody class="border-top-0">
+                                  <tr
+                                    *ngFor="let groupRule of groupRuleList | paginate:{id:'pagination1',itemsPerPage:5,currentPage:p1} | filter:searchText"
+                                    data-id={{groupRule.rules?.id}}>
+                                    <td>{{groupRule.rules?.id}}</td>
+                                    <td>{{groupRule.rules?.name}}</td>
+                                    <td>{{groupRule.rules?.ip_address}}</td>
+                                    <td>{{groupRule.rules?.port}}</td>
+                                    <td>{{groupRule.rules?.protocol}}</td>
+                                    <td style="display: none;">
+                                      <h6><span *ngIf="groupRule.rules?.status==1">Active</span></h6>
+                                      <h6><span *ngIf="groupRule.rules?.status==2">Inactive</span></h6>
+                                      <h6><span *ngIf="groupRule.rules?.status==3">In progress</span></h6>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                                id="pagination1" (pageChange)="p1 = $event"></pagination-controls>
+                            </ng-template>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==true" class="tab-pane" id="logs-1" role="tabpanel">
+                    <div *ngIf="usersLogsList.length === 0; else other_content">
+                      <div class="card-body">
+                        <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                            style="width: 22%;"></label>
+                      </div>
+                    </div>
+                    <ng-template #other_content>
+                      <div class="card-body">
+                        <div class="row mb-0">
+                          <div class="row mb-2">
+                            <div class="col-sm-4">
+                              <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                  <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                    [(ngModel)]='searchText1'>
+                                  <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="( usersLogsList | filter : searchText1) as resultFilter2">
+                          <div *ngIf="resultFilter2.length === 0 ; else otherr3">
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="th-table">ID</th>
+                                  <th class="th-table">Element</th>
+                                  <th class="th-table">Element ID</th>
+                                  <th class="th-table">Action</th>
+                                  <th class="th-table">Action date</th>
+                                  <th class="th-table">Source</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr>
+                                  <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 22%;"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ng-template #otherr3>
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="success" [appSort]="usersLogsList" data-order="desc" data-name="id">ID <i
+                                      class="fas fa-angle-up"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="element">
+                                    Element <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="element_id">
+                                    Element ID <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="action">
+                                    Action <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc"
+                                    data-name="action_date">Action date <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc" data-name="source">
+                                    Source <i class="fas fa-angle-up d-none"></i></th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr
+                                  *ngFor="let userlog of usersLogsList | paginate:{itemsPerPage:5,currentPage:p2} | filter:searchText1">
+                                  <td>{{userlog.id}}</td>
+                                  <td>
+                                    <span>{{userlog.element}}</span>
+                                  </td>
+                                  <td>{{userlog.element_id}}</td>
+                                  <td>{{userlog.action}}</td>
+                                  <td>{{userlog.action_date | date:'yyyy-MM-dd h:mm:ss a'}}</td>
+                                  <td>
+                                    <span>{{userlog.source}}</span>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                              (pageChange)="p2 = $event"></pagination-controls>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==false" class="tab-pane" id="logs-1" role="tabpanel">
+                    <div *ngIf="usersLogsList.length === 0; else other_content">
+                      <div class="card-body">
+                        <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                            style="width: 22%;"></label>
+                      </div>
+                    </div>
+                    <ng-template #other_content>
+                      <div class="card-body">
+                        <div class="row mb-0">
+                          <div class="row mb-2">
+                            <div class="col-sm-4">
+                              <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                  <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                    [(ngModel)]='searchText1'>
+                                  <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="( usersLogsList | filter : searchText1) as resultFilter3">
+                          <div *ngIf="resultFilter3.length === 0 ; else otherr4">
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="th-table">ID</th>
+                                  <th class="th-table">Element</th>
+                                  <th class="th-table">Element ID</th>
+                                  <th class="th-table">Action</th>
+                                  <th class="th-table">Action date</th>
+                                  <th class="th-table">Source</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr>
+                                  <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 22%;"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ng-template #otherr4>
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="success" [appSort]="usersLogsList" data-order="desc" data-name="id">ID <i
+                                      class="fas fa-angle-up"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="element">
+                                    Element <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="element_id">
+                                    Element ID <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-name="action">
+                                    Action <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc"
+                                    data-name="action_date">Action date <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc" data-name="source">
+                                    Source <i class="fas fa-angle-up d-none"></i></th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr
+                                  *ngFor="let userlog of usersLogsList | paginate:{itemsPerPage:5,currentPage:p2} | filter:searchText1">
+                                  <td>{{userlog.id}}</td>
+                                  <td>
+                                    <span>{{userlog.element}}</span>
+                                  </td>
+                                  <td>{{userlog.element_id}}</td>
+                                  <td>{{userlog.action}}</td>
+                                  <td>{{userlog.action_date | date:'yyyy-MM-dd h:mm:ss a'}}</td>
+                                  <td>
+                                    <span>{{userlog.source}}</span>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                              (pageChange)="p2 = $event"></pagination-controls>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

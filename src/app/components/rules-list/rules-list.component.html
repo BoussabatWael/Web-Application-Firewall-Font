@@ -1,0 +1,171 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+  <app-topbar></app-topbar>
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="rulesList.length ===0; else other_content">
+                  <div class="row mb-2">
+                    <div class="col-12">
+                      <div *ngIf="this.usrPer.rules.includes('create')==true" class="text-sm-end"
+                        routerLink="/rule/add">
+                        <button type="button" class="btn btn-primary waves-effect waves-light btn-add"
+                          style="border-radius: 50px;"><i class="mdi mdi-plus me-1"></i> Add new rule</button>
+                      </div>
+                      <div *ngIf="this.usrPer.rules.includes('create')==false" style="display: none;"
+                        class="text-sm-end" routerLink="/rule/add">
+                        <button type="button" class="btn btn-primary waves-effect waves-light btn-add"
+                          style="border-radius: 50px;"><i class="mdi mdi-plus me-1"></i> Add new rule</button>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                      style="width: 20%;"></label>
+                </div>
+                <ng-template #other_content>
+                  <div class="row mb-2 justify-content-between">
+                    <div class="col-6">
+                      <div class="search-box me-2 mb-2 d-inline-block">
+                        <div class="position-relative">
+                          <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                            [(ngModel)]="searchText">
+                          <i class="bx bx-search-alt search-icon"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div *ngIf="this.usrPer.rules.includes('create')==true" class="text-sm-end"
+                        routerLink="/rule/add">
+                        <button type="button" class="btn btn-primary waves-effect waves-light btn-add"
+                          style="border-radius: 50px;"><i class="mdi mdi-plus me-1"></i> Add new rule</button>
+                      </div>
+                      <div *ngIf="this.usrPer.rules.includes('create')==false" style="display: none;"
+                        class="text-sm-end" routerLink="/rule/add">
+                        <button type="button" class="btn btn-primary waves-effect waves-light btn-add"
+                          style="border-radius: 50px;"><i class="mdi mdi-plus me-1"></i> Add new rule</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="( rulesList | filter : searchText) as resultFilter">
+                    <div *ngIf="resultFilter.length === 0 ; else otherr">
+                      <div class="table-responsive">
+                        <table class="table align-middle table-nowrap table-hover text-center" id="#table_rule">
+                          <thead class="th-bg-color">
+                            <tr>
+                              <th class="th-table">ID</th>
+                              <th class="th-table">Name</th>
+                              <th class="th-table">Action</th>
+                              <th class="th-table">Protocol</th>
+                              <th class="th-table">Port</th>
+                              <th class="th-table">IP address</th>
+                              <th class="th-table">Status</th>
+                              <th class="th-table">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody class="border-top-0">
+                            <tr>
+                              <td colspan="9"><img src="assets/images/no_data_found.png" style="width: 20%;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <ng-template #otherr>
+                      <div class="table-responsive">
+                        <table class="table align-middle table-nowrap table-hover text-center" id="#table_rule">
+                          <thead class="th-bg-color">
+                            <tr>
+                              <th scope="col" [appSort]="rulesList" data-order="desc" data-name="id">ID <i
+                                  class="fas fa-angle-up"></i></th>
+                              <th scope="col" [appSort]="rulesList" data-order="desc" data-name="name">Name <i
+                                  class="fas fa-angle-up d-none"></i></th>
+                              <th scope="col" [appSort]="rulesList" data-order="desc" data-name="action">Action <i
+                                  class="fas fa-angle-up d-none"></i></th>
+                              <th scope="col" [appSort]="rulesList" data-order="desc" data-name="protocol">Protocol <i
+                                  class="fas fa-angle-up d-none"></i></th>
+                              <th scope="col" [appSort]="rulesList" data-order="desc" data-name="port">Port <i
+                                  class="fas fa-angle-up d-none"></i></th>
+                              <th scope="col" [appSort]="rulesList" data-order="desc" data-name="ip_address">IP address
+                                <i class="fas fa-angle-up d-none"></i></th>
+                              <th scope="col" [appSort]="rulesList" data-order="desc" data-name="status">Status <i
+                                  class="fas fa-angle-up d-none"></i></th>
+                              <th scope="col" class="th-table">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody class="border-top-0">
+                            <tr
+                              *ngFor="let rule of rulesList  | paginate:{itemsPerPage:10,currentPage:p} | filter:searchText"
+                              data-id={{rule.id}}>
+                              <td>
+                                {{rule.id}}
+                              </td>
+                              <td>
+                                {{rule.name}}
+                              </td>
+                              <td>
+                                {{rule.action}}
+                              </td>
+                              <td>
+                                {{rule.protocol}}
+                              <td>
+                                {{rule.port}}
+                              </td>
+                              <td>
+                                {{rule.ip_address}}
+                              </td>
+                              <td>
+                                <span *ngIf="rule.status==1"><span
+                                    class="badge badge-pill badge-soft-success font-size-11">Active</span></span>
+                                <span *ngIf="rule.status==2"><span
+                                    class="badge badge-pill badge-soft-danger font-size-11">Inactive</span></span>
+                                <span *ngIf="rule.status==3"><span
+                                    class="badge badge-pill badge-soft-warning font-size-11">In progress</span></span>
+                              </td>
+                              <td>
+                                <div class="d-flex flex-wrap gap-1 justify-content-center">
+                                  <div *ngIf="rule.name === 'RULE_DENY'; else other_content89">
+
+                                  </div>
+                                  <ng-template #other_content89>
+                                    <a class="btn btn-secondary waves-effect waves-light btn-act"
+                                      *ngIf="this.usrPer.rules.includes('edit')==true"
+                                      routerLink="/rule/edit/{{rule.id}}" placement="left" ngbTooltip="Edit">
+                                      <i class="mdi mdi-pencil font-size-16"></i></a>
+                                    <a class="btn btn-secondary waves-effect waves-light btn-act"
+                                      *ngIf="this.usrPer.rules.includes('edit')==false"
+                                      routerLink="/rule/edit/{{rule.id}}" placement="left" ngbTooltip="View">
+                                      <i class="fa fa-eye font-size-16"></i></a>
+                                    <a class="btn btn-danger waves-effect waves-light btn-act"
+                                      *ngIf="this.usrPer.rules.includes('delete')==true" type="button"
+                                      (click)="deleteRule(rule.id)" placement="left" ngbTooltip="Delete">
+                                      <i class="mdi mdi-delete font-size-16"></i></a>
+                                    <a class="btn btn-danger waves-effect waves-light btn-act"
+                                      *ngIf="this.usrPer.rules.includes('delete')==false" style="display: none;"
+                                      type="button" (click)="deleteRule(rule.id)" placement="left" ngbTooltip="Delete">
+                                      <i class="mdi mdi-delete font-size-16"></i></a>
+                                  </ng-template>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                          style="float: right;" (pageChange)="p = $event"></pagination-controls>
+                      </div>
+                    </ng-template>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

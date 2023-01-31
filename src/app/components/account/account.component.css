@@ -1,0 +1,14 @@
+div, a , span, button{
+    font-family: "Poppins", sans-serif !important;
+    font-size: 14px;
+  }
+
+.btn-add{
+    font-size: 13px !important;
+}
+
+.imgUser{
+  align-items: flex-end !important;
+  display: flex;
+  margin-left: 15px;
+  }

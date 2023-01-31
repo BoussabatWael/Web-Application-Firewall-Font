@@ -1,0 +1,137 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+  <app-topbar></app-topbar>
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid repotingloading">
+        <div class="innerLoad">
+          <div role="status" class="spinner-border">
+            <span class="sr-only loading"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="response1 ==='error' || AccessLogsList.length ===0; else other3">
+                  <div class="table-responsive">
+                    <table class="table align-middle table-nowrap table-hover text-center" id="#table_server">
+                      <thead style="background-color: #ced4da6b;">
+                        <tr>
+                          <th class="th-table">IP address</th>
+                          <th class="th-table">Date</th>
+                          <th class="th-table">Request</th>
+                          <th class="th-table">Status</th>
+                          <th class="th-table">Size</th>
+                          <th class="th-table">Country</th>
+                          <th class="th-table">User agent</th>
+                        </tr>
+                      </thead>
+                      <tbody class="border-top-0">
+                        <tr>
+                          <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 20%;"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <ng-template #other3>
+                  <div class="row mb-2">
+                    <div class="row mb-2">
+                      <div class="col-sm-4">
+                        <div class="search-box me-2 mb-2 d-inline-block">
+                          <div class="position-relative">
+                            <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                              [(ngModel)]="searchText" />
+                            <i class="bx bx-search-alt search-icon"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <div *ngIf="( AccessLogsList | filter : searchText) as resultFilter3">
+                      <div *ngIf="resultFilter3.length === 0 ; else otherr3">
+                        <table class="table align-middle table-nowrap table-hover text-center" id="#table_server">
+                          <thead style="background-color: #ced4da6b;">
+                            <tr>
+                              <th class="th-table">IP address</th>
+                              <th class="th-table">Date</th>
+                              <th class="th-table">Request</th>
+                              <th class="th-table">Status</th>
+                              <th class="th-table">Size</th>
+                              <th class="th-table">Country</th>
+                              <th class="th-table">User agent</th>
+                            </tr>
+                          </thead>
+                          <tbody class="border-top-0">
+                            <tr>
+                              <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 20%;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <ng-template #otherr3>
+                        <table class="table align-middle table-nowrap table-hover text-center" id="#table_server">
+                          <thead style="background-color: #ced4da6b;">
+                            <tr>
+                              <th class="th-table">IP address</th>
+                              <th class="th-table">Date</th>
+                              <th class="th-table">Request</th>
+                              <th class="th-table">Status</th>
+                              <th class="th-table">Size</th>
+                              <th class="th-table">Country</th>
+                              <th class="th-table">User agent</th>
+                            </tr>
+                          </thead>
+                          <tbody class="border-top-0">
+                            <tr
+                              *ngFor="let accesslog of AccessLogsList | paginate: { itemsPerPage: 10, currentPage: p } | filter: searchText">
+                              <td>
+                                {{accesslog[0]}}
+                              <td>
+                                {{accesslog[1]}}
+                              </td>
+                              <td>
+                                {{accesslog[2]}}
+                              </td>
+                              <td>
+                                {{accesslog[3][1]}}
+                              </td>
+                              <td>
+                                {{accesslog[3][2]}}
+                              </td>
+                              <td>
+                                <div *ngIf="accesslog[5] == null">
+                                  <h6 class="text-dark"> - </h6>
+                                </div>
+                                <div *ngIf="accesslog[5] != null">
+                                  {{accesslog[5]}}
+                                </div>
+                              </td>
+                              <td>
+                                <div *ngIf="accesslog[6] == null">
+                                  <h6 class="text-dark"> - </h6>
+                                </div>
+                                <div *ngIf="accesslog[6] != null">
+                                  {{accesslog[6]}}
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                          (pageChange)="p = $event"></pagination-controls>
+                      </ng-template>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

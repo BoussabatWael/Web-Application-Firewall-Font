@@ -1,0 +1,857 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+  <app-topbar></app-topbar>
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card overflow-hidden">
+              <div class="bg-primary bg-soft">
+                <div class="row">
+                  <div class="col-7">
+                  </div>
+                  <div class="col-5 align-self-end leftside"></div>
+                </div>
+              </div>
+              <div class="card-body pt-4">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <h5 class="font-size-15 text-truncate"><a class="text-dark">Name</a></h5>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <h5 class="font-size-18 text-truncate"><a>{{policy.name}}</a></h5><br>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <h5 class="font-size-15 text-truncate"><a class="text-dark">Status</a></h5>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <span *ngIf="policy.status==1"
+                            class="badge rounded-pill badge-soft-success font-size-12">Active</span>
+                          <span *ngIf="policy.status==2"
+                            class="badge rounded-pill badge-soft-danger font-size-12">Inactive</span>
+                          <span *ngIf="policy.status==3" class="badge rounded-pill badge-soft-warning font-size-12">In
+                            progress</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title mb-4 text-dark">Informations</h4>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <p>Action : {{policy.action}}</p>
+                    <p>Duration : {{policy.duration}}</p>
+                    <p>Metric : {{policy.metric}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-body">
+                <ul class="nav nav-pills nav-justified" role="tablist">
+                  <li class="nav-item waves-effect waves-light" placement="top" ngbTooltip="General Informations">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#home-1" role="tab">
+                      <span class="d-block"><i class="fas fa-home"></i>
+                        <span class="d-none d-sm-block" class="text-dark text2"> General</span> </span>
+                    </a>
+                  </li>
+                  <li class="nav-item waves-effect waves-light" placement="top" ngbTooltip="Servers">
+                    <a class="nav-link" data-bs-toggle="tab" href="#messages-1" role="tab">
+                      <span class="d-block"><i class="fas fa-server"></i>
+                        <span class="d-none d-sm-block" class="text-dark text2"> Servers</span> </span>
+                    </a>
+                  </li>
+                  <li class="nav-item waves-effect waves-light" (click)="getUserLogs()" placement="top"
+                    ngbTooltip="Logs Activity">
+                    <a class="nav-link" data-bs-toggle="tab" href="#logs-1" role="tab">
+                      <span class="d-block"><i class="fa fa-history"></i>
+                        <span class="d-none d-sm-block" class="text-dark text2"> Logs</span> </span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content p-0 py-4 text-muted">
+                  <div *ngIf="this.usrPer.policies.includes('edit')==true" class="tab-pane active" id="home-1"
+                    role="tabpanel">
+                    <div class="card-body">
+                      <form [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-4 col-form-label"><a class="text-dark">Name<span
+                                class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <input class="form-control" style="width: 100%;" type="text" formControlName="name"
+                              [ngModel]='policy.name' [ngClass]="{ 'is-invalid': submitted && form['name'].errors }"
+                              id="example-text-input">
+                            <div *ngIf="submitted && form['name'].errors" class="invalid-feedback">
+                              <div *ngIf="form['name'].errors form['name'].required">Name is required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-4 col-form-label"><a
+                              class="text-dark">Metric<span class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <input class="form-control" style="width: 100%;" type="number" formControlName="metric"
+                              [ngModel]='policy.metric' [ngClass]="{ 'is-invalid': submitted && form['metric'].errors }"
+                              id="example-text-input">
+                            <div *ngIf="submitted && form['metric'].errors" class="invalid-feedback">
+                              <div *ngIf="form['metric'].errors form['metric'].required">Metric is required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-4 col-form-label"><a
+                              class="text-dark">Duration<span class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <input class="form-control" style="width: 100%;" type="number" formControlName="duration"
+                              [ngModel]='policy.duration'
+                              [ngClass]="{ 'is-invalid': submitted && form['duration'].errors }"
+                              id="example-text-input">
+                            <div *ngIf="submitted && form['duration'].errors" class="invalid-feedback">
+                              <div *ngIf="form['duration'].errors form['duration'].required">Duration is required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-4 col-form-label"><a
+                              class="text-dark">Threshold<span class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <input class="form-control" style="width: 100%;" type="text" formControlName="threshold"
+                              [ngModel]='policy.threshold'
+                              [ngClass]="{ 'is-invalid': submitted && form['threshold'].errors }"
+                              id="example-text-input">
+                            <div *ngIf="submitted && form['threshold'].errors" class="invalid-feedback">
+                              <div *ngIf="form['threshold'].errors form['threshold'].required">Threshold is required
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label for="example-text-input" class="col-md-4 col-form-label"><a
+                              class="text-dark">Action<span class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <input class="form-control" type="text" formControlName="action" [ngModel]='policy.action'
+                              id="example-text-input">
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-4 col-form-label"><a class="text-dark">Status<span
+                                class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <select class="form-select" formControlName="status" [ngModel]='policy.status'>
+                              <option *ngIf="policy.status==1" disabled>Active</option>
+                              <option *ngIf="policy.status==2" disabled>Inactive</option>
+                              <option *ngIf="policy.status==3" disabled>In progress</option>
+                              <option value="1">Active</option>
+                              <option value="2">Inactive</option>
+                              <option value="3">In progress</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-4 col-form-label"><a class="text-dark">Account<span
+                                class="required-asterisk">*</span></a></label>
+                          <div class="col-md-8" formGroupName="account">
+                            <select class="form-select" formControlName="id" [ngModel]='policy.account?.id'>
+                              <option *ngFor="let account of accountsList" value="{{account.id}}">{{account.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 justify-content-end">
+                          <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div *ngIf="this.usrPer.policies.includes('edit')==false" class="tab-pane active" id="home-1"
+                    role="tabpanel">
+                    <div class="card-body">
+                      <form [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-3 col-form-label"><a
+                              class="text-dark">Name</a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <label for="example-text-input" class="col-md-0 col-form-label"><a
+                                class="text-dark">{{policy.name}}</a></label>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-3 col-form-label"><a
+                              class="text-dark">Metric</a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <label for="example-text-input" class="col-md-3 col-form-label"><a
+                                class="text-dark">{{policy.metric}}</a></label>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-3 col-form-label"><a
+                              class="text-dark">Duration</a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <label for="example-text-input" class="col-md-3 col-form-label"><a
+                                class="text-dark">{{policy.duration}}</a></label>
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="example-text-input" class="col-md-3 col-form-label"><a
+                              class="text-dark">Threshold</a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <label for="example-text-input" class="col-md-3 col-form-label"><a
+                                class="text-dark">{{policy.threshold}}</a></label>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label for="example-text-input" class="col-md-3 col-form-label"><a
+                              class="text-dark">Action</a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <input class="form-control" type="text" formControlName="action" [ngModel]='policy.action'
+                              id="example-text-input">
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-3 col-form-label"><a class="text-dark">Status</a></label>
+                          <div class="col-md-8" [formGroup]="policyForm" (ngSubmit)="updatePolicy(policy.id)">
+                            <select class="form-select" formControlName="status" [ngModel]='policy.status'>
+                              <option *ngIf="policy.status==1" disabled>Active</option>
+                              <option *ngIf="policy.status==2" disabled>Inactive</option>
+                              <option *ngIf="policy.status==3" disabled>In progress</option>
+                              <option value="1">Active</option>
+                              <option value="2">Inactive</option>
+                              <option value="3">In progress</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="mb-3 row" style="display: none;">
+                          <label class="col-md-3 col-form-label"><a class="text-dark">Account</a></label>
+                          <div class="col-md-8" formGroupName="account">
+                            <select class="form-select" formControlName="id" [ngModel]='policy.account?.id'>
+
+                              <option *ngFor="let account of accountsList" value="{{account.id}}">{{account.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div *ngIf="this.usrPer.policies.includes('edit')==true" class="tab-pane" id="messages-1"
+                    role="tabpanel">
+                    <div *ngIf="policyInstanceList.length === 0; else other_content">
+                      <div class="card-body">
+                        <div class="row mb-0 justify-content-between">
+                          <div class="col-8">
+                          </div>
+                          <div class="col-2">
+                            <div class="d-flex flex-wrap gap-2 pb-3">
+                              <button type="submit" (click)="assignPolicyToServerModal(assignServer, server)"
+                                class="btn btn-outline-primary">Assign to server</button>
+                              <ng-template #assignServer>
+                                <div class="modal-header">
+                                  <h6 class="modal-title" id="assignServerLabel1">Assign policy to server</h6>
+                                  <button type="button" class="btn-close" (click)="onSubmit()"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <form [formGroup]="policyInstanceFormAdd" (ngSubmit)="assignPolicyInstanceToServer()">
+                                    <label for="validationCustom03" class="form-label"><a class="text-dark">Servers
+                                        list<span class="required-asterisk">*</span></a></label>
+                                    <div *ngIf="serversList.length ===0; else content1" formGroupName="servers">
+                                      <select class="form-select mb-3" required aria-required="true"
+                                        formControlName="id"
+                                        [ngClass]="{ 'is-invalid': submitted1 && policiesInstanceForm['servers'].get('id')?.errors }">
+                                        <option class="text-center" disabled> No data to display</option>
+                                      </select>
+                                      <div *ngIf="submitted1 && policiesInstanceForm['servers'].get('id')?.errors"
+                                        class="invalid-feedback">
+                                        <div
+                                          *ngIf="policiesInstanceForm['servers'].get('id')?.errors form['id'].required">
+                                          Server is required</div>
+                                      </div>
+                                    </div>
+                                    <ng-template #content1 formGroupName="servers">
+                                      <select class="form-select mb-3" required aria-required="true"
+                                        formControlName="id"
+                                        [ngClass]="{ 'is-invalid': submitted1 && policiesInstanceForm['servers'].get('id')?.errors }">
+                                        <option *ngFor="let server of serversList" value="{{server.id}}">{{server.name}}
+                                        </option>
+                                      </select>
+                                      <div *ngIf="submitted1 && policiesInstanceForm['servers'].get('id')?.errors"
+                                        class="invalid-feedback">
+                                        <div
+                                          *ngIf="policiesInstanceForm['servers'].get('id')?.errors form['id'].required">
+                                          Server is required</div>
+                                      </div>
+                                    </ng-template>
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-secondary">Save changes</button>
+                                      <button type="button" (click)="onSubmit()"
+                                        class="btn btn-outline-secondary">Close</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </ng-template>
+                            </div>
+                          </div>
+                        </div>
+                        <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                            style="width: 22%;"></label>
+                      </div>
+                    </div>
+                    <ng-template #other_content>
+                      <div class="card-body">
+                        <div class="row mb-0 justify-content-between">
+                          <div class="col-8">
+                            <div class="search-box me-2 mb-2 d-inline-block">
+                              <div class="position-relative">
+                                <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                  [(ngModel)]='searchText'>
+                                <i class="bx bx-search-alt search-icon"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-2">
+                            <div class="d-flex flex-wrap gap-2 pb-3">
+                              <button type="submit" (click)="assignPolicyToServerModal(assignServer, server)"
+                                class="btn btn-outline-primary">Assign to server</button>
+                              <ng-template #assignServer>
+                                <div class="modal-header">
+                                  <h6 class="modal-title" id="assignServerLabel1">Assign policy to server</h6>
+                                  <button type="button" class="btn-close" (click)="onSubmit()"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <form [formGroup]="policyInstanceFormAdd" (ngSubmit)="assignPolicyInstanceToServer()">
+                                    <label for="validationCustom03" class="form-label"><a class="text-dark">Servers
+                                        list<span class="required-asterisk">*</span></a></label>
+                                    <div *ngIf="serversList.length ===0; else content1" formGroupName="servers">
+                                      <select class="form-select mb-3" required aria-required="true"
+                                        formControlName="id"
+                                        [ngClass]="{ 'is-invalid': submitted1 && policiesInstanceForm['servers'].get('id')?.errors }">
+                                        <option class="text-center" disabled> No data to display</option>
+                                      </select>
+                                      <div *ngIf="submitted1 && policiesInstanceForm['servers'].get('id')?.errors"
+                                        class="invalid-feedback">
+                                        <div
+                                          *ngIf="policiesInstanceForm['servers'].get('id')?.errors form['id'].required">
+                                          Server is required</div>
+                                      </div>
+                                    </div>
+                                    <ng-template #content1 formGroupName="servers">
+                                      <select class="form-select mb-3" required aria-required="true"
+                                        formControlName="id"
+                                        [ngClass]="{ 'is-invalid': submitted1 && policiesInstanceForm['servers'].get('id')?.errors }">
+                                        <option *ngFor="let server of serversList" value="{{server.id}}">{{server.name}}
+                                        </option>
+                                      </select>
+                                      <div *ngIf="submitted1 && policiesInstanceForm['servers'].get('id')?.errors"
+                                        class="invalid-feedback">
+                                        <div
+                                          *ngIf="policiesInstanceForm['servers'].get('id')?.errors form['id'].required">
+                                          Server is required</div>
+                                      </div>
+                                    </ng-template>
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-secondary">Save changes</button>
+                                      <button type="button" (click)="onSubmit()"
+                                        class="btn btn-outline-secondary">Close</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </ng-template>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="( policyInstanceList | filter : searchText) as resultFilter">
+                          <div *ngIf="resultFilter.length === 0 ; else otherr">
+                            <table class="table align-middle table-nowrap table-hover text-center" id="table_server">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="th-table">ID</th>
+                                  <th class="th-table">Name</th>
+                                  <th class="th-table">IP address</th>
+                                  <th class="th-table">Operating system</th>
+                                  <th class="th-table">System version</th>
+                                  <th class="th-table">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr>
+                                  <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 22%;"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ng-template #otherr>
+                            <table class="table align-middle table-nowrap table-hover text-center" id="table_server">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="success" [appSort]="policyInstanceList" data-order="desc"
+                                    data-parent="servers" data-name="id">ID <i class="fas fa-angle-up"></i></th>
+                                  <th class="warning" [appSort]="policyInstanceList" data-order="desc"
+                                    data-parent="servers" data-name="name">Name <i class="fas fa-angle-up d-none"></i>
+                                  </th>
+                                  <th class="danger" [appSort]="policyInstanceList" data-order="desc"
+                                    data-parent="servers" data-name="ip_address">IP address <i
+                                      class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="policyInstanceList" data-order="desc"
+                                    data-parent="servers" data-name="operating_system">Operating system <i
+                                      class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="policyInstanceList" data-order="desc"
+                                    data-parent="servers" data-name="system_version">System version <i
+                                      class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" style="display: none;">Status <i
+                                      class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" class="th-table">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr
+                                  *ngFor="let policyInstance of policyInstanceList | paginate:{id:'pagination1',itemsPerPage:5,currentPage:p1} | filter:searchText"
+                                  data-id={{policyInstance.servers?.id}}>
+                                  <td>{{policyInstance.servers?.id}}</td>
+                                  <td>{{policyInstance.servers?.name}}</td>
+                                  <td>
+                                    {{policyInstance.servers?.ip_address}}
+                                  </td>
+                                  <td>
+                                    {{policyInstance.servers?.operating_system}}
+                                  </td>
+                                  <td>
+                                    {{policyInstance.servers?.system_version}}
+                                  </td>
+                                  <td style="display: none;">
+                                    <h6><span *ngIf="policyInstance.servers?.status==1">Active</span></h6>
+                                    <h6><span *ngIf="policyInstance.servers?.status==2">Inactive</span></h6>
+                                    <h6><span *ngIf="policyInstance.servers?.status==3">In progress</span></h6>
+                                  </td>
+                                  <td>
+                                    <div class="d-flex flex-wrap gap-1 justify-content-center">
+                                      <a class="btn btn-secondary waves-effect waves-light btn-act" type="submit"
+                                        (click)="openModal(editServerModal, policyInstance.servers!)" placement="left"
+                                        ngbTooltip="Edit"><i class="mdi mdi-pencil font-size-16"></i></a>
+                                      <a class="btn btn-danger waves-effect waves-light btn-act" type="button"
+                                        (click)="deleteServer(policyInstance.servers?.id)" placement="left"
+                                        ngbTooltip="Delete"><i class="mdi mdi-delete font-size-16"></i></a>
+                                    </div>
+                                    <ng-template #editServerModal>
+                                      <div class="modal-header">
+                                        <h6 class="modal-title" id="editRuleLabel" class="text-dark">Edit server</h6>
+                                        <button type="button" class="btn-close" (click)="onSubmit()"
+                                          aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="card-body">
+                                          <form [formGroup]="serverFormEdit"
+                                            (ngSubmit)="updateServer(policyInstance.servers?.id,policyInstance.servers!)">
+                                            <div class="mb-3 row" style="display: none;">
+                                              <label for="example-text-input" class="col-6 col-form-label">ID<span
+                                                  class="required-asterisk">*</span></label>
+                                              <div class="col-12">
+                                                <input class="form-control" type="text" id="id" formControlName="id"
+                                                  [ngModel]='policyInstance.servers?.id'>
+                                              </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                              <label for="example-text-input" class="col-6 col-form-label">Name<span
+                                                  class="required-asterisk">*</span></label>
+                                              <div class="col-12">
+                                                <input class="form-control" type="text" id="name" formControlName="name"
+                                                  [ngClass]="{ 'is-invalid': submitted && serverForm['name'].errors }"
+                                                  [ngModel]='policyInstance.servers?.name'>
+                                                <div *ngIf="submitted && serverForm['name'].errors"
+                                                  class="invalid-feedback">
+                                                  <div *ngIf="serverForm['name'].errors serverForm['name'].required">
+                                                    Name is required</div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                              <label for="example-text-input" class="col-6 col-form-label">IP
+                                                Address<span class="required-asterisk">*</span></label>
+                                              <div class="col-12">
+                                                <input class="form-control" type="text" id="ip_address"
+                                                  formControlName="ip_address"
+                                                  [ngClass]="{ 'is-invalid': submitted && serverForm['ip_address'].errors }"
+                                                  [ngModel]='policyInstance.servers?.ip_address'>
+                                                <div *ngIf="submitted && serverForm['ip_address'].errors"
+                                                  class="invalid-feedback">
+                                                  <div
+                                                    *ngIf="serverForm['ip_address'].errors serverForm['ip_address'].required">
+                                                    IP address is required</div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                              <label for="example-text-input" class="col-6 col-form-label">Operating
+                                                system<span class="required-asterisk">*</span></label>
+                                              <div class="col-12">
+                                                <input class="form-control" type="text" id="operating_system"
+                                                  formControlName="operating_system"
+                                                  [ngClass]="{ 'is-invalid': submitted && serverForm['operating_system'].errors }"
+                                                  [ngModel]='policyInstance.servers?.operating_system'>
+                                                <div *ngIf="submitted && serverForm['operating_system'].errors"
+                                                  class="invalid-feedback">
+                                                  <div
+                                                    *ngIf="serverForm['operating_system'].errors serverForm['operating_system'].required">
+                                                    Operating system is required</div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                              <label for="example-text-input" class="col-6 col-form-label">System
+                                                version<span class="required-asterisk">*</span></label>
+                                              <div class="col-12">
+                                                <input class="form-control" type="text" id="system_version"
+                                                  formControlName="system_version"
+                                                  [ngClass]="{ 'is-invalid': submitted && serverForm['system_version'].errors }"
+                                                  [ngModel]='policyInstance.servers?.system_version'>
+                                                <div *ngIf="submitted && serverForm['system_version'].errors"
+                                                  class="invalid-feedback">
+                                                  <div
+                                                    *ngIf="serverForm['system_version'].errors serverForm['system_version'].required">
+                                                    System version is required</div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                              <label class="col-6 col-form-label">Status<span
+                                                  class="required-asterisk">*</span></label>
+                                              <div class="col-12">
+                                                <select class="form-select" formControlName="status"
+                                                  [ngClass]="{ 'is-invalid': submitted && serverForm['status'].errors }"
+                                                  [ngModel]='policyInstance.servers?.status'>
+                                                  <option *ngIf="policyInstance.servers?.status==1" disabled>Active
+                                                  </option>
+                                                  <option *ngIf="policyInstance.servers?.status==2" disabled>Inactive
+                                                  </option>
+                                                  <option *ngIf="policyInstance.servers?.status==3" disabled>In progress
+                                                  </option>
+                                                  <option value="1">Active</option>
+                                                  <option value="2">Inactive</option>
+                                                  <option value="3">In progress</option>
+                                                </select>
+                                                <div *ngIf="submitted && serverForm['status'].errors"
+                                                  class="invalid-feedback">
+                                                  <div
+                                                    *ngIf="serverForm['status'].errors serverForm['status'].required">
+                                                    Status is required</div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="mb-3 row" style="display: none;">
+                                              <label for="example-time-input" class="col-6 col-form-label"><a
+                                                  class="text-dark">Start date<span
+                                                    class="required-asterisk">*</span></a></label>
+                                              <div class="col-12">
+                                                <input class="form-control" type="datetime" formControlName="start_date"
+                                                  [ngModel]='policyInstance.servers?.start_date'
+                                                  id="example-time-input">
+                                              </div>
+                                            </div>
+                                            <div class="mb-3 row" style="display: none;">
+                                              <label class="col-6 col-form-label">Account<span
+                                                  class="required-asterisk">*</span></label>
+                                              <div class="col-12" formGroupName="account">
+                                                <select class="form-select" formControlName="id"
+                                                  [ngModel]='policyInstance.servers?.account?.id'>
+                                                  <option value="{{policyInstance.servers?.account?.id}}">
+                                                    {{policyInstance.servers?.account?.name}}</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="mb-3 row" style="display: none;">
+                                              <label class="col-6 col-form-label">Category<span
+                                                  class="required-asterisk">*</span></label>
+                                              <div class="col-12" formGroupName="categories">
+                                                <select class="form-select" formControlName="id"
+                                                  [ngModel]='policyInstance.servers?.categories?.id'>
+                                                  <option value="{{policyInstance.servers?.categories?.id}}">
+                                                    {{policyInstance.servers?.account?.name}}</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="mb-3 row" style="display: none;">
+                                              <label class="col-6 col-form-label">Provider<span
+                                                  class="required-asterisk">*</span></label>
+                                              <div class="col-12" formGroupName="providers">
+                                                <select class="form-select" formControlName="id"
+                                                  [ngModel]='policyInstance.servers?.providers?.id'>
+                                                  <option value="{{policyInstance.servers?.providers?.id}}">
+                                                    {{policyInstance.servers?.providers?.name}}</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                              <button type="submit"
+                                                class="btn btn-primary waves-effect waves-light">Save changes</button>
+                                              <button type="button" (click)="onSubmit()"
+                                                class="btn btn-secondary waves-effect waves-light">Cancel</button>
+                                            </div>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </ng-template>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                              id="pagination1" (pageChange)="p1 = $event"></pagination-controls>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                  <div *ngIf="this.usrPer.policies.includes('edit')==false" class="tab-pane" id="messages-1"
+                    role="tabpanel">
+                    <div *ngIf="policyInstanceList.length === 0; else other_content">
+                      <div class="card-body">
+                        <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                            style="width: 22%;"></label>
+                      </div>
+                    </div>
+                    <ng-template #other_content>
+                      <div class="card-body">
+                        <div class="row mb-2">
+                          <div class="row mb-2">
+                            <div class="col-sm-4">
+                              <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                  <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                    [(ngModel)]='searchText'>
+                                  <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <table class="table align-middle table-nowrap table-hover text-center" id="table_server">
+                          <thead class="th-bg-color">
+                            <tr>
+                              <th class="success" [appSort]="policyInstanceList" data-order="desc" data-parent="servers"
+                                data-name="id">ID <i class="fas fa-angle-up"></i></th>
+                              <th class="warning" [appSort]="policyInstanceList" data-order="desc" data-parent="servers"
+                                data-name="name">Name <i class="fas fa-angle-up d-none"></i></th>
+                              <th class="danger" [appSort]="policyInstanceList" data-order="desc" data-parent="servers"
+                                data-name="ip_address">IP address <i class="fas fa-angle-up d-none"></i></th>
+                              <th class="danger" [appSort]="policyInstanceList" data-order="desc" data-parent="servers"
+                                data-name="operating_system">Operating system <i class="fas fa-angle-up d-none"></i>
+                              </th>
+                              <th class="danger" [appSort]="policyInstanceList" data-order="desc" data-parent="servers"
+                                data-name="system_version">System version <i class="fas fa-angle-up d-none"></i></th>
+                              <th class="danger" style="display: none;">Status <i class="fas fa-angle-up d-none"></i>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody class="border-top-0">
+                            <tr
+                              *ngFor="let policyInstance of policyInstanceList | paginate:{id:'pagination1',itemsPerPage:5,currentPage:p1} | filter:searchText"
+                              data-id={{policyInstance.servers?.id}}>
+                              <td>{{policyInstance.servers?.id}}</td>
+                              <td>{{policyInstance.servers?.name}}</td>
+                              <td>
+                                {{policyInstance.servers?.ip_address}}
+                              </td>
+                              <td>
+                                {{policyInstance.servers?.operating_system}}
+                              </td>
+                              <td>
+                                {{policyInstance.servers?.system_version}}
+                              </td>
+                              <td style="display: none;">
+                                <h6><span *ngIf="policyInstance.servers?.status==1">Active</span></h6>
+                                <h6><span *ngIf="policyInstance.servers?.status==2">Inactive</span></h6>
+                                <h6><span *ngIf="policyInstance.servers?.status==3">In progress</span></h6>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                          id="pagination1" (pageChange)="p1 = $event"></pagination-controls>
+                      </div>
+                    </ng-template>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==true" class="tab-pane" id="logs-1" role="tabpanel">
+                    <div *ngIf="usersLogsList.length === 0; else other_content">
+                      <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                          style="width: 22%;"></label>
+                    </div>
+                    <ng-template #other_content>
+                      <div class="card-body">
+                        <div class="row mb-0">
+                          <div class="row mb-2">
+                            <div class="col-sm-4">
+                              <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                  <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                    [(ngModel)]='searchText1'>
+                                  <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="( usersLogsList | filter : searchText1) as resultFilter3">
+                          <div *ngIf="resultFilter3.length === 0 ; else otherr3">
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="th-table">ID </th>
+                                  <th class="th-table">Element</th>
+                                  <th class="th-table">Element ID</th>
+                                  <th class="th-table">Action</th>
+                                  <th class="th-table">Action date</th>
+                                  <th class="th-table">source</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr>
+                                  <td colspan="7"><img src="assets/images/no_data_found.png" style="width: 22%;"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ng-template #otherr3>
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="success" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="id">ID <i class="fas fa-angle-up"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="element">Element <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="element_id">Element ID <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="action">Action <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="action_date">Action date <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="source">source <i class="fas fa-angle-up d-none"></i></th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr
+                                  *ngFor="let userlog of usersLogsList | paginate:{itemsPerPage:5,currentPage:p2} | filter:searchText1">
+                                  <td>{{userlog.id}}</td>
+                                  <td>
+                                    <span>{{userlog.element}}</span>
+                                  </td>
+                                  <td>{{userlog.element_id}}</td>
+                                  <td>{{userlog.action}}</td>
+                                  <td>{{userlog.action_date | date:'yyyy-MM-dd h:mm:ss a'}}</td>
+                                  <td>
+                                    <span>{{userlog.source}}</span>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                              (pageChange)="p2 = $event"></pagination-controls>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                  <div *ngIf="this.usrPer.users.includes('edit')==false" class="tab-pane" id="slogs-1" role="tabpanel">
+                    <div *ngIf="usersLogsList.length === 0; else other_content">
+                      <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                          style="width: 22%;"></label>
+                    </div>
+                    <ng-template #other_content>
+                      <div class="card-body">
+                        <div class="row mb-0">
+                          <div class="row mb-2">
+                            <div class="col-sm-4">
+                              <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                  <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                    [(ngModel)]='searchText1'>
+                                  <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="( usersLogsList | filter : searchText1) as resultFilter3">
+                          <div *ngIf="resultFilter3.length === 0 ; else otherr3">
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="th-table">ID </th>
+                                  <th class="th-table">Element</th>
+                                  <th class="th-table">Element ID</th>
+                                  <th class="th-table">Action</th>
+                                  <th class="th-table">Action date</th>
+                                  <th class="th-table">source</th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                              </tbody>
+                            </table>
+                          </div>
+                          <ng-template #otherr3>
+                            <table class="table align-middle table-nowrap table-hover text-center">
+                              <thead class="th-bg-color">
+                                <tr>
+                                  <th class="success" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="id">ID <i class="fas fa-angle-up"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="element">Element <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="element_id">Element ID <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="danger" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="action">Action <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="action_date">Action date <i class="fas fa-angle-up d-none"></i></th>
+                                  <th class="warning" [appSort]="usersLogsList" data-order="desc" data-parent="servers"
+                                    data-name="source">source <i class="fas fa-angle-up d-none"></i></th>
+                                </tr>
+                              </thead>
+                              <tbody class="border-top-0">
+                                <tr
+                                  *ngFor="let userlog of usersLogsList | paginate:{itemsPerPage:5,currentPage:p2} | filter:searchText1">
+                                  <td>{{userlog.id}}</td>
+                                  <td>
+                                    <span>{{userlog.element}}</span>
+                                  </td>
+                                  <td>{{userlog.element_id}}</td>
+                                  <td>{{userlog.action}}</td>
+                                  <td>{{userlog.action_date | date:'yyyy-MM-dd h:mm:ss a'}}</td>
+                                  <td>
+                                    <span>{{userlog.source}}</span>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls class="pagination pagination-rounded justify-content-center mt-4"
+                              (pageChange)="p2 = $event"></pagination-controls>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

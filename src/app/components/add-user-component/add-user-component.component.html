@@ -1,0 +1,83 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+  <!-- Topbar -->
+  <app-topbar></app-topbar>
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="userForm" (ngSubmit)="addUser()">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="example-text-input" class="col-md-4 col-form-label">Username<span
+                        class="required-asterisk">*</span></label>
+                    <div class="col-md-12">
+                      <input type="text" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && form['username'].errors }" formControlName="username"
+                        required>
+                      <div *ngIf="submitted && form['username'].errors" class="invalid-feedback">
+                        <div *ngIf="form['username'].errors form['username'].required">Username is required</div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="example-text-input" class="col-md-4 col-form-label">Password<span
+                        class="required-asterisk">*</span></label>
+                    <div class="col-md-12">
+                      <div class="input-group auth-pass-inputgroup">
+                        <input type="password" class="form-control" formControlName="password" aria-label="Password"
+                          aria-describedby="password-addon" minlength="6"
+                          [ngClass]="{ 'is-invalid': submitted && form['password'].errors }">
+                        <button class="btn btn-light " type="button" id="password-addon"><i
+                            class="mdi mdi-eye-outline"></i></button>
+                        <div *ngIf="submitted && form['password'].errors" class="invalid-feedback">
+                          <div *ngIf="form['password'].errors form['password'].required">Password required | minimum 6
+                            characters</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="example-text-input" class="col-md-4 col-form-label">Role<span
+                        class="required-asterisk">*</span></label>
+                    <div class="col-md-12">
+                      <select class="form-select" formControlName="role"
+                        [ngClass]="{ 'is-invalid': submitted && form['role'].errors }" required>
+                        <option value="2">Admin</option>
+                        <option value="3">Supervisor</option>
+                        <option value="4">Agent</option>
+                      </select>
+                      <div *ngIf="submitted && form['role'].errors" class="invalid-feedback">
+                        <div *ngIf="form['role'].errors form['role'].required">Role is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="example-text-input1" class="col-md-4 col-form-label">Photo</label>
+                    <div class="col-md-12">
+                      <input type="file" class="form-control" name="photo" placeholder="photo"
+                        (change)="selectImge($event)" formControlName="photo">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex flex-wrap gap-2 justify-content-end">
+                <button type="submit" class="btn btn-primary waves-effect waves-light">Add</button>
+                <button type="button" class="btn btn-secondary waves-effect waves-light"
+                  routerLink="/settings">Cancel</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

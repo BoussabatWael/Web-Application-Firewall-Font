@@ -1,0 +1,193 @@
+<!-- Begin page -->
+<div id="layout-wrapper">
+  <!-- Topbar -->
+  <app-topbar></app-topbar>
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-20">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="card mini-stats-wid">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                      <div class="me-3">
+                        <h6 class="text-dark">SERVERS</h6>
+                        <h5 class="mb-0">{{this.serversNumber}}</h5>
+                      </div>
+                      <div class="avatar-sm ms-auto">
+                        <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
+                          <i class="bx bx-server"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card blog-stats-wid">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                      <div class="me-3">
+                        <h6 class="text-dark">RULES</h6>
+                        <h5 class="mb-0">{{this.rulesNumber}}</h5>
+                      </div>
+                      <div class="avatar-sm ms-auto">
+                        <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
+                          <i class="bx bxs-layer"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card blog-stats-wid">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                      <div class="me-3">
+                        <h6 class="text-dark">POLICIES</h6>
+                        <h5 class="mb-0">{{this.policiesNumber}}</h5>
+                      </div>
+                      <div class="avatar-sm ms-auto">
+                        <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
+                          <i class="bx bx-sync"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-6">
+            <div class="card" style="height: 522px !important;">
+              <div class="card-body col-xl-200">
+                <div class="chartjs-size-monitor">
+                  <div class="chartjs-size-monitor-expand">
+                    <div class=""></div>
+                  </div>
+                  <div class="chartjs-size-monitor-shrink">
+                    <div class=""></div>
+                  </div>
+                </div>
+                <h6 class="text-dark mb-4">RULES</h6>
+                <div class="row text-center">
+                  <div class="col-3">
+                    <h5 class="mb-0">{{this.activeRulesNumber}}</h5>
+                    <p class="text-muted text-truncate">Active</p>
+                  </div>
+                  <div class="col-3">
+                    <h5 class="mb-0">{{this.inactiveRulesNumber}}</h5>
+                    <p class="text-muted text-truncate">Inactive</p>
+                  </div>
+                  <div class="col-3">
+                    <h5 class="mb-0">{{this.pendingRulesNumber}}</h5>
+                    <p class="text-muted text-truncate">Pending</p>
+                  </div>
+                  <div class="col-3">
+                    <h5 class="mb-0">{{this.deletedRulesNumber}}</h5>
+                    <p class="text-muted text-truncate">Deleted</p>
+                  </div>
+                </div>
+                <div *ngIf="this.response1.length ===0; else otherr">
+                  <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                      style="width: 40% !important;margin-top: 23px;"></label>
+                </div>
+                <ng-template #otherr>
+                  <canvas style="width: 100% !important;" baseChart [data]="barChartData" [options]="barChartOptions"
+                    [plugins]="barChartPlugins" [legend]="barChartLegend" [type]="'bar'">
+                  </canvas>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="card" style="height: 523px !important; ">
+              <div class="card-body">
+                <div class="chartjs-size-monitor">
+                  <div class="chartjs-size-monitor-expand">
+                    <div class=""></div>
+                  </div>
+                  <div class="chartjs-size-monitor-shrink">
+                    <div class=""></div>
+                  </div>
+                </div>
+                <h6 class="text-dark">RULES BY SERVER</h6>
+                <div *ngIf="this.response2.length===0;else otherr2">
+                  <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                      style="width: 40%; margin-top: 100px;"></label>
+                </div>
+                <ng-template #otherr2>
+                  <canvas style="margin: 8% auto auto;width: 330px !important;height: 330px !important;" baseChart
+                    [data]="pieChartData" [options]="pieChartOptions" [plugins]="pieChartPlugins"
+                    [legend]="pieChartLegend" [type]="'pie'">
+                  </canvas>
+                </ng-template>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-20">
+            <div *ngIf="LastUserLogs.length === 0; else other_content">
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="text-dark">Last activity</h6>
+                  <label class="col-md-12 col-form-label text-center"><img src="assets/images/no_data_found.png"
+                      style="width: 22%;"></label>
+                </div>
+              </div>
+            </div>
+            <ng-template #other_content>
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="text-dark mb-4">Last activity</h6>
+                  <div class="table-responsive">
+                    <table class="table align-middle table-nowrap table-hover text-center">
+                      <thead class="th-bg-color">
+                        <tr>
+                          <th [appSort]="LastUserLogs" data-order="asc" data-name="id"> ID <i
+                              class="fas fa-angle-down"></i></th>
+                          <th [appSort]="LastUserLogs" data-order="asc" data-name="action_date"> Action date <i
+                              class="fas fa-angle-down d-none"></i></th>
+                          <th [appSort]="LastUserLogs" data-order="asc" data-name="action">Action <i
+                              class="fas fa-angle-down d-none"></i></th>
+                          <th [appSort]="LastUserLogs" data-order="asc" data-name="element">Element <i
+                              class="fas fa-angle-down d-none"></i></th>
+                          <th [appSort]="LastUserLogs" data-order="asc" data-name="element_id">Element ID<i
+                              class="fas fa-angle-down d-none"></i></th>
+                          <th [appSort]="LastUserLogs" data-order="asc" data-name="source">Source <i
+                              class="fas fa-angle-down d-none"></i></th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let userlog of LastUserLogs" class="border-top-0">
+                        <tr>
+                          <td>{{userlog.id}}</td>
+                          <td>{{userlog.action_date | date:'yyyy-MM-dd h:mm:ss a'}}</td>
+                          <td style="text-transform: uppercase;">{{userlog.action}}</td>
+                          <td>
+                            <span>{{userlog.element}}</span>
+                          </td>
+                          <td>
+                            <span>{{userlog.element_id}}</span>
+                          </td>
+                          <td>
+                            <span>{{userlog.source}}</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
